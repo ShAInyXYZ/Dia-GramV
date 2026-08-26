@@ -20,9 +20,9 @@
   .fp.top-right { top: 12px; right: 12px; }
   .fp.bottom-left { bottom: 12px; left: 12px; }
   .fp.bottom-right { bottom: 12px; right: 12px; }
-  .head { display: flex; align-items: center; gap: 6px; width: 100%; text-align: left; background: transparent; border: none; padding: 5px 9px; color: var(--dim); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+  .head { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; background: transparent; border: none; padding: 8px 12px; color: var(--dim); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
   .head:hover { color: var(--text); }
   .chev { width: 8px; }
   .open .head { border-bottom: 1px solid var(--hair); }
-  .body { padding: 6px 8px 8px; max-height: min(60vh, 520px); overflow: auto; }
+  .body { padding: 10px 12px 14px; max-height: min(64vh, 560px); overflow: auto; }
 </style>

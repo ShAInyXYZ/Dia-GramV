@@ -9,6 +9,6 @@
 </div>
 
 <style>
-  .sec + .sec { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--hair); }
-  .lbl { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin-bottom: 5px; }
+  .sec + .sec { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--hair); }
+  .lbl { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; }
 </style>

@@ -35,7 +35,7 @@
   };
 </script>
 
-<FloatPanel title="Key" bind:open corner="top-left" width={250}>
+<FloatPanel title="Key" bind:open corner="top-left" width={296}>
   {#each groups as g (g.label)}
     <Section label={g.label}>
       <div class="rows">
@@ -72,13 +72,13 @@
 </FloatPanel>
 
 <style>
-  .rows { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 8px; }
-  .row { display: flex; align-items: center; gap: 7px; width: 100%; padding: 3px 5px; background: transparent; border: 1px solid transparent; border-radius: 4px; font-family: var(--mono); font-size: 10.5px; color: var(--muted); text-align: left; }
+  .rows { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; }
+  .row { display: flex; align-items: center; gap: 10px; width: 100%; padding: 5px 7px; background: transparent; border: 1px solid transparent; border-radius: 4px; font-family: var(--mono); font-size: 11px; color: var(--muted); text-align: left; }
   .row:hover { background: var(--s2); border-color: var(--hair); }
   .row.pin { border-color: var(--accent); }
   .row.static { cursor: default; } .row.static:hover { background: transparent; border-color: transparent; }
   .name { flex: 1; letter-spacing: .04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .n { color: var(--dim); font-size: 9.5px; }
+  .n { color: var(--dim); font-size: 9.5px; min-width: 14px; text-align: right; }
   .sw { width: 34px; height: 8px; border-radius: 2px; display: inline-block; flex: none; }
   .empty { font-size: 11px; color: var(--dim); padding: 4px; }
 </style>

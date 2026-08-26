@@ -6,8 +6,9 @@
   const k = $derived(NODE_KINDS[kind] ?? { shape: 'rect', color: '#8a8580' });
 </script>
 
-<span class="g" style="width:{w}px;height:{h}px"><Shape shape={k.shape} {w} {h} color={color ?? k.color} /></span>
+<span class="g" style="width:{w}px;height:{h}px"><span class="in" style="inset:2px"><Shape shape={k.shape} w={w - 4} h={h - 4} color={color ?? k.color} /></span></span>
 
 <style>
   .g { position: relative; display: inline-block; flex: none; }
+  .in { position: absolute; }
 </style>

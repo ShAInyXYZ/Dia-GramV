@@ -1,13 +1,13 @@
 <script lang="ts">
   import { EDGE_KINDS } from '@dgv/core';
+  import EdgeGlyph from '../kit/EdgeGlyph.svelte';
   let { value = 'sync', onchange }: { value?: string; onchange: (k: string) => void } = $props();
-  const dash: Record<string, string> = { sync: '', async: '7 5', data: '2 4', deploy: '12 6', control: '8 4 2 4', import: '' };
 </script>
 
 <div class="kinds">
   {#each Object.entries(EDGE_KINDS) as [k, v]}
     <button class="k" class:on={value === k} onclick={() => onchange(k)} data-tip={v.hint}>
-      <svg width="26" height="8"><line x1="1" y1="4" x2="25" y2="4" stroke="currentColor" stroke-width={k === 'import' ? 1 : k === 'data' ? 2 : 1.5} stroke-dasharray={dash[k]} /></svg>
+      <EdgeGlyph kind={k} w={28} color={value === k ? 'var(--accent)' : '#a49e95'} />
       <span>{v.label}</span>
     </button>
   {/each}

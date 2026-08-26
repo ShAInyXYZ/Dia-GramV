@@ -6,6 +6,8 @@ export const hl = $state<{
   colorBy: 'kind' | 'status'; edgeStyle: EdgeStyle;
   flash: string | null;       // node/edge id pulsed once after "go to problem"
   dropFrame: string | null;   // frame that would adopt the node being dragged
-}>({ activeId: null, neighbors: null, color: null, colorBy: 'kind', edgeStyle: 'floating', flash: null, dropFrame: null });
+  kindFilter: string | null;  // legend spotlight: only this node kind stays lit
+  edgeFilter: string | null;  // legend spotlight: only this edge kind stays lit
+}>({ activeId: null, neighbors: null, color: null, colorBy: 'kind', edgeStyle: 'floating', flash: null, dropFrame: null, kindFilter: null, edgeFilter: null });
 
 export function flash(id: string) { hl.flash = id; setTimeout(() => { if (hl.flash === id) hl.flash = null; }, 900); }

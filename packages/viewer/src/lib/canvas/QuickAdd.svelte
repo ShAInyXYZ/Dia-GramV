@@ -1,7 +1,7 @@
 <script lang="ts">
   // Quick-add popover at the cursor: type to filter kinds, Enter to place.
   import { NODE_KINDS } from '@dgv/core';
-  import Shape from './Shape.svelte';
+  import KindGlyph from '../kit/KindGlyph.svelte';
   let { at, onpick, onclose }: { at: { x: number; y: number }; onpick: (kind: string) => void; onclose: () => void } = $props();
   let q = $state(''), idx = $state(0), input = $state<HTMLInputElement | null>(null);
   const items = $derived(Object.entries(NODE_KINDS).filter(([k, v]) => !q || k.includes(q.toLowerCase()) || v.label.toLowerCase().includes(q.toLowerCase()) || v.hint.toLowerCase().includes(q.toLowerCase())));
@@ -24,7 +24,7 @@
   <div class="list">
     {#each items as [k, v], i (k)}
       <button class="it" class:on={i === idx} onmouseenter={() => (idx = i)} onclick={() => onpick(k)}>
-        <span class="glyph"><Shape shape={v.shape} w={34} h={20} color={v.color} /></span>
+        <span class="glyph"><KindGlyph kind={k} /></span>
         <span class="name" style="color:{v.color}">{v.label}</span>
         <span class="hint">{v.hint}</span>
       </button>
@@ -39,7 +39,7 @@
   .list { max-height: 330px; overflow: auto; }
   .it { display: grid; grid-template-columns: 38px 1fr; column-gap: 8px; width: 100%; text-align: left; background: transparent; border: 1px solid transparent; padding: 5px 6px; border-radius: 5px; }
   .it.on { background: var(--s2); border-color: var(--hair); }
-  .glyph { position: relative; width: 34px; height: 20px; grid-row: 1 / 3; align-self: center; }
+  .glyph { grid-row: 1 / 3; align-self: center; }
   .name { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
   .hint { font-size: 10.5px; color: var(--dim); line-height: 1.3; }
   .none { color: var(--dim); font-size: 11px; padding: 8px; }

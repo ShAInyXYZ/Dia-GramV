@@ -13,7 +13,7 @@
 
   const kind = $derived(NODE_KINDS[data.kind] ?? { shape: 'rect', color: '#8a8580', label: data.kind });
   const accent = $derived(accentOf(data));
-  const dim = $derived(hl.neighbors ? !hl.neighbors.has(id) : false);
+  const dim = $derived((hl.neighbors ? !hl.neighbors.has(id) : false) || (!!hl.kindFilter && data.kind !== hl.kindFilter));
   const active = $derived(hl.activeId === id);
   const problem = $derived(dg.problemIds.get(id));
   const lod = $derived(vp.current.zoom < 0.5);

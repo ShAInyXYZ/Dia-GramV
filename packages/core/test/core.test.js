@@ -55,6 +55,14 @@ test('lint: import cycle, orphan, store initiates, bridge one-sided', () => {
   assert.equal(diagSummary(lint(doc)).ok, false);
 });
 
+test('lint: control/deploy/import edges need no port', () => {
+  const doc = emptyDiagram('t');
+  doc.nodes.push({ id: 'sysd', kind: 'infra', label: 'systemd' }, { id: 'svc', kind: 'model', label: 'llama', ports: [{ id: 'chat', protocol: 'http', dir: 'in' }] }, { id: 'ui', kind: 'ui', label: 'UI' });
+  doc.edges.push({ id: 'c', source: 'sysd', target: 'svc', kind: 'control' }, { id: 'call', source: 'ui', target: 'svc', kind: 'sync', protocol: 'http' });
+  const unbound = lint(doc).filter((d) => d.code === 'port/unbound').map((d) => d.subject.id);
+  assert.deepEqual(unbound, ['call']);
+});
+
 test('lint: missing refs are errors and stop deeper rules', () => {
   const doc = emptyDiagram('t');
   doc.nodes.push({ id: 'a', kind: 'service', label: 'A', frame: 'ghost' });

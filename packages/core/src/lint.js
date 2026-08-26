@@ -67,8 +67,10 @@ export function lint(rawDoc, opts = {}) {
     check(s, e.sourcePort, 'source');
     check(t, e.targetPort, 'target');
 
-    // a node that declares ports expects edges to name one
-    if (!e.targetPort && (t.ports ?? []).some((p) => p.dir !== 'out')) {
+    // a node that declares ports expects CALLS to name one; control/deploy/import
+    // edges (systemd runs it, a package embeds it) are not calls into a port
+    const isCall = !['control', 'deploy', 'import'].includes(e.kind);
+    if (isCall && !e.targetPort && (t.ports ?? []).some((p) => p.dir !== 'out')) {
       out.push(warn('port/unbound', `edge "${e.id}" → "${t.id}" does not name a port, but "${t.id}" declares ${t.ports.length}`, { type: 'edge', id: e.id, field: 'targetPort' }, [`set targetPort to one of: ${t.ports.map((p) => p.id).join(', ')}`]));
     }
 

@@ -49,7 +49,7 @@ sync (solid) · async (dashed) · data (dotted, thick) · import (thin) · deplo
 | port/direction | error | edge enters an `out` port (or leaves an `in` port) |
 | port/protocol-mismatch | error | edge protocol ≠ port protocol — change one, or add a bridge |
 | graph/import-cycle | error | modules import each other in a loop |
-| port/unbound | warning | target declares ports but the edge names none |
+| port/unbound | warning | a call edge (sync/async/data) into a node that declares ports names none |
 | contract/unspecified | warning | cross-kind edge with no protocol and no label |
 | kind/store-initiates | warning | a db/cache/storage is the source of a sync/async edge |
 | kind/import-not-module | warning | `import` edge where neither end is a module |

@@ -169,7 +169,22 @@ export function lint(rawDoc, opts = {}) {
   const unplaced = doc.nodes.filter((n) => !n.position).length;
   if (unplaced) out.push(info('layout/unplaced', `${unplaced} node(s) have no position yet`, { type: 'diagram' }, ['run layout (dgv_layout)']));
 
-  return out;
+  return acknowledge(out, doc);
+}
+
+/**
+ * An element with `ack` has been looked at by a human: its WARNINGS become
+ * info carrying the reason, so the count stops nagging but the fact stays
+ * visible. Errors are never acknowledged — a broken reference is broken.
+ */
+function acknowledge(diags, doc) {
+  const reason = new Map();
+  for (const list of [doc.frames, doc.nodes, doc.edges]) for (const it of list) if (it.ack) reason.set(it.id, it.ack);
+  return diags.map((d) => {
+    if (d.severity !== 'warning') return d;
+    const r = reason.get(d.subject?.id);
+    return r ? { ...d, severity: 'info', ack: r, message: `${d.message} — acknowledged: ${r}` } : d;
+  });
 }
 
 function rootOf(ix, fid) {

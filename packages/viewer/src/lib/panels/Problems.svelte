@@ -23,7 +23,7 @@
   {#if !list.length}<p class="hint">{dg.name ? 'No problems. The plan holds together.' : 'Open a diagram.'}</p>{/if}
   {#each list as d}
     <button class="row {d.severity}" onclick={() => go(d)}>
-      <span class="code">{d.code}</span>
+      <span class="code">{d.code}{#if (d as any).ack} · <em>acknowledged</em>{/if}</span>
       <span class="msg">{d.message}</span>
       {#if d.fixes?.length}<span class="fix">→ {d.fixes[0]}</span>{/if}
     </button>
@@ -39,6 +39,7 @@
   .row:hover { background: var(--s2); border-color: var(--hair); }
   .row.error { border-left-color: var(--err); } .row.warning { border-left-color: var(--warn); } .row.info { border-left-color: var(--hair2); opacity: .8; }
   .code { display: block; font-family: var(--mono); font-size: 9.5px; letter-spacing: .06em; color: var(--dim); }
+  .code em { font-style: normal; color: var(--ok); }
   .msg { display: block; color: var(--text); }
   .fix { display: block; color: var(--muted); font-size: 10.5px; margin-top: 2px; }
   .hint { color: var(--dim); font-size: 12px; padding: 4px; }

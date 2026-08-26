@@ -8,10 +8,13 @@
  * {
  *   dgv: 1,
  *   meta:   { title, description?, updated?, colorBy?: 'kind'|'status' },
- *   frames: [{ id, label, parent?, tone?, position:{x,y}, size:{width,height}, note? }],
+ *   frames: [{ id, label, parent?, tone?, position:{x,y}, size:{width,height}, note?, ack? }],
  *   nodes:  [{ id, kind, label, sublabel?, note?, frame?, position:{x,y}, tech?, status?,
- *              tags?: string[], ports?: [{ id, protocol?, dir?: 'in'|'out'|'both', shape? }] }],
- *   edges:  [{ id, source, target, kind?, protocol?, label?, sourcePort?, targetPort?, payload?, note? }]
+ *              tags?: string[], ports?: [{ id, protocol?, dir?: 'in'|'out'|'both', shape? }], ack? }],
+ *   edges:  [{ id, source, target, kind?, protocol?, label?, sourcePort?, targetPort?, payload?, note?, ack? }]
+ *
+ *   `ack` = "I know, it is intentional": a one-line reason that turns this element's
+ *   lint WARNINGS into info. Errors are never acknowledged away.
  * }
  */
 import { NODE_KINDS, EDGE_KINDS, STATUSES, FRAME_TONES } from './catalog.js';
@@ -50,6 +53,7 @@ export function validateSchema(doc) {
     if (!isStr(f.label) || !f.label.trim()) bad(`${p}/label`, 'label required');
     if (f.parent != null && !isStr(f.parent)) bad(`${p}/parent`, 'parent must be a frame id');
     if (f.tone != null && !FRAME_TONES.includes(f.tone)) bad(`${p}/tone`, `tone must be one of ${FRAME_TONES.join(', ')}`);
+    if (f.ack != null && !isStr(f.ack)) bad(`${p}/ack`, 'ack must be a string (the reason)');
     if (f.position != null) pos(`${p}/position`, f.position);
     if (f.size != null && (!isObj(f.size) || !isNum(f.size.width) || !isNum(f.size.height))) bad(`${p}/size`, 'size must be {width, height}');
   });
@@ -63,6 +67,7 @@ export function validateSchema(doc) {
     if (!isStr(n.label) || !n.label.trim()) bad(`${who}/label`, 'label required');
     if (n.frame != null && !isStr(n.frame)) bad(`${who}/frame`, 'frame must be a frame id');
     if (n.status != null && !STATUSES[n.status]) bad(`${who}/status`, `unknown status "${n.status}"`, `use one of ${Object.keys(STATUSES).join(', ')}`);
+    if (n.ack != null && !isStr(n.ack)) bad(`${who}/ack`, 'ack must be a string (the reason)');
     if (n.position != null) pos(`${who}/position`, n.position);
     if (n.tags != null && !(Array.isArray(n.tags) && n.tags.every(isStr))) bad(`${who}/tags`, 'tags must be strings');
     if (n.ports != null) {
@@ -82,6 +87,7 @@ export function validateSchema(doc) {
     if (!isStr(e.source)) bad(`${who}/source`, 'source node id required');
     if (!isStr(e.target)) bad(`${who}/target`, 'target node id required');
     if (e.kind != null && !EDGE_KINDS[e.kind]) bad(`${who}/kind`, `unknown edge kind "${e.kind}"`, `use one of ${Object.keys(EDGE_KINDS).join(', ')}`);
+    if (e.ack != null && !isStr(e.ack)) bad(`${who}/ack`, 'ack must be a string (the reason)');
   });
 
   return out;

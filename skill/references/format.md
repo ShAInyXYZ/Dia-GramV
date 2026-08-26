@@ -4,13 +4,15 @@
 {
   "dgv": 1,
   "meta": { "title": "…", "description": "…", "updated": "2026-08-26", "colorBy": "kind" | "status", "edgeStyle": "floating" | "routed" | "straight" },
-  "frames": [ { "id", "label", "parent"?, "tone"?: neutral|amber|cyan|violet|green|rose, "note"?, "position"?: {x,y}, "size"?: {width,height} } ],
+  "frames": [ { "id", "label", "parent"?, "tone"?: neutral|amber|cyan|violet|green|rose, "note"?, "ack"?, "position"?: {x,y}, "size"?: {width,height} } ],
   "nodes":  [ { "id", "kind", "label", "sublabel"?, "note"?, "frame"?, "tech"?, "status"?: todo|wip|done|blocked|failed|update,
-                "tags"?: [], "ports"?: [ { "id", "protocol"?, "dir"?: in|out|both, "shape"? } ], "position"?: {x,y} } ],
+                "tags"?: [], "ports"?: [ { "id", "protocol"?, "dir"?: in|out|both, "shape"? } ], "position"?: {x,y}, "ack"? } ],
   "edges":  [ { "id", "source", "target", "kind"?: sync|async|data|import|deploy|control, "protocol"?, "label"?,
-                "sourcePort"?, "targetPort"?, "payload"?, "note"? } ]
+                "sourcePort"?, "targetPort"?, "payload"?, "note"?, "ack"? } ]
 }
 ```
+
+`ack` is a one-line reason on any element: its lint **warnings** become info carrying that reason. Errors cannot be acknowledged. Use it only after checking the warning is intentional, and say why in the ack.
 
 Positions are absolute canvas pixels; nodes are 260 px wide, height is measured. Membership is explicit (`node.frame`, `frame.parent`) — never inferred from geometry.
 

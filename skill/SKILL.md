@@ -18,7 +18,7 @@ One diagram per system, stored as `dgv/<name>.dgv.json` in the project. The agen
    - every node: `kind`, `label`, short `sublabel`, `tech`. Add `ports` on anything that is *called* (api, service, db, model, sidecar): `{ id, protocol, dir, shape }` where `shape` says what crosses it (`"JSON /api/v1"`, `"text[] → float[][]"`).
    - every edge: `kind` (sync | async | data | import | deploy | control), `protocol`, `label` (what happens), `targetPort` when the target declares ports, `payload` when the shape matters.
    - never send `position` — DGV places new nodes; call `dgv_layout` after a batch.
-4. Read the lint report `dgv_apply` returns. **Fix every error** by changing only the named `subject` using one of its `fixes`. Warnings are advice: fix them when they reveal a real gap (orphans, unspecified contracts, one-sided bridges); explain when you deliberately keep one.
+4. Read the lint report `dgv_apply` returns. **Fix every error** by changing only the named `subject` using one of its `fixes`. Warnings are advice: fix them when they reveal a real gap (orphans, unspecified contracts, one-sided bridges). When a warning is intentional, set `ack: "<why>"` on that element via `dgv_apply` — it becomes info and the reason travels with the diagram. Never ack something you have not verified.
 5. `dgv_layout` then `dgv_open` — tell the user the URL. They may rearrange and save; re-read with `dgv_read` before your next edit so you never overwrite their layout.
 6. `dgv_export format=markdown` when the plan is agreed → paste into the project's docs / CLAUDE.md so the build follows it.
 

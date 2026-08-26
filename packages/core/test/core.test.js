@@ -55,6 +55,16 @@ test('lint: import cycle, orphan, store initiates, bridge one-sided', () => {
   assert.equal(diagSummary(lint(doc)).ok, false);
 });
 
+test('lint: ack turns a warning into info, never an error', () => {
+  const doc = emptyDiagram('t');
+  doc.nodes.push({ id: 'db', kind: 'db', label: 'DB' }, { id: 'svc', kind: 'sidecar', label: 'S', ports: [{ id: 'e', protocol: 'http', dir: 'in' }] });
+  doc.edges.push({ id: 'x', source: 'db', target: 'svc', kind: 'sync', protocol: 'http', targetPort: 'e', ack: 'the db calls the embedder itself' });
+  const d = lint(doc).find((x) => x.code === 'kind/store-initiates');
+  assert.equal(d.severity, 'info'); assert.match(d.message, /acknowledged/); assert.equal(d.ack, 'the db calls the embedder itself');
+  doc.edges.push({ id: 'y', source: 'db', target: 'ghost', ack: 'nope' });
+  assert.ok(lint(doc).some((x) => x.code === 'ref/missing-node' && x.severity === 'error'));
+});
+
 test('lint: control/deploy/import edges need no port', () => {
   const doc = emptyDiagram('t');
   doc.nodes.push({ id: 'sysd', kind: 'infra', label: 'systemd' }, { id: 'svc', kind: 'model', label: 'llama', ports: [{ id: 'chat', protocol: 'http', dir: 'in' }] }, { id: 'ui', kind: 'ui', label: 'UI' });

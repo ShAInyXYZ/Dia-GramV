@@ -12,6 +12,7 @@
   const ed = $derived(edge?.data ?? ({} as EdgeData));
   const frames = $derived(dg.frames().filter((f) => f.id !== node?.id));
   const portsOf = (id?: string) => ((dg.node(id ?? '')?.data as NodeData | undefined)?.ports ?? []);
+  const hasWarn = (id?: string) => dg.diagnostics.some((d) => d.subject?.id === id && (d.severity === 'warning' || (d as any).ack));
 
   let idDraft = $state('');
   $effect(() => { idDraft = node?.id ?? ''; });
@@ -48,6 +49,10 @@
     {/each}
     <label class="f">note</label><textarea value={nd.note ?? ''} oninput={(e) => up({ note: (e.target as HTMLTextAreaElement).value })}></textarea>
     <label class="f">tags</label><input class="mono" value={(nd.tags ?? []).join(', ')} onchange={(e) => up({ tags: (e.target as HTMLInputElement).value.split(',').map((s) => s.trim()).filter(Boolean) })} />
+    {#if hasWarn(node.id) || nd.ack}
+      <label class="f">accepted warning · why</label><input value={nd.ack ?? ''} placeholder="leave empty to keep the warning" onchange={(e) => up({ ack: (e.target as HTMLInputElement).value || undefined })} />
+    {/if}
+
   {:else if fd && node}
     <div class="head"><span class="k">Frame</span><button class="x" onclick={() => dg.remove([node.id])}>delete</button></div>
     <label class="f">id</label><input class="mono" bind:value={idDraft} onchange={() => { if (!dg.renameId(node.id, idDraft)) idDraft = node.id; }} />
@@ -56,6 +61,9 @@
     <label class="f">inside</label>
     <select value={node.parentId ?? ''} onchange={(e) => dg.setParent(node.id, (e.target as HTMLSelectElement).value || null)}><option value="">(top level)</option>{#each frames as f}<option value={f.id}>{(f.data as FrameData).label}</option>{/each}</select>
     <label class="f">note</label><textarea value={fd.note ?? ''} oninput={(e) => up({ note: (e.target as HTMLTextAreaElement).value })}></textarea>
+    {#if hasWarn(node.id) || fd.ack}
+      <label class="f">accepted warning · why</label><input value={fd.ack ?? ''} placeholder="leave empty to keep the warning" onchange={(e) => up({ ack: (e.target as HTMLInputElement).value || undefined })} />
+    {/if}
     <p class="hint">Drag nodes into a frame to adopt them; frames grow to fit. Drag a corner to resize.</p>
   {:else if edge}
     <div class="head"><span class="k">Edge</span><button class="x" onclick={() => dg.remove([edge.id])}>delete</button></div>
@@ -70,6 +78,9 @@
     </div>
     <label class="f">payload</label><input value={ed.payload ?? ''} placeholder="messages[], tools[], grammar" oninput={(e) => upE({ payload: (e.target as HTMLInputElement).value || undefined })} />
     <label class="f">note</label><textarea value={ed.note ?? ''} oninput={(e) => upE({ note: (e.target as HTMLTextAreaElement).value || undefined })}></textarea>
+    {#if hasWarn(edge.id) || ed.ack}
+      <label class="f">accepted warning · why</label><input value={ed.ack ?? ''} placeholder="leave empty to keep the warning" onchange={(e) => upE({ ack: (e.target as HTMLInputElement).value || undefined })} />
+    {/if}
   {:else}
     <p class="hint">Select a node, frame or edge to edit it.<br /><br />Drag from a node's right handle to another node to connect them. Click a node to light up its neighbourhood.</p>
   {/if}

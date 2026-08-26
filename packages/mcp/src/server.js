@@ -29,7 +29,7 @@ const Port = z.object({
 const Frame = z.object({
   id: z.string(), label: z.string().optional(),
   parent: z.string().nullable().optional().describe('parent frame id for nesting'),
-  tone: z.enum(FRAME_TONES).optional(), note: z.string().optional(),
+  tone: z.enum(FRAME_TONES).optional(), note: z.string().optional(), ack: z.string().optional().describe('acknowledge this element\'s lint warnings with a one-line reason (they become info)'),
   position: Pos.optional(), size: z.object({ width: z.number(), height: z.number() }).optional(),
 });
 const Node = z.object({
@@ -41,6 +41,7 @@ const Node = z.object({
   status: z.enum(STATUS_IDS).optional(),
   tags: z.array(z.string()).optional(),
   ports: z.array(Port).optional().describe('interfaces this node exposes; edges bind to them'),
+  ack: z.string().optional().describe('acknowledge this element\'s lint warnings with a one-line reason (they become info)'),
   position: Pos.optional().describe('omit — DGV places new nodes; use dgv_layout for a full relayout'),
 });
 const Edge = z.object({
@@ -51,6 +52,7 @@ const Edge = z.object({
   sourcePort: z.string().optional(), targetPort: z.string().optional().describe('must be a port declared on the target'),
   payload: z.string().optional().describe('what is exchanged: "messages[], tools[]"'),
   note: z.string().optional(),
+  ack: z.string().optional().describe('acknowledge this element\'s lint warnings with a one-line reason (they become info)'),
 });
 
 const text = (s) => ({ content: [{ type: 'text', text: typeof s === 'string' ? s : JSON.stringify(s, null, 2) }] });

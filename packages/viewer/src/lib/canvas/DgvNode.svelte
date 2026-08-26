@@ -20,7 +20,8 @@
   // a wire is being dragged toward this node → its ports become drop targets
   const wiring = $derived(!!conn.current?.inProgress && conn.current.fromNode?.id !== id);
   const targeted = $derived(wiring && conn.current?.toNode?.id === id);
-  const pad = $derived(({ cylinder: '18px 14px 14px', hexagon: '10px 22px', skew: '10px 22px 10px 26px', diamond: '10px 18px', window: '26px 12px 10px', tab: '16px 12px 10px', folder: '18px 12px 10px', chevron: '10px 26px 10px 12px', device: '18px 14px 16px' } as Record<string, string>)[kind.shape] ?? '10px 12px');
+  // top inset carries +6px so the kind tag never kisses the outline (more where a shape has a header/dome)
+  const pad = $derived(({ cylinder: '24px 14px 14px', hexagon: '16px 22px 12px', skew: '16px 22px 12px 26px', diamond: '16px 18px 12px', window: '32px 12px 12px', tab: '22px 12px 12px', folder: '24px 12px 12px', chevron: '16px 26px 12px 12px', device: '24px 14px 18px' } as Record<string, string>)[kind.shape] ?? '16px 12px 12px');
 </script>
 
 <div class="card" class:dim class:active class:selected class:lod class:flash={hl.flash === id} style="--accent:{accent}; padding:{pad}" bind:clientWidth={w} bind:clientHeight={h}>

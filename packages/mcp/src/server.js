@@ -96,7 +96,7 @@ export function createServer({ dir } = {}) {
     title: 'Apply changes', description: 'Upsert frames/nodes/edges by id (partial objects merge into existing ones) and/or remove by id. New nodes are auto-placed. Returns the lint report — fix errors before moving on.',
     inputSchema: {
       name: z.string(),
-      meta: z.object({ title: z.string().optional(), description: z.string().optional(), colorBy: z.enum(['kind', 'status']).optional() }).optional(),
+      meta: z.object({ title: z.string().optional(), description: z.string().optional(), colorBy: z.enum(['kind', 'status']).optional(), edgeStyle: z.enum(['floating', 'routed', 'straight']).optional().describe('link drawing: floating bezier | routed orthogonally around nodes | straight') }).optional(),
       frames: z.array(Frame).optional(), nodes: z.array(Node).optional(), edges: z.array(Edge).optional(),
       remove: z.object({ frames: z.array(z.string()).optional(), nodes: z.array(z.string()).optional(), edges: z.array(z.string()).optional() }).optional(),
     },

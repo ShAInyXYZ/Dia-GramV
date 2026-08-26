@@ -6,7 +6,7 @@
 import { lint, layout, NODE_KINDS, kindColor, STATUSES, applyPatch, emptyDiagram } from '@dgv/core';
 import { api, type DiagramInfo } from '../api';
 import { toFlow, fromFlow, absPos, nodeW, nodeH, isFrame, type FNode, type FEdge, type NodeData, type FrameData, type EdgeData } from '../model/flow';
-import { hl } from './hl.svelte';
+import { hl, EDGE_STYLES } from './hl.svelte';
 
 export type Sel = { type: 'node' | 'frame' | 'edge'; id: string } | null;
 export type Diag = { code: string; severity: 'error' | 'warning' | 'info'; message: string; subject: any; fixes: string[] };
@@ -50,6 +50,7 @@ class DiagramStore {
       this.name = name; this.meta = doc.meta; this.nodes = f.nodes; this.edges = f.edges;
       this.dirty = false; this.saveState = 'saved'; this.externalChange = false; this.selected = null; this.error = null;
       hl.activeId = null; hl.neighbors = null; hl.colorBy = doc.meta.colorBy ?? 'kind';
+      hl.edgeStyle = EDGE_STYLES.includes(doc.meta.edgeStyle) ? doc.meta.edgeStyle : 'floating';
       location.hash = '#/' + name;
     } catch (e: any) { this.error = e.message; }
   }
@@ -73,7 +74,7 @@ class DiagramStore {
     if (!this.name) return;
     this.saveState = 'saving';
     try {
-      this.meta = { ...this.meta, colorBy: hl.colorBy, updated: new Date().toISOString().slice(0, 10) };
+      this.meta = { ...this.meta, colorBy: hl.colorBy, edgeStyle: hl.edgeStyle, updated: new Date().toISOString().slice(0, 10) };
       await api.write(this.name, this.doc);
       this.lastSave = Date.now();
       this.dirty = false; this.saveState = 'saved'; this.externalChange = false;

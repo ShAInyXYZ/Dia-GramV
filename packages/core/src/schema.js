@@ -33,6 +33,7 @@ export function validateSchema(doc) {
   else {
     if (!isStr(doc.meta.title) || !doc.meta.title.trim()) bad('/meta/title', 'must be a non-empty string', 'give the diagram a title');
     if (doc.meta.colorBy != null && !['kind', 'status'].includes(doc.meta.colorBy)) bad('/meta/colorBy', 'must be "kind" or "status"');
+    if (doc.meta.edgeStyle != null && !['floating', 'routed', 'straight'].includes(doc.meta.edgeStyle)) bad('/meta/edgeStyle', 'must be floating | routed | straight');
   }
   for (const key of ['frames', 'nodes', 'edges']) {
     if (doc[key] != null && !Array.isArray(doc[key])) bad(`/${key}`, 'must be an array');

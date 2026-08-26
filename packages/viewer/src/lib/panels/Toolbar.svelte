@@ -2,7 +2,7 @@
   import { useSvelteFlow } from '@xyflow/svelte';
   import { NODE_KINDS } from '@dgv/core';
   import { dg } from '../stores/diagram.svelte';
-  import { hl } from '../stores/hl.svelte';
+  import { hl, EDGE_STYLES } from '../stores/hl.svelte';
 
   const flow = useSvelteFlow();
   let addKind = $state('service');
@@ -34,6 +34,7 @@
     <button onclick={() => dg.relayout('TB')} disabled={!dg.name} title="dagre layout, top→bottom inside frames">layout ↓</button>
     <button onclick={() => dg.relayout('LR')} disabled={!dg.name} title="dagre layout, left→right inside frames">layout →</button>
     <button onclick={() => flow.fitView({ duration: 300 })} title="fit (also: minimap)">fit</button>
+    <button onclick={() => { hl.edgeStyle = EDGE_STYLES[(EDGE_STYLES.indexOf(hl.edgeStyle) + 1) % EDGE_STYLES.length]; dg.touch(); }} title="link style: floating bezier → routed around nodes (orthogonal, beveled) → straight">links: {hl.edgeStyle}</button>
     <button class:active={hl.colorBy === 'status'} onclick={() => { hl.colorBy = hl.colorBy === 'kind' ? 'status' : 'kind'; dg.touch(); }} title="color nodes by kind or by build status">by {hl.colorBy}</button>
   </div>
   <div class="group right">

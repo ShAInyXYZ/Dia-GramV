@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import { Position } from '@xyflow/svelte';
-  // Floating edges: attach where the straight line between centres leaves each box.
+  // Floating attach point: where the centre-to-centre line leaves each box.
   function center(node: any) {
     const w = node.measured?.width ?? node.width ?? 260, h = node.measured?.height ?? node.height ?? 80;
     return { x: node.internals.positionAbsolute.x + w / 2, y: node.internals.positionAbsolute.y + h / 2, w, h };
@@ -14,17 +14,39 @@
     const pos = Math.abs(dx) / sx > Math.abs(dy) / sy ? (dx > 0 ? Position.Right : Position.Left) : (dy > 0 ? Position.Bottom : Position.Top);
     return { x: cx + dx * scale, y: cy + dy * scale, pos };
   }
+  // Routed attach point: the midpoint of the side facing the other node.
+  function sidePoint(node: any, tx: number, ty: number) {
+    const { x: cx, y: cy, w, h } = center(node);
+    const dx = tx - cx, dy = ty - cy;
+    const horizontal = Math.abs(dx) / (w / 2) > Math.abs(dy) / (h / 2);
+    if (horizontal) return dx > 0 ? { x: cx + w / 2, y: cy, pos: Position.Right } : { x: cx - w / 2, y: cy, pos: Position.Left };
+    return dy > 0 ? { x: cx, y: cy + h / 2, pos: Position.Bottom } : { x: cx, y: cy - h / 2, pos: Position.Top };
+  }
+  const ARROW_ANGLE = { [Position.Left]: 0, [Position.Right]: 180, [Position.Top]: 90, [Position.Bottom]: -90 };
+  // midpoint of a polyline by length — label anchor for routed wires
+  function midOf(pts: { x: number; y: number }[]) {
+    let total = 0; const seg: number[] = [];
+    for (let i = 1; i < pts.length; i++) { const l = Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); seg.push(l); total += l; }
+    let acc = 0;
+    for (let i = 0; i < seg.length; i++) {
+      if (acc + seg[i] >= total / 2) { const t = (total / 2 - acc) / (seg[i] || 1); return { x: pts[i].x + (pts[i + 1].x - pts[i].x) * t, y: pts[i].y + (pts[i + 1].y - pts[i].y) * t }; }
+      acc += seg[i];
+    }
+    return pts[Math.floor(pts.length / 2)];
+  }
 </script>
 
 <script lang="ts">
-  import { getBezierPath, useInternalNode, BaseEdge, EdgeLabel, type EdgeProps } from '@xyflow/svelte';
+  import { getBezierPath, getStraightPath, useInternalNode, useNodes, BaseEdge, EdgeLabel, type EdgeProps } from '@xyflow/svelte';
   import { hl } from '../stores/hl.svelte';
   import { dg } from '../stores/diagram.svelte';
+  import { routeOrthogonal, toBeveledPath, DIR, STUB, BEVEL, type Rect, type Dir } from './edgeRouter';
   import type { EdgeData } from '../model/flow';
 
   let { id, source, target, data, selected }: EdgeProps & { data?: EdgeData } = $props();
   const s = useInternalNode(source);
   const t = useInternalNode(target);
+  const nodes = useNodes();
 
   const kind = $derived(data?.kind ?? 'sync');
   const connected = $derived(!!hl.activeId && (source === hl.activeId || target === hl.activeId));
@@ -34,19 +56,54 @@
   const dash = $derived(({ async: '7 5', data: '2 4', deploy: '12 6', control: '8 4 2 4', import: '' } as Record<string, string>)[kind] ?? '');
   const text = $derived([data?.label, data?.protocol].filter(Boolean).join(' · '));
 
+  // obstacles for the routed style: every component card (frames are containers, not blockers)
+  const obstacles = $derived.by((): Rect[] => {
+    if (hl.edgeStyle !== 'routed') return [];
+    const all = nodes.current ?? [];
+    const byId = new Map(all.map((n) => [n.id, n]));
+    const out: Rect[] = [];
+    for (const n of all) {
+      if (n.type === 'frame') continue;
+      const w = n.measured?.width ?? n.width ?? 0, h = n.measured?.height ?? n.height ?? 0;
+      if (!w || !h) continue;
+      let ax = n.position.x, ay = n.position.y;
+      for (let p = n.parentId; p;) { const pn = byId.get(p); if (!pn) break; ax += pn.position.x; ay += pn.position.y; p = pn.parentId; }
+      out.push({ x: ax, y: ay, w, h });
+    }
+    return out;
+  });
+
+  const exitDir = (p: Position): Dir => p === Position.Left ? DIR.W : p === Position.Top ? DIR.N : p === Position.Bottom ? DIR.S : DIR.E;
+  const arriveDir = (p: Position): Dir => p === Position.Right ? DIR.W : p === Position.Bottom ? DIR.N : p === Position.Top ? DIR.S : DIR.E;
+  const off = (d: Dir) => d === DIR.E ? { x: STUB, y: 0 } : d === DIR.W ? { x: -STUB, y: 0 } : d === DIR.S ? { x: 0, y: STUB } : { x: 0, y: -STUB };
+
   const geo = $derived.by(() => {
     const a = s.current, b = t.current;
     if (!a || !b) return null;
-    const bc = center(b), ac = center(a);
+    const ac = center(a), bc = center(b);
+    const style = hl.edgeStyle;
+
+    if (style === 'routed') {
+      const p = sidePoint(a, bc.x, bc.y), q = sidePoint(b, ac.x, ac.y);
+      const eDir = exitDir(p.pos), aDir = arriveDir(q.pos);
+      const eo = off(eDir), ao = off(aDir);
+      const pts = routeOrthogonal({ x: p.x + eo.x, y: p.y + eo.y }, { x: q.x - ao.x, y: q.y - ao.y }, obstacles, eDir, aDir);
+      const full = [{ x: p.x, y: p.y }, ...pts, { x: q.x, y: q.y }];
+      const m = midOf(full);
+      return { d: toBeveledPath(full, BEVEL), lx: m.x, ly: m.y, tx: q.x, ty: q.y, ang: ARROW_ANGLE[q.pos] };
+    }
     const p = borderPoint(a, bc.x, bc.y), q = borderPoint(b, ac.x, ac.y);
+    if (style === 'straight') {
+      const [d, lx, ly] = getStraightPath({ sourceX: p.x, sourceY: p.y, targetX: q.x, targetY: q.y });
+      return { d, lx, ly, tx: q.x, ty: q.y, ang: (Math.atan2(q.y - p.y, q.x - p.x) * 180) / Math.PI + 180 };
+    }
     const [d, lx, ly] = getBezierPath({ sourceX: p.x, sourceY: p.y, sourcePosition: p.pos, targetX: q.x, targetY: q.y, targetPosition: q.pos });
-    const ang = { [Position.Left]: 0, [Position.Right]: 180, [Position.Top]: 90, [Position.Bottom]: -90 }[q.pos];
-    return { d, lx, ly, tx: q.x, ty: q.y, ang };
+    return { d, lx, ly, tx: q.x, ty: q.y, ang: ARROW_ANGLE[q.pos] };
   });
 </script>
 
 {#if geo}
-  <BaseEdge {id} path={geo.d} class="dgv-path" style="stroke:{stroke};stroke-width:{width};stroke-dasharray:{dash}" interactionWidth={18} />
+  <BaseEdge {id} path={geo.d} class="dgv-path" style="stroke:{stroke};stroke-width:{width};stroke-dasharray:{dash};stroke-linejoin:round" interactionWidth={18} />
   <polygon points="0,0 -9,-4 -9,4" transform="translate({geo.tx},{geo.ty}) rotate({geo.ang})" fill={stroke} style="pointer-events:none" />
   {#if text}
     <EdgeLabel x={geo.lx} y={geo.ly}>

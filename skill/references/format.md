@@ -3,7 +3,7 @@
 ```jsonc
 {
   "dgv": 1,
-  "meta": { "title": "…", "description": "…", "updated": "2026-08-26", "colorBy": "kind" | "status" },
+  "meta": { "title": "…", "description": "…", "updated": "2026-08-26", "colorBy": "kind" | "status", "edgeStyle": "floating" | "routed" | "straight" },
   "frames": [ { "id", "label", "parent"?, "tone"?: neutral|amber|cyan|violet|green|rose, "note"?, "position"?: {x,y}, "size"?: {width,height} } ],
   "nodes":  [ { "id", "kind", "label", "sublabel"?, "note"?, "frame"?, "tech"?, "status"?: todo|wip|done|blocked|failed|update,
                 "tags"?: [], "ports"?: [ { "id", "protocol"?, "dir"?: in|out|both, "shape"? } ], "position"?: {x,y} } ],

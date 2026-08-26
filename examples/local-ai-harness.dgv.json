@@ -1,0 +1,52 @@
+{
+  "dgv": 1,
+  "meta": {
+    "title": "Local AI Harness",
+    "description": "A browser panel drives a Go core that talks to a local llama.cpp server; memory lives in Typesense; a Python sidecar handles embeddings; a phone reaches it over the tailnet.",
+    "updated": "2026-08-26",
+    "colorBy": "kind"
+  },
+  "frames": [
+    { "id": "machine", "label": "Workstation", "tone": "neutral" },
+    { "id": "core", "label": "Go Core · crv", "parent": "machine", "tone": "amber" },
+    { "id": "serving", "label": "Model Serving", "parent": "machine", "tone": "green" },
+    { "id": "memory", "label": "Memory", "parent": "machine", "tone": "violet" },
+    { "id": "remote", "label": "Remote", "tone": "cyan" }
+  ],
+  "nodes": [
+    { "id": "panel", "kind": "ui", "label": "Panel", "sublabel": "Svelte 5 SPA", "tech": "Svelte", "frame": "machine", "status": "done",
+      "note": "Chat, session tree, memory browser. One codebase for desktop + phone." },
+    { "id": "api", "kind": "api", "label": "HTTP API", "sublabel": "/api/v1", "tech": "Go net/http", "frame": "core", "status": "done",
+      "ports": [ { "id": "rest", "protocol": "http", "dir": "in", "shape": "JSON" }, { "id": "events", "protocol": "sse", "dir": "out", "shape": "turn/tool/idle events" } ] },
+    { "id": "loop", "kind": "service", "label": "Agent Loop", "sublabel": "observe → think → act", "tech": "Go", "frame": "core", "status": "done",
+      "note": "Owns the turn. Builds the prompt from the 5 memories, dispatches tool calls, streams tokens back." },
+    { "id": "tools", "kind": "module", "label": "Tool Registry", "sublabel": "grammars + guards", "tech": "Go", "frame": "core", "status": "done" },
+    { "id": "rfx", "kind": "module", "label": "RFX Runtime", "sublabel": "declarative capabilities", "tech": "Go", "frame": "core", "status": "wip" },
+    { "id": "llama", "kind": "model", "label": "llama-server", "sublabel": "llama.cpp · OpenAI-compatible", "tech": "C++", "frame": "serving", "status": "done",
+      "ports": [ { "id": "chat", "protocol": "http", "dir": "in", "shape": "/v1/chat/completions" } ] },
+    { "id": "weights", "kind": "storage", "label": "Model Weights", "sublabel": "GGUF on disk", "frame": "serving", "status": "done" },
+    { "id": "typesense", "kind": "db", "label": "Typesense", "sublabel": "semantic + episodic memory", "frame": "memory", "status": "done",
+      "ports": [ { "id": "search", "protocol": "http", "dir": "in", "shape": "collections: sessions, decisions" } ] },
+    { "id": "sidecar", "kind": "sidecar", "label": "Embed Sidecar", "sublabel": "optional Python", "tech": "Python", "frame": "memory", "status": "wip",
+      "ports": [ { "id": "embed", "protocol": "http", "dir": "in", "shape": "text[] → float[][]" } ] },
+    { "id": "sessions", "kind": "storage", "label": "Session Files", "sublabel": "~/.crv/sessions", "frame": "memory", "status": "done" },
+    { "id": "phone", "kind": "device", "label": "Phone", "sublabel": "same panel, small screen", "frame": "remote", "status": "done" },
+    { "id": "tailnet", "kind": "infra", "label": "Tailscale", "sublabel": "tailnet-only exposure", "frame": "remote", "status": "done" },
+    { "id": "ntfy", "kind": "external", "label": "ntfy", "sublabel": "push notifications" }
+  ],
+  "edges": [
+    { "id": "panel-api", "source": "panel", "target": "api", "kind": "sync", "protocol": "http", "targetPort": "rest", "label": "send turn" },
+    { "id": "api-panel", "source": "api", "target": "panel", "kind": "async", "protocol": "sse", "sourcePort": "events", "label": "stream tokens" },
+    { "id": "api-loop", "source": "api", "target": "loop", "kind": "sync", "protocol": "ipc", "label": "handler → loop" },
+    { "id": "loop-tools", "source": "loop", "target": "tools", "kind": "import" },
+    { "id": "loop-rfx", "source": "loop", "target": "rfx", "kind": "import" },
+    { "id": "loop-llama", "source": "loop", "target": "llama", "kind": "sync", "protocol": "http", "targetPort": "chat", "label": "chat completion", "payload": "messages[], tools[], grammar" },
+    { "id": "llama-weights", "source": "llama", "target": "weights", "kind": "data", "protocol": "fs", "label": "mmap" },
+    { "id": "loop-typesense", "source": "loop", "target": "typesense", "kind": "data", "protocol": "http", "targetPort": "search", "label": "recall / store" },
+    { "id": "loop-sidecar", "source": "loop", "target": "sidecar", "kind": "sync", "protocol": "http", "targetPort": "embed", "label": "embed" },
+    { "id": "loop-sessions", "source": "loop", "target": "sessions", "kind": "data", "protocol": "fs", "label": "append turns" },
+    { "id": "phone-tailnet", "source": "phone", "target": "tailnet", "kind": "sync", "protocol": "https", "label": "tailnet" },
+    { "id": "tailnet-api", "source": "tailnet", "target": "api", "kind": "sync", "protocol": "http", "targetPort": "rest", "label": "forward" },
+    { "id": "loop-ntfy", "source": "loop", "target": "ntfy", "kind": "async", "protocol": "https", "label": "turn done" }
+  ]
+}

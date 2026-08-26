@@ -1,0 +1,56 @@
+/* Emberdeck tokens: warm charcoal, flat 3-step surface ladder, hairlines for depth,
+   ONE accent (ember) reserved for interactive / selection signal. */
+:root {
+  --bg: #0e0d0b;
+  --s1: #161513;
+  --s2: #1e1c19;
+  --s3: #262320;
+  --hair: #2c2a27;
+  --hair2: #3a3733;
+  --text: #e6e3de;
+  --muted: #a49e95;
+  --dim: #7d766c;
+  --accent: #e8873a;
+  --ok: #4ec9a5;
+  --warn: #c9b458;
+  --err: #f93c31;
+  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 13px; }
+#app { height: 100%; }
+button, select, input, textarea { font: inherit; color: inherit; }
+button {
+  background: var(--s2); border: 1px solid var(--hair); border-radius: 5px; padding: 5px 10px;
+  font-family: var(--mono); font-size: 11.5px; cursor: pointer; color: var(--text);
+}
+button:hover { border-color: var(--hair2); }
+button.primary { color: var(--accent); }
+button.primary:hover, button.active { border-color: var(--accent); }
+button:disabled { opacity: .45; cursor: default; }
+input, select, textarea {
+  background: var(--s1); border: 1px solid var(--hair); border-radius: 4px; padding: 5px 7px; width: 100%;
+  font-size: 12px; outline: none;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+textarea { resize: vertical; min-height: 56px; font-family: var(--sans); line-height: 1.4; }
+label.f { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin: 10px 0 4px; }
+.mono { font-family: var(--mono); }
+.dim { color: var(--dim); }
+.muted { color: var(--muted); }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--hair2); border-radius: 4px; }
+
+/* Svelte Flow overrides */
+.svelte-flow { background: var(--bg) !important; }
+.svelte-flow__controls { background: var(--s1); border: 1px solid var(--hair); border-radius: 6px; overflow: hidden; box-shadow: none !important; }
+.svelte-flow__controls-button { background: var(--s1) !important; border-bottom: 1px solid var(--hair) !important; fill: var(--muted); }
+.svelte-flow__controls-button:hover { background: var(--s2) !important; }
+.svelte-flow__minimap { background: var(--s1) !important; border: 1px solid var(--hair); border-radius: 6px; }
+.svelte-flow__attribution { display: none; }
+.svelte-flow__edge.selected path.dgv-path { stroke: var(--accent) !important; }
+.svelte-flow__node.selected .card { outline: 1px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+.svelte-flow__node.selected .frame { border-color: var(--accent) !important; }
+.svelte-flow__resize-control.line { border-color: transparent !important; }
+.svelte-flow__resize-control.handle { background: var(--accent) !important; border: none !important; width: 7px !important; height: 7px !important; }

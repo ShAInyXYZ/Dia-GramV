@@ -1,0 +1,16 @@
+{
+  "name": "dia-gramv",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Dia-GramV (DGV) — plan a system's architecture as a typed, linted, live diagram before writing code. Local MCP server + Svelte Flow viewer + Claude skill.",
+  "type": "module",
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "test": "node --test packages/core/test/*.test.js",
+    "build": "npm run build -w @dgv/viewer",
+    "dev": "npm run dev -w @dgv/viewer",
+    "serve": "node packages/mcp/bin/dgv.mjs serve",
+    "mcp": "node packages/mcp/bin/dgv.mjs mcp"
+  },
+  "license": "MIT"
+}

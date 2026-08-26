@@ -79,16 +79,20 @@
 </FloatPanel>
 
 <style>
-  .rows { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; }
-  /* Name above its glyph. Side by side, the glyphs sat at different widths and
-     pushed every label to a different x, so the column never read as a list. */
-  .row { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; width: 100%; padding: 6px 7px; background: transparent; border: 1px solid transparent; border-radius: 4px; font-family: var(--mono); font-size: 11px; color: var(--muted); text-align: left; }
+  /* The gap BETWEEN cells has to beat the gap INSIDE one, or a label sits
+     nearer the next entry's glyph than its own and the pairing inverts. */
+  .rows { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 10px; }
+
+  .row { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 100%; padding: 7px 6px; background: transparent; border: 1px solid transparent; border-radius: 5px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
   .row:hover { background: var(--s2); border-color: var(--hair); }
   .row.pin { border-color: var(--accent); }
   .row.static { cursor: default; } .row.static:hover { background: transparent; border-color: transparent; }
-  .head { display: flex; align-items: baseline; gap: 6px; width: 100%; }
-  .name { flex: 1; letter-spacing: .04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .n { color: var(--dim); font-size: 9.5px; text-align: right; }
+
+  /* Centred as a unit: the name and its count read as one label sitting over
+     the glyph, rather than the count being flung to the far edge. */
+  .head { display: flex; align-items: baseline; justify-content: center; gap: 5px; max-width: 100%; }
+  .name { letter-spacing: .04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .n { color: var(--dim); font-size: 9.5px; flex: none; }
   .sw { width: 34px; height: 8px; border-radius: 2px; display: inline-block; flex: none; }
   .empty { font-size: 11px; color: var(--dim); padding: 4px; }
 </style>

@@ -25,6 +25,7 @@ class DiagramStore {
   externalChange = $state(false);
   error = $state<string | null>(null);
   dir = $state<string>('');
+  private lastSave = 0;
 
   doc = $derived.by(() => fromFlow(this.nodes, this.edges, this.meta));
   diagnostics = $derived.by<Diag[]>(() => {
@@ -62,6 +63,7 @@ class DiagramStore {
   onDiskChange(name: string) {
     this.refreshList();
     if (name !== this.name) return;
+    if (Date.now() - this.lastSave < 1500) return;   // our own save echoing back
     if (this.dirty) this.externalChange = true;
     else this.open(name);
   }
@@ -73,6 +75,7 @@ class DiagramStore {
     try {
       this.meta = { ...this.meta, colorBy: hl.colorBy, updated: new Date().toISOString().slice(0, 10) };
       await api.write(this.name, this.doc);
+      this.lastSave = Date.now();
       this.dirty = false; this.saveState = 'saved'; this.externalChange = false;
       this.refreshList();
     } catch (e: any) { this.saveState = 'error'; this.error = e.message; }

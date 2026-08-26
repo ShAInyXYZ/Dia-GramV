@@ -2,6 +2,7 @@
   import { NODE_KINDS, EDGE_KINDS, STATUSES, PROTOCOLS, FRAME_TONES } from '@dgv/core';
   import { dg } from '../stores/diagram.svelte';
   import type { NodeData, FrameData, EdgeData, Port } from '../model/flow';
+  import EdgeKindPicker from '../canvas/EdgeKindPicker.svelte';
 
   const sel = $derived(dg.selected);
   const node = $derived(sel && sel.type !== 'edge' ? dg.node(sel.id) : undefined);
@@ -60,7 +61,7 @@
     <div class="head"><span class="k">Edge</span><button class="x" onclick={() => dg.remove([edge.id])}>delete</button></div>
     <div class="ends mono">{edge.source} <span class="dim">→</span> {edge.target}</div>
     <label class="f">kind</label>
-    <select value={ed.kind ?? 'sync'} onchange={(e) => upE({ kind: (e.target as HTMLSelectElement).value })}>{#each Object.entries(EDGE_KINDS) as [k, v]}<option value={k}>{v.label} — {v.hint}</option>{/each}</select>
+    <EdgeKindPicker value={ed.kind ?? 'sync'} onchange={(k) => upE({ kind: k })} />
     <label class="f">protocol</label><input class="mono" list="protocols" value={ed.protocol ?? ''} oninput={(e) => upE({ protocol: (e.target as HTMLInputElement).value || undefined })} />
     <label class="f">label</label><input value={ed.label ?? ''} placeholder="what happens: send turn, stream tokens…" oninput={(e) => upE({ label: (e.target as HTMLInputElement).value || undefined })} />
     <div class="two">

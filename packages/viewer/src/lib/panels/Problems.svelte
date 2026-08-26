@@ -1,6 +1,7 @@
 <script lang="ts">
   import { useSvelteFlow } from '@xyflow/svelte';
   import { dg } from '../stores/diagram.svelte';
+  import { flash } from '../stores/hl.svelte';
   const flow = useSvelteFlow();
   let showInfo = $state(false);
   const list = $derived(dg.diagnostics.filter((d) => showInfo || d.severity !== 'info'));
@@ -8,6 +9,7 @@
 
   function go(d: any) {
     const id = d.subject?.id; if (!id) return;
+    flash(id);
     if (d.subject.type === 'edge') { const e = dg.edge(id); if (e) { dg.select({ type: 'edge', id }); flow.fitView({ nodes: [{ id: e.source }, { id: e.target }], duration: 300, maxZoom: 1 }); } }
     else { const n = dg.node(id); if (n) { dg.select({ type: n.type === 'frame' ? 'frame' : 'node', id }); flow.fitView({ nodes: [{ id }], duration: 300, maxZoom: 1.1 }); } }
   }

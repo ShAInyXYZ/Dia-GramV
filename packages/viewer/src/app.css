@@ -54,3 +54,12 @@ label.f { display: block; font-family: var(--mono); font-size: 10px; letter-spac
 .svelte-flow__node.selected .frame { border-color: var(--accent) !important; }
 .svelte-flow__resize-control.line { border-color: transparent !important; }
 .svelte-flow__resize-control.handle { background: var(--accent) !important; border: none !important; width: 7px !important; height: 7px !important; }
+
+/* data-tip tooltips (never title=) */
+[data-tip] { position: relative; }
+[data-tip]:hover::after {
+  content: attr(data-tip); position: absolute; left: 50%; top: calc(100% + 6px); transform: translateX(-50%);
+  background: var(--s3); color: var(--text); border: 1px solid var(--hair2); border-radius: 4px; padding: 3px 7px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .02em; white-space: nowrap; z-index: 60; pointer-events: none;
+}
+.rail [data-tip]:hover::after { left: auto; right: calc(100% + 8px); top: 50%; transform: translateY(-50%); }

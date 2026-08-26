@@ -41,7 +41,9 @@
   import { hl } from '../stores/hl.svelte';
   import { dg } from '../stores/diagram.svelte';
   import { routeOrthogonal, toBeveledPath, DIR, STUB, BEVEL, type Rect, type Dir } from './edgeRouter';
-  import type { EdgeData } from '../model/flow';
+  import type { EdgeData, NodeData } from '../model/flow';
+  import EdgeKindPicker from './EdgeKindPicker.svelte';
+  import { PROTOCOLS } from '@dgv/core';
 
   let { id, source, target, data, selected }: EdgeProps & { data?: EdgeData } = $props();
   const s = useInternalNode(source);
@@ -55,6 +57,8 @@
   const width = $derived(selected || connected ? 2.4 : kind === 'import' ? 1 : kind === 'data' ? 2 : 1.5);
   const dash = $derived(({ async: '7 5', data: '2 4', deploy: '12 6', control: '8 4 2 4', import: '' } as Record<string, string>)[kind] ?? '');
   const text = $derived([data?.label, data?.protocol].filter(Boolean).join(' · '));
+  const portsOf = (nid: string) => ((dg.node(nid)?.data as NodeData | undefined)?.ports ?? []);
+  const up = (patch: Partial<EdgeData>) => dg.updateEdge(id, patch);
 
   // obstacles for the routed style: every component card (frames are containers, not blockers)
   const obstacles = $derived.by((): Rect[] => {
@@ -105,9 +109,28 @@
 {#if geo}
   <BaseEdge {id} path={geo.d} class="dgv-path" style="stroke:{stroke};stroke-width:{width};stroke-dasharray:{dash};stroke-linejoin:round" interactionWidth={18} />
   <polygon points="0,0 -9,-4 -9,4" transform="translate({geo.tx},{geo.ty}) rotate({geo.ang})" fill={stroke} style="pointer-events:none" />
-  {#if text}
+  {#if selected}
+    <!-- inline contract editor: the wire IS the contract, edit it where it is -->
     <EdgeLabel x={geo.lx} y={geo.ly}>
-      <div class="lbl" class:muted={!!hl.activeId && !connected && !selected} style="border-color:{selected ? 'var(--accent)' : 'var(--hair)'}">{text}</div>
+      <div class="editor nodrag nopan" role="group">
+        <div class="ends">{source} → {target}</div>
+        <EdgeKindPicker value={kind} onchange={(k) => up({ kind: k })} />
+        <div class="row">
+          <input class="mono" list="protocols" placeholder="protocol" value={data?.protocol ?? ''} oninput={(e) => up({ protocol: (e.target as HTMLInputElement).value || undefined })} />
+          <input placeholder="what happens" value={data?.label ?? ''} oninput={(e) => up({ label: (e.target as HTMLInputElement).value || undefined })} />
+        </div>
+        {#if portsOf(source).some((p) => p.dir === 'out' || p.dir === 'both') || portsOf(target).some((p) => p.dir !== 'out')}
+          <div class="row">
+            <select value={data?.sourcePort ?? ''} onchange={(e) => up({ sourcePort: (e.target as HTMLSelectElement).value || undefined })}><option value="">from port —</option>{#each portsOf(source).filter((p) => p.dir === 'out' || p.dir === 'both') as p}<option value={p.id}>↗ {p.id}</option>{/each}</select>
+            <select value={data?.targetPort ?? ''} onchange={(e) => up({ targetPort: (e.target as HTMLSelectElement).value || undefined })}><option value="">to port —</option>{#each portsOf(target).filter((p) => p.dir !== 'out') as p}<option value={p.id}>↘ {p.id}{p.protocol ? ` (${p.protocol})` : ''}</option>{/each}</select>
+          </div>
+        {/if}
+        <datalist id="protocols">{#each PROTOCOLS as p}<option value={p}></option>{/each}</datalist>
+      </div>
+    </EdgeLabel>
+  {:else if text}
+    <EdgeLabel x={geo.lx} y={geo.ly}>
+      <div class="lbl" class:muted={!!hl.activeId && !connected}>{text}</div>
     </EdgeLabel>
   {/if}
 {/if}
@@ -115,4 +138,8 @@
 <style>
   .lbl { font-family: var(--mono); font-size: 9.5px; color: var(--muted); background: var(--bg); border: 1px solid var(--hair); border-radius: 3px; padding: 1px 6px; white-space: nowrap; pointer-events: none; }
   .lbl.muted { opacity: .35; }
+  .editor { width: 250px; background: var(--s1); border: 1px solid var(--accent); border-radius: 7px; padding: 7px; display: grid; gap: 6px; pointer-events: auto; font-family: var(--sans); }
+  .editor .ends { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+  .editor .row { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  .editor input, .editor select { font-size: 11px; padding: 3px 6px; }
 </style>

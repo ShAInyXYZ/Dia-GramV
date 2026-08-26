@@ -9,6 +9,7 @@ import { toFlow, fromFlow, absPos, nodeW, nodeH, isFrame, type FNode, type FEdge
 import { hl, EDGE_STYLES } from './hl.svelte';
 
 export type Sel = { type: 'node' | 'frame' | 'edge'; id: string } | null;
+type Snap = { nodes: FNode[]; edges: FEdge[]; meta: any };
 export type Diag = { code: string; severity: 'error' | 'warning' | 'info'; message: string; subject: any; fixes: string[] };
 
 const PAD = 40, TOP = 52;
@@ -26,6 +27,10 @@ class DiagramStore {
   error = $state<string | null>(null);
   dir = $state<string>('');
   private lastSave = 0;
+  // undo: `committed` is the state as of the last touch(); touch() pushes it
+  // before adopting the new state, so order of mutate/touch never matters.
+  private past: Snap[] = []; private future: Snap[] = []; private committed: Snap | null = null; private lastTouch = 0;
+  canUndo = $state(false); canRedo = $state(false);
 
   doc = $derived.by(() => fromFlow(this.nodes, this.edges, this.meta));
   diagnostics = $derived.by<Diag[]>(() => {
@@ -49,6 +54,7 @@ class DiagramStore {
       const f = toFlow(doc);
       this.name = name; this.meta = doc.meta; this.nodes = f.nodes; this.edges = f.edges;
       this.dirty = false; this.saveState = 'saved'; this.externalChange = false; this.selected = null; this.error = null;
+      this.past = []; this.future = []; this.committed = this.snap(); this.canUndo = this.canRedo = false;
       hl.activeId = null; hl.neighbors = null; hl.colorBy = doc.meta.colorBy ?? 'kind';
       hl.edgeStyle = EDGE_STYLES.includes(doc.meta.edgeStyle) ? doc.meta.edgeStyle : 'floating';
       location.hash = '#/' + name;
@@ -81,7 +87,52 @@ class DiagramStore {
       this.refreshList();
     } catch (e: any) { this.saveState = 'error'; this.error = e.message; }
   }
-  touch() { this.dirty = true; }
+  touch() {
+    this.dirty = true;
+    const now = Date.now();
+    if (this.committed && now - this.lastTouch > 400) { this.past.push(this.committed); if (this.past.length > 60) this.past.shift(); this.future = []; }
+    this.lastTouch = now; this.committed = this.snap(); this.canUndo = this.past.length > 0; this.canRedo = this.future.length > 0;
+  }
+  private snap(): Snap { const raw: any = { nodes: $state.snapshot(this.nodes), edges: $state.snapshot(this.edges), meta: $state.snapshot(this.meta) }; return structuredClone(raw) as Snap; }
+  private restore(sn: Snap) { this.nodes = sn.nodes; this.edges = sn.edges; this.meta = sn.meta; this.committed = structuredClone(sn); this.dirty = true; this.selected = null; this.canUndo = this.past.length > 0; this.canRedo = this.future.length > 0; }
+  undo() { const sn = this.past.pop(); if (!sn) return; this.future.push(this.snap()); this.restore(sn); }
+  redo() { const sn = this.future.pop(); if (!sn) return; this.past.push(this.snap()); this.restore(sn); }
+
+  /** while dragging: which frame would adopt the node (frame highlights) */
+  onDrag(dragged: FNode[]) {
+    const d = dragged[0]; const n = d && this.nodes.find((k) => k.id === d.id); if (!n) { hl.dropFrame = null; return; }
+    const a = absPos(this.nodes, { ...n, position: d.position, parentId: n.parentId });
+    const exclude = new Set<string>([n.id]);
+    if (isFrame(n)) for (const k of this.nodes) if (this.isDescendant(k.id, n.id)) exclude.add(k.id);
+    hl.dropFrame = this.frameAt(a, nodeW(n), nodeH(n), exclude)?.id ?? null;
+  }
+
+  /** align / distribute the selected component cards (absolute coords, written back relative) */
+  align(mode: 'left' | 'right' | 'top' | 'bottom' | 'hcenter' | 'vcenter' | 'hspread' | 'vspread') {
+    const sel = this.nodes.filter((n) => n.selected && !isFrame(n)); if (sel.length < 2) return;
+    const boxes = sel.map((n) => ({ n, ...absPos(this.nodes, n), w: nodeW(n), h: nodeH(n) }));
+    const minX = Math.min(...boxes.map((b) => b.x)), maxR = Math.max(...boxes.map((b) => b.x + b.w));
+    const minY = Math.min(...boxes.map((b) => b.y)), maxB = Math.max(...boxes.map((b) => b.y + b.h));
+    const target = new Map<string, { x: number; y: number }>();
+    if (mode === 'hspread' || mode === 'vspread') {
+      const horiz = mode === 'hspread';
+      const sorted = [...boxes].sort((a, b) => horiz ? a.x - b.x : a.y - b.y);
+      const total = horiz ? maxR - minX : maxB - minY, used = sorted.reduce((a, b) => a + (horiz ? b.w : b.h), 0);
+      const gap = (total - used) / (sorted.length - 1); let cur = horiz ? minX : minY;
+      for (const b of sorted) { target.set(b.n.id, horiz ? { x: cur, y: b.y } : { x: b.x, y: cur }); cur += (horiz ? b.w : b.h) + gap; }
+    } else for (const b of boxes) target.set(b.n.id, {
+      x: mode === 'left' ? minX : mode === 'right' ? maxR - b.w : mode === 'hcenter' ? (minX + maxR) / 2 - b.w / 2 : b.x,
+      y: mode === 'top' ? minY : mode === 'bottom' ? maxB - b.h : mode === 'vcenter' ? (minY + maxB) / 2 - b.h / 2 : b.y,
+    });
+    this.nodes = this.nodes.map((n) => {
+      const t = target.get(n.id); if (!t) return n;
+      const p = n.parentId ? this.nodes.find((k) => k.id === n.parentId) : null;
+      const base = p ? absPos(this.nodes, p) : { x: 0, y: 0 };
+      return { ...n, position: { x: Math.round(t.x - base.x), y: Math.round(t.y - base.y) } };
+    });
+    this.refit(); this.touch();
+  }
+
 
   // ---- editing -------------------------------------------------------
   private uid(prefix: string) {
@@ -168,6 +219,7 @@ class DiagramStore {
 
   /** after a drag: re-nest by geometry, then grow frames around their members */
   afterDrag(dragged: FNode[]) {
+    hl.dropFrame = null;
     for (const d of dragged) {
       const n = this.nodes.find((k) => k.id === d.id); if (!n) continue;
       const a = absPos(this.nodes, n);
@@ -210,12 +262,17 @@ class DiagramStore {
     this.touch();
   }
 
-  connect(source: string, target: string): FEdge | null {
+  connect(source: string, target: string, sourceHandle?: string | null, targetHandle?: string | null): FEdge | null {
     if (source === target) return null;
     const s = this.nodes.find((n) => n.id === source), t = this.nodes.find((n) => n.id === target);
     if (!s || !t || isFrame(s) || isFrame(t)) return null;
     const id = this.uid(`${source}-${target}`).replace(/-1$/, '');
-    const edge: FEdge = { id: this.edges.some((e) => e.id === id) ? this.uid(id) : id, source, target, type: 'dgv', zIndex: 0, data: { kind: 'sync' } };
+    // a handle named after a declared port binds the edge to it; 'in'/'out' are the generic handles
+    const portOf = (n: FNode, h?: string | null) => (h && (n.data as NodeData).ports?.some((p) => p.id === h) ? h : undefined);
+    const sp = portOf(s, sourceHandle), tp = portOf(t, targetHandle);
+    const tport = tp ? (t.data as NodeData).ports!.find((p) => p.id === tp) : undefined;
+    const edge: FEdge = { id: this.edges.some((e) => e.id === id) ? this.uid(id) : id, source, target, type: 'dgv', zIndex: 0,
+      data: { kind: tport?.protocol && ['sql', 'redis', 's3', 'fs'].includes(tport.protocol) ? 'data' : 'sync', protocol: tport?.protocol, sourcePort: sp, targetPort: tp } };
     this.touch();
     queueMicrotask(() => this.select({ type: 'edge', id: edge.id }));
     return edge;

@@ -41,9 +41,11 @@
       <div class="rows">
         {#each g.kinds as k (k)}
           <button class="row" class:pin={pinned?.kind === k} onmouseenter={() => hover({ kind: k })} onmouseleave={() => hover(null)} onclick={() => pin({ kind: k })} data-tip={NODE_KINDS[k].hint}>
+            <span class="head">
+              <span class="name" style="color:{NODE_KINDS[k].color}">{NODE_KINDS[k].label}</span>
+              <span class="n">{count(k)}</span>
+            </span>
             <KindGlyph kind={k} />
-            <span class="name" style="color:{NODE_KINDS[k].color}">{NODE_KINDS[k].label}</span>
-            <span class="n">{count(k)}</span>
           </button>
         {/each}
       </div>
@@ -54,8 +56,8 @@
       <div class="rows">
         {#each edgeKinds as k (k)}
           <button class="row" class:pin={pinned?.edge === k} onmouseenter={() => hover({ edge: k })} onmouseleave={() => hover(null)} onclick={() => pin({ edge: k })} data-tip={EDGE_KINDS[k].hint}>
+            <span class="head"><span class="name">{EDGE_KINDS[k].label}</span></span>
             <EdgeGlyph kind={k} />
-            <span class="name">{EDGE_KINDS[k].label}</span>
           </button>
         {/each}
       </div>
@@ -64,7 +66,12 @@
   {#if hl.colorBy === 'status' && statuses.length}
     <Section label="Build status">
       <div class="rows">
-        {#each statuses as s (s)}<div class="row static"><i class="sw" style="background:{STATUSES[s].color}"></i><span class="name">{STATUSES[s].label}</span></div>{/each}
+        {#each statuses as s (s)}
+            <div class="row static">
+              <span class="head"><span class="name">{STATUSES[s].label}</span></span>
+              <i class="sw" style="background:{STATUSES[s].color}"></i>
+            </div>
+          {/each}
       </div>
     </Section>
   {/if}
@@ -72,13 +79,16 @@
 </FloatPanel>
 
 <style>
-  .rows { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; }
-  .row { display: flex; align-items: center; gap: 10px; width: 100%; padding: 5px 7px; background: transparent; border: 1px solid transparent; border-radius: 4px; font-family: var(--mono); font-size: 11px; color: var(--muted); text-align: left; }
+  .rows { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; }
+  /* Name above its glyph. Side by side, the glyphs sat at different widths and
+     pushed every label to a different x, so the column never read as a list. */
+  .row { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; width: 100%; padding: 6px 7px; background: transparent; border: 1px solid transparent; border-radius: 4px; font-family: var(--mono); font-size: 11px; color: var(--muted); text-align: left; }
   .row:hover { background: var(--s2); border-color: var(--hair); }
   .row.pin { border-color: var(--accent); }
   .row.static { cursor: default; } .row.static:hover { background: transparent; border-color: transparent; }
+  .head { display: flex; align-items: baseline; gap: 6px; width: 100%; }
   .name { flex: 1; letter-spacing: .04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .n { color: var(--dim); font-size: 9.5px; min-width: 14px; text-align: right; }
+  .n { color: var(--dim); font-size: 9.5px; text-align: right; }
   .sw { width: 34px; height: 8px; border-radius: 2px; display: inline-block; flex: none; }
   .empty { font-size: 11px; color: var(--dim); padding: 4px; }
 </style>

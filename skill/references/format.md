@@ -22,7 +22,7 @@ Positions are absolute canvas pixels; nodes are 260 px wide, height is measured.
 | service | rect | a running process that owns logic: backend, core, daemon |
 | api | pill | a named interface surface: REST/gRPC/WS endpoint set, gateway, SDK facade |
 | module | tab | internal package / library inside a program; linked by `import` |
-| program | terminal | an executable: CLI, script, job runner, standalone binary |
+| program | chevron | an executable: CLI, script, job runner, standalone binary |
 | worker | rect | background processor: queue consumer, cron, scheduler |
 | db | cylinder | relational / document / graph database with a schema |
 | cache | cylinder | ephemeral key-value store |
@@ -32,7 +32,7 @@ Positions are absolute canvas pixels; nodes are 260 px wide, height is measured.
 | sidecar | dashed | optional helper process, usually another language/runtime |
 | model | chamfered | ML model or serving engine |
 | external | dashed | third-party service or SaaS you do not control |
-| device | device | remote hardware: phone, sensor, another machine |
+| device | phone | remote hardware: phone, sensor, another machine |
 | infra | thin | proxy, load balancer, container host, tunnel |
 
 ## Edge kinds

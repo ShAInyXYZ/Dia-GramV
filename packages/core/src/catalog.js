@@ -13,7 +13,7 @@ export const NODE_KINDS = {
   service:  { label: 'Service',   shape: 'rect',     color: '#e8873a', role: 'compute', hint: 'a running process that owns logic: backend, core, daemon' },
   api:      { label: 'API',       shape: 'pill',     color: '#4ec9a5', role: 'iface',   hint: 'a named interface surface: REST/gRPC/WS endpoint set, gateway, SDK facade' },
   module:   { label: 'Module',    shape: 'tab',      color: '#c98cff', role: 'code',    hint: 'internal package / library inside a program; linked by import, not network' },
-  program:  { label: 'Program',   shape: 'terminal', color: '#9ab87a', role: 'compute', hint: 'an executable: CLI, script, job runner, standalone binary' },
+  program:  { label: 'Program',   shape: 'chevron',  color: '#9ab87a', role: 'compute', hint: 'an executable: CLI, script, job runner, standalone binary' },
   worker:   { label: 'Worker',    shape: 'rect',     color: '#d9a75b', role: 'compute', hint: 'background processor: queue consumer, cron, scheduler' },
   db:       { label: 'Database',  shape: 'cylinder', color: '#c9b458', role: 'store',   hint: 'relational / document / graph database with a schema' },
   cache:    { label: 'Cache',     shape: 'cylinder', color: '#8fb5c9', role: 'store',   hint: 'ephemeral key-value store: redis, in-memory LRU' },

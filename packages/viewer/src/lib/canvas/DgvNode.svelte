@@ -14,7 +14,7 @@
   const dim = $derived(hl.neighbors ? !hl.neighbors.has(id) : false);
   const active = $derived(hl.activeId === id);
   const problem = $derived(dg.problemIds.get(id));
-  const pad = $derived(({ cylinder: '18px 14px 14px', hexagon: '10px 22px', skew: '10px 22px 10px 26px', diamond: '10px 18px', window: '26px 12px 10px', tab: '16px 12px 10px', folder: '18px 12px 10px', terminal: '22px 12px 10px' } as Record<string, string>)[kind.shape] ?? '10px 12px');
+  const pad = $derived(({ cylinder: '18px 14px 14px', hexagon: '10px 22px', skew: '10px 22px 10px 26px', diamond: '10px 18px', window: '26px 12px 10px', tab: '16px 12px 10px', folder: '18px 12px 10px', chevron: '10px 26px 10px 12px', device: '18px 14px 16px' } as Record<string, string>)[kind.shape] ?? '10px 12px');
 </script>
 
 <div class="card" class:dim class:active class:selected style="--accent:{accent}; padding:{pad}" bind:clientWidth={w} bind:clientHeight={h}>

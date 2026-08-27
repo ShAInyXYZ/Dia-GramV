@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 250" font-family="ui-sans-serif,-apple-system,Inter,'Segoe UI',sans-serif">
+<!-- One file, two ways in. Same shapes and palette as the canvas. -->
+<rect width="1280" height="250" fill="#0e0d0b"/>
+<g transform="translate(50 80)">
+  <path d="M7,0 H193 Q200,0 200,7 V77 Q200,84 193,84 H7 Q0,84 0,77 V7 Q0,0 7,0 Z" fill="#161513" stroke="#c98cff" stroke-width="1.5"/>
+  <text x="16" y="24" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" letter-spacing="1.3" fill="#c98cff">YOUR AGENT</text>
+  <text x="16" y="46" font-family="ui-sans-serif,-apple-system,Inter,'Segoe UI',sans-serif" font-size="16" font-weight="650" fill="#e6e3de">Claude Code</text>
+  <text x="16" y="66" font-family="ui-sans-serif,-apple-system,Inter,'Segoe UI',sans-serif" font-size="12" fill="#a49e95">via the dgv MCP server</text>
+</g>
+<g transform="translate(1030 80)">
+  <path d="M7,0 H193 Q200,0 200,7 V77 Q200,84 193,84 H7 Q0,84 0,77 V7 Q0,0 7,0 Z" fill="#161513" stroke="#6ea8fe" stroke-width="1.5"/>
+  <text x="16" y="24" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" letter-spacing="1.3" fill="#6ea8fe">YOU</text>
+  <text x="16" y="46" font-family="ui-sans-serif,-apple-system,Inter,'Segoe UI',sans-serif" font-size="16" font-weight="650" fill="#e6e3de">Browser</text>
+  <text x="16" y="66" font-family="ui-sans-serif,-apple-system,Inter,'Segoe UI',sans-serif" font-size="12" fill="#a49e95">viewer on :7710</text>
+</g>
+<g transform="translate(480 62)">
+  <path d="M0,15 Q0,8 7,8 H70 l8,-8 H313 Q320,0 320,7 V113 Q320,120 313,120 H7 Q0,120 0,113 Z" fill="#161513" stroke="#e8873a" stroke-width="1.5"/>
+  <text x="18" y="38" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" letter-spacing="1.3" fill="#e8873a">THE FILE · IN YOUR REPO</text>
+  <text x="18" y="64" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="16" font-weight="650" fill="#e6e3de">dgv/&lt;name&gt;.dgv.json</text>
+  <text x="18" y="86" font-family="ui-sans-serif,-apple-system,Inter,'Segoe UI',sans-serif" font-size="12" fill="#a49e95">frames · nodes with kinds and ports</text>
+  <text x="18" y="104" font-family="ui-sans-serif,-apple-system,Inter,'Segoe UI',sans-serif" font-size="12" fill="#a49e95">edges with kinds, protocols, target ports</text>
+</g>
+<line x1="250" y1="108" x2="480" y2="108" stroke="#8a8580" stroke-width="1.5"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#8a8580" transform="translate(480 108) rotate(0)"/>
+<rect x="266" y="99" width="198" height="17" rx="3" fill="#0e0d0b"/>
+<text x="365" y="112" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">apply · read · layout · export</text>
+<line x1="480" y1="138" x2="250" y2="138" stroke="#4ec9a5" stroke-width="1.5" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4ec9a5" transform="translate(250 138) rotate(180)"/>
+<rect x="278.4" y="129" width="173.20000000000002" height="17" rx="3" fill="#0e0d0b"/>
+<text x="365" y="142" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">lint report on every write</text>
+<line x1="1030" y1="108" x2="800" y2="108" stroke="#8a8580" stroke-width="1.5"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#8a8580" transform="translate(800 108) rotate(180)"/>
+<rect x="847" y="99" width="136" height="17" rx="3" fill="#0e0d0b"/>
+<text x="915" y="112" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">edit · drag · Ctrl+S</text>
+<line x1="800" y1="138" x2="1030" y2="138" stroke="#4ec9a5" stroke-width="1.5" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4ec9a5" transform="translate(1030 138) rotate(0)"/>
+<rect x="819.1" y="129" width="191.8" height="17" rx="3" fill="#0e0d0b"/>
+<text x="915" y="142" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">reloads when the file changes</text>
+<text x="640" y="222" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1" fill="#7d766c">both sides read and write the same file · nothing else holds state</text>
+</svg>

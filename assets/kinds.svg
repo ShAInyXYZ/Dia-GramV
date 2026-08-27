@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 350" font-family="ui-sans-serif,-apple-system,Inter,'Segoe UI',sans-serif">
+<!-- Every node kind and wire kind DGV knows, drawn with the catalog's own shapePath() and colours. Regenerate rather than edit. -->
+<rect width="1300" height="350" fill="#0e0d0b"/>
+<text x="34" y="34" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="12" letter-spacing="1.6" fill="#7d766c">NODE KINDS · the shape is the kind</text>
+<g transform="translate(34 58)">
+  <path d="M7,0 H133 Q140,0 140,7 V45 Q140,52 133,52 H7 Q0,52 0,45 V7 Q0,0 7,0 Z" fill="#161513" stroke="#6ea8fe" stroke-width="1.5"/>
+  <line x1="0" y1="20" x2="140" y2="20" stroke="#6ea8fe" stroke-width="1" opacity=".55"/><circle cx="11" cy="10" r="2.5" fill="#6ea8fe" opacity=".8"/><circle cx="20" cy="10" r="2.5" fill="#6ea8fe" opacity=".5"/>
+  
+  <text x="70" y="36" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#6ea8fe">UI</text>
+  <text x="70" y="70" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">ui</text>
+</g>
+<g transform="translate(190 58)">
+  <path d="M7,0 H133 Q140,0 140,7 V45 Q140,52 133,52 H7 Q0,52 0,45 V7 Q0,0 7,0 Z" fill="#161513" stroke="#e8873a" stroke-width="1.5"/>
+  
+  
+  <text x="70" y="26" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#e8873a">SERVICE</text>
+  <text x="70" y="70" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">service</text>
+</g>
+<g transform="translate(346 58)">
+  <path d="M22,0 H118 A22,22 0 0 1 118,52 H22 A22,22 0 0 1 22,0 Z" fill="#161513" stroke="#4ec9a5" stroke-width="1.5"/>
+  
+  
+  <text x="70" y="26" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#4ec9a5">API</text>
+  <text x="70" y="70" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">api</text>
+</g>
+<g transform="translate(502 58)">
+  <path d="M0,7 Q0,0 7,0 H56 l10,9 H133 Q140,9 140,16 V45 Q140,52 133,52 H7 Q0,52 0,45 Z" fill="#161513" stroke="#c98cff" stroke-width="1.5"/>
+  
+  
+  <text x="70" y="30" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#c98cff">MODULE</text>
+  <text x="70" y="70" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">module</text>
+</g>
+<g transform="translate(658 58)">
+  <path d="M0,0 H122 L140,26 L122,52 H0 Z" fill="#161513" stroke="#9ab87a" stroke-width="1.5"/>
+  
+  
+  <text x="70" y="26" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#9ab87a">PROGRAM</text>
+  <text x="70" y="70" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">program</text>
+</g>
+<g transform="translate(814 58)">
+  <path d="M7,0 H133 Q140,0 140,7 V45 Q140,52 133,52 H7 Q0,52 0,45 V7 Q0,0 7,0 Z" fill="#161513" stroke="#d9a75b" stroke-width="1.5"/>
+  
+  
+  <text x="70" y="26" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#d9a75b">WORKER</text>
+  <text x="70" y="70" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">worker</text>
+</g>
+<g transform="translate(970 58)">
+  <path d="M0,9 A70,9 0 0 1 140,9 V43 A70,9 0 0 1 0,43 Z" fill="#161513" stroke="#c9b458" stroke-width="1.5"/>
+  <path d="M0,9 A70,9 0 0 0 140,9" fill="none" stroke="#c9b458" stroke-width="1.5"/>
+  
+  
+  <text x="70" y="30" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#c9b458">DATABASE</text>
+  <text x="70" y="70" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">db</text>
+</g>
+<g transform="translate(1126 58)">
+  <path d="M0,9 A70,9 0 0 1 140,9 V43 A70,9 0 0 1 0,43 Z" fill="#161513" stroke="#8fb5c9" stroke-width="1.5"/>
+  <path d="M0,9 A70,9 0 0 0 140,9" fill="none" stroke="#8fb5c9" stroke-width="1.5"/>
+  
+  
+  <text x="70" y="30" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#8fb5c9">CACHE</text>
+  <text x="70" y="70" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">cache</text>
+</g>
+<g transform="translate(34 144)">
+  <path d="M0,15 Q0,8 7,8 H42 l8,-8 H133 Q140,0 140,7 V45 Q140,52 133,52 H7 Q0,52 0,45 Z" fill="#161513" stroke="#b8a27e" stroke-width="1.5"/>
+  
+  
+  <text x="70" y="30" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#b8a27e">STORAGE</text>
+  <text x="70" y="70" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">storage</text>
+</g>
+<g transform="translate(190 144)">
+  <path d="M16,0 H140 L124,52 H0 Z" fill="#161513" stroke="#e86a8f" stroke-width="1.5"/>
+  
+  
+  <text x="70" y="26" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#e86a8f">QUEUE</text>
+  <text x="70" y="70" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">queue</text>
+</g>
+<g transform="translate(346 144)">
+  <path d="M18,0 H122 L140,26 L122,52 H18 L0,26 Z" fill="#161513" stroke="#5ec8d8" stroke-width="1.5"/>
+  
+  
+  <text x="70" y="26" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#5ec8d8">BRIDGE</text>
+  <text x="70" y="70" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">bridge</text>
+</g>
+<g transform="translate(502 144)">
+  <path d="M7,0 H133 Q140,0 140,7 V45 Q140,52 133,52 H7 Q0,52 0,45 V7 Q0,0 7,0 Z" fill="#161513" stroke="#c98cff" stroke-width="1.5" stroke-dasharray="6 4"/>
+  
+  
+  <text x="70" y="26" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#c98cff">SIDECAR</text>
+  <text x="70" y="70" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">sidecar</text>
+</g>
+<g transform="translate(658 144)">
+  <path d="M12,0 H128 L140,12 V40 L128,52 H12 L0,40 V12 Z" fill="#161513" stroke="#4ec9a5" stroke-width="1.5"/>
+  
+  
+  <text x="70" y="26" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#4ec9a5">MODEL</text>
+  <text x="70" y="70" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">model</text>
+</g>
+<g transform="translate(814 144)">
+  <path d="M7,0 H133 Q140,0 140,7 V45 Q140,52 133,52 H7 Q0,52 0,45 V7 Q0,0 7,0 Z" fill="#161513" stroke="#8a8580" stroke-width="1.5" stroke-dasharray="6 4"/>
+  
+  
+  <text x="70" y="26" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#8a8580">EXTERNAL</text>
+  <text x="70" y="70" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">external</text>
+</g>
+<g transform="translate(970 144)">
+  <path d="M16,0 H124 Q140,0 140,16 V36 Q140,52 124,52 H16 Q0,52 0,36 V16 Q0,0 16,0 Z" fill="#161513" stroke="#6ea8fe" stroke-width="1.5"/>
+  
+  <rect x="52" y="6" width="36" height="3" rx="1.5" fill="#6ea8fe" opacity=".7"/>
+  <text x="70" y="26" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#6ea8fe">DEVICE</text>
+  <text x="70" y="70" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">device</text>
+</g>
+<g transform="translate(1126 144)">
+  <path d="M7,0 H133 Q140,0 140,7 V45 Q140,52 133,52 H7 Q0,52 0,45 V7 Q0,0 7,0 Z" fill="#161513" stroke="#7d766c" stroke-width="1"/>
+  
+  
+  <text x="70" y="26" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#7d766c">INFRA</text>
+  <text x="70" y="70" text-anchor="middle" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">infra</text>
+</g>
+<text x="34" y="254" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="12" letter-spacing="1.6" fill="#7d766c">WIRE KINDS · the dash is the kind</text>
+<g transform="translate(34 288)">
+  <line x1="0" y1="10" x2="178" y2="10" stroke="#8a8580" stroke-width="1.5"/>
+  <polygon points="0,0 -9,-4 -9,4" fill="#8a8580" transform="translate(178 10)"/>
+  <text x="0" y="36" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#e6e3de">SYNC CALL</text>
+  <text x="0" y="52" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">sync</text>
+</g>
+<g transform="translate(242 288)">
+  <line x1="0" y1="10" x2="178" y2="10" stroke="#8a8580" stroke-width="1.5" stroke-dasharray="7 5"/>
+  <polygon points="0,0 -9,-4 -9,4" fill="#8a8580" transform="translate(178 10)"/>
+  <text x="0" y="36" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#e6e3de">ASYNC</text>
+  <text x="0" y="52" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">async</text>
+</g>
+<g transform="translate(450 288)">
+  <line x1="0" y1="10" x2="178" y2="10" stroke="#8a8580" stroke-width="2" stroke-dasharray="2 4"/>
+  <polygon points="0,0 -9,-4 -9,4" fill="#8a8580" transform="translate(178 10)"/>
+  <text x="0" y="36" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#e6e3de">DATA</text>
+  <text x="0" y="52" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">data</text>
+</g>
+<g transform="translate(658 288)">
+  <line x1="0" y1="10" x2="178" y2="10" stroke="#4a4640" stroke-width="1"/>
+  <polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(178 10)"/>
+  <text x="0" y="36" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#e6e3de">IMPORT</text>
+  <text x="0" y="52" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">import</text>
+</g>
+<g transform="translate(866 288)">
+  <line x1="0" y1="10" x2="178" y2="10" stroke="#8a8580" stroke-width="1.5" stroke-dasharray="12 6"/>
+  <polygon points="0,0 -9,-4 -9,4" fill="#8a8580" transform="translate(178 10)"/>
+  <text x="0" y="36" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#e6e3de">DEPLOYS</text>
+  <text x="0" y="52" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">deploy</text>
+</g>
+<g transform="translate(1074 288)">
+  <line x1="0" y1="10" x2="178" y2="10" stroke="#8a8580" stroke-width="1.5" stroke-dasharray="8 4 2 4"/>
+  <polygon points="0,0 -9,-4 -9,4" fill="#8a8580" transform="translate(178 10)"/>
+  <text x="0" y="36" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.2" fill="#e6e3de">CONTROL</text>
+  <text x="0" y="52" font-family="ui-monospace,'SF Mono',SFMono-Regular,'DejaVu Sans Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#7d766c">control</text>
+</g>
+</svg>

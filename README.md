@@ -1,22 +1,23 @@
 <div align="center">
   <img src="banner.svg" width="880" alt="Dia-GramV — plan the architecture before you write the code"/>
 
-  <p><strong>An MCP server that gives your AI a typed, checkable model of the system you are building.</strong></p>
+  <p><strong>An MCP server that gives your coding agent a typed, linted model of the system you are building — and a browser canvas for you.</strong></p>
 
   <p>
     <img src="https://img.shields.io/badge/MCP-stdio-e8873a?style=flat-square&labelColor=161513" alt="MCP over stdio"/>
-    <img src="https://img.shields.io/badge/Node-20%2B-e8873a?style=flat-square&labelColor=161513&logo=node.js&logoColor=e6e3de" alt="Node 20+"/>
+    <img src="https://img.shields.io/badge/Node-20.19%2B-e8873a?style=flat-square&labelColor=161513&logo=node.js&logoColor=e6e3de" alt="Node 20.19+"/>
     <img src="https://img.shields.io/badge/Svelte-5-e8873a?style=flat-square&labelColor=161513&logo=svelte&logoColor=e6e3de" alt="Svelte 5"/>
     <img src="https://img.shields.io/badge/license-MIT-e8873a?style=flat-square&labelColor=161513" alt="MIT"/>
     <img src="https://img.shields.io/badge/cloud-none-e8873a?style=flat-square&labelColor=161513" alt="No cloud"/>
   </p>
 
-  <p>Your diagrams are files in your repo. Runs on your machine — no accounts, no cloud, no telemetry.</p>
+  <p>Diagrams are JSON files in your repo. Runs on your machine — no accounts, no cloud, no telemetry.</p>
 
   <p>
     <a href="#install"><strong>Install ↓</strong></a> ·
-    <a href="#see-it-work"><strong>See it work</strong></a> ·
+    <a href="#a-session-start-to-finish"><strong>A session</strong></a> ·
     <a href="#mcp-tools"><strong>MCP tools</strong></a> ·
+    <a href="#what-the-linter-checks"><strong>Lint rules</strong></a> ·
     <a href="#the-file-format"><strong>Format</strong></a>
   </p>
 </div>
@@ -25,189 +26,187 @@
 
 ## What it is
 
-DGV is two things sharing one file:
+One file, two ways in.
 
-1. **An MCP server** your coding agent talks to. It can create the model, change it, ask what is wrong with it, and read it back as a compact outline — without ever opening your source tree.
-2. **A live editor** in your browser for when *you* want to look, drag something, or hand the picture to a teammate.
+The file is `dgv/<name>.dgv.json`: frames (boundaries), nodes (components) and edges (connections), each with a **kind** from a fixed catalog. A node can declare **ports**; an edge can name the port it lands on and the **protocol** it speaks. It is a plain JSON document that lives in your repository next to the code it describes.
 
-Between them sits `dgv/<name>.dgv.json` — a plain, versioned file in your repo. Not a rendering, not an export: **the model itself**, in git, next to the code it describes.
+The **MCP server** is how an agent works with that file. Through it the agent creates a diagram, changes it, reads it back as a short outline, and — on every write — gets a lint report back: a stable code, the element concerned, and concrete fixes.
 
-Every component has a `kind` that means something (`api`, `worker`, `db`, `queue`, `bridge`, `sidecar`, `model`, `device`…). Every connection carries a `kind` and a `protocol`, and binds to a **port the target actually declares**. Because those are typed, a linter can read the plan and tell you — with a stable code and concrete fixes — when it cannot work.
+The **viewer** is how you work with it. A Svelte Flow canvas where kinds have shapes, wires carry their protocol, an inspector edits every field, and the problems panel shows the same lint live. When the agent changes the file, the page reloads.
 
-## Why we built it
+<div align="center">
+  <img src="assets/how-it-fits.svg" width="880" alt="The agent reaches the file through MCP; you reach it through the viewer; nothing else holds state"/>
+</div>
 
-[Cerveau](https://github.com/ShAInyXYZ/Cerveau) — a local-first agentic coding harness, and a much older project — had an internal `arch-viewer`: a Svelte Flow canvas that drew its architecture. It was useful, and it had two problems. Nothing could talk to it but a human with a browser, so the agent doing the actual building never saw it. And it inferred structure from geometry, so it was fragile: move a box near another box and membership changed under you.
+## Where it came from
 
-DGV keeps the lineage — same library, same conviction that architecture is worth drawing — and rebuilds the foundation:
+[Cerveau](https://github.com/ShAInyXYZ/Cerveau) is a local-first agentic coding harness, and an older project. Its docs folder held a private, unshipped draft called `arch-viewer`: a Svelte Flow canvas reading a `Diagram.json` of its architecture — 99 nodes, 127 edges. Nodes had a kind; edges were a label. Nothing but a browser could read it, so the agent doing the building never saw it, and the hierarchy-aware layout it needed was fragile enough that a frame could swallow its neighbours.
 
-| arch-viewer (in Cerveau) | DGV |
+DGV keeps the parts that worked — the canvas, the frames, the dagre layout — and puts a contract underneath:
+
+| `arch-viewer` draft | DGV |
 |---|---|
-| a viewer a person opens | an **MCP server** an agent drives, plus a viewer |
-| membership inferred from geometry | membership **declared** (`node.frame`, `edge.targetPort`) |
-| untyped boxes and lines | a **catalog** of kinds, protocols, edge kinds, statuses |
-| draws whatever you give it | **lints** it, and says how to fix it |
-| a picture | a **file in the repo** that review and CI can reach |
+| a JSON only the viewer read, in a private folder | a JSON the agent reads and writes through MCP, in the repo |
+| nodes had a kind; edges were a label | a catalog of node kinds, edge kinds, protocols, statuses; ports on nodes |
+| membership implied by where a box sat | membership declared: `node.frame` |
+| drew whatever it was given | lints every write, and says how to fix it |
 
-## Why this changes things for AI-assisted work
+## Why it matters when an AI is writing the code
 
-The picture is the least interesting part. The point is that a machine can read the model, check it, and change it.
+The drawing is the least important part. What matters is that the model of the system is a file a program can read, check and change.
 
-**If you vibecode**, you are generating a system faster than you can hold it in your head. Nothing in the loop remembers last Tuesday's decision, and the model in your head drifts from the one in the repo silently. DGV gives that drift somewhere to be caught: the plan is a file, and the file gets argued with.
+**If you vibecode**, the system grows faster than you can keep it in your head, and the shape you *think* it has drifts from the shape it has. DGV gives that shape a place to live, and a linter that objects when it stops making sense.
 
-**If you are a developer working with AI**, the diagram is where you state intent that code cannot express yet. *"The worker consumes the queue; the API never writes to the bucket directly."* Say it once, and every later prompt inherits it.
+**If you develop with an AI beside you**, the diagram is where you state intent the code cannot express yet — *the worker consumes the queue; the API never writes to the bucket directly* — once, in a form every later session inherits.
 
-**If you are the AI**, this is the difference between grepping and knowing. Dropped into a 200-file repo, an agent burns thousands of tokens rebuilding a picture that already exists — and still guesses. `dgv_read` returns the whole system in a few hundred:
+**If you are the agent**, this is the difference between grepping and knowing. In an unfamiliar repository you rebuild the picture by opening files. `dgv_read` hands you the picture. This is its complete output for the example below, verbatim:
 
 ```
 # Notes app
-frames 3 · nodes 6 · edges 5
+A small web app with background jobs — the kind of thing you'd vibecode in an afternoon.
+frames 3 · nodes 6 · edges 5 · updated 2026-08-27
 
+## frame browser: Browser
+- web [ui] Notes UI — SvelteKit
 ## frame server: Server · one process
-- api  [api]    HTTP API — /api/notes    ports: rest:http/in
+- api [api] HTTP API — /api/notes ports: rest:http/in
 - jobs [worker] Job runner — thumbnails, exports
 ## frame data: Data
-- pg    [db]      Postgres — notes, users   ports: sql:sql/in
-- redis [queue]   Job queue — Redis lists   ports: jobs:redis/in
-- s3    [storage] Object store — uploads    ports: put:s3/in
+- pg [db] Postgres — notes, users ports: sql:sql/in
+- redis [queue] Job queue — Redis lists ports: jobs:redis/in
+- s3 [storage] Object store — uploads ports: put:s3/in
 
 ## edges
-- web-api:    web → api    [sync http]   fetch    ports ·→rest
-- api-pg:     api → pg     [data sql]             ports ·→sql
-- api-redis:  api → redis  [async redis] enqueue  ports ·→jobs
-- jobs-redis: jobs → redis [async redis] consume  ports ·→jobs
-- jobs-s3:    jobs → s3    [data s3]              ports ·→put
+- web-api: web → api [sync http] fetch ports ·→rest
+- api-pg: api → pg [data sql] ports ·→sql
+- api-redis: api → redis [async redis] enqueue ports ·→jobs
+- jobs-redis: jobs → redis [async redis] consume ports ·→jobs
+- jobs-s3: jobs → s3 [data s3] ports ·→put
 ```
 
-That is the whole architecture, and it is authoritative rather than inferred. A model that can read `api → pg [data sql] ·→sql` does not invent a REST endpoint on your database.
+An agent that can read `api → pg [data sql] ·→sql` does not invent a REST endpoint on the database.
 
-**And it tracks what is left to do.** Every node carries a `status` — `todo`, `wip`, `done`, `blocked`, `failed`, `update`. Colour the canvas by status instead of kind and the diagram *is* the build board, in the same file, at component granularity. An agent can ask what is still `todo` and pick up where the last session stopped.
+**It also carries progress.** A node can have a `status` — `todo`, `wip`, `done`, `blocked`, `failed`, `update`. Press `2` in the viewer to colour by status instead of kind, and the same file is the build board. An agent can read what is still `todo` and continue where the last session stopped.
 
-## See it work
+## A session, start to finish
 
-A real session. Nothing below is illustrative — it is the output of the tools in this repo.
+Built through the MCP for this README. Requests are shortened with `…`; responses are the tool's own output, cut to the fields that matter.
 
 ### 1. The agent describes the system
 
 ```jsonc
 dgv_apply({ name: "notes-app",
-  frames: [ {id:"browser", label:"Browser"}, {id:"server", label:"Server · one process"}, … ],
-  nodes:  [ {id:"api", kind:"api", label:"HTTP API", frame:"server",
-             ports:[{id:"rest", protocol:"http", dir:"in"}]}, … ],
-  edges:  [ {id:"jobs-s3", source:"jobs", target:"s3", kind:"data",
-             protocol:"s3", targetPort:"upload"},
-            {id:"pg-api",  source:"pg", target:"api", kind:"sync",
-             protocol:"http", label:"notify on change"}, … ] })
+  frames: [ { id: "browser", label: "Browser" }, { id: "server", label: "Server · one process" }, … ],
+  nodes:  [ { id: "api", kind: "api", label: "HTTP API", frame: "server",
+              ports: [ { id: "rest", protocol: "http", dir: "in" } ] }, … ],
+  edges:  [ { id: "jobs-s3", source: "jobs", target: "s3", kind: "data", protocol: "s3", targetPort: "upload" },
+            { id: "pg-api",  source: "pg",   target: "api", kind: "sync", protocol: "http", label: "notify on change" }, … ] })
 ```
 
-### 2. DGV refuses it, and says exactly why
-
-`dgv_apply` lints on every write, so a mistake comes back in the same turn that made it:
+### 2. The write is rejected, with the reason and the fix
 
 ```jsonc
-{ "ok": false, "lint": { "error": 1, "warning": 2 },
+{ "ok": false,
+  "lint": { "ok": false, "error": 1, "warning": 2, "info": 0, "total": 3 },
   "diagnostics": [
     { "code": "port/undeclared", "severity": "error",
       "message": "edge \"jobs-s3\" uses target port \"upload\" but node \"s3\" does not declare it",
       "subject": { "type": "edge", "id": "jobs-s3", "field": "targetPort" },
       "fixes": [ "add port {id:\"upload\"} to node \"s3\"", "point the edge at one of: put" ] },
-
     { "code": "kind/store-initiates", "severity": "warning",
       "message": "\"pg\" is a db; stores do not initiate sync calls to \"api\"",
       "subject": { "type": "edge", "id": "pg-api" },
       "fixes": [ "reverse the edge and mark it kind:\"data\"",
-                 "if it is a trigger/CDC stream, add a worker or queue between them" ] }
-  ] }
+                 "if it is a trigger/CDC stream, add a worker or queue between them" ] },
+    … ] }
 ```
 
-Two mistakes anyone makes at 2am: a port called `upload` on one side and `put` on the other, and a database calling back into the API. The first would have compiled and failed at runtime. The second is an architecture the agent would have cheerfully implemented.
+The same three, as the viewer shows them — the failing wire turns red on the canvas, and each entry jumps to its element:
 
-Both come back with the fix rather than just the complaint — so the agent repairs the plan before writing a line of code.
+<div align="center">
+  <img src="assets/lint.png" width="880" alt="The problems panel: 1 error, 2 warnings, each with its code, message and fix; the failing wire drawn in red"/>
+</div>
 
-### 3. Fixed, laid out, open in the browser
+Two ordinary mistakes: the port is called `put` on the store and `upload` on the edge, and a database is calling back into the API. The first is a typo that would have become a bug. The second is an architecture an agent would have implemented without a second thought. Both come back as an id, a code and a fix — in the same turn — so the plan is repaired before any code exists.
+
+### 3. Repaired, laid out, opened
 
 ```jsonc
-dgv_apply({ name:"notes-app",
-            edges:[ {id:"jobs-s3", …, targetPort:"put"} ],
-            remove:{ edges:["pg-api"] } })
-→ { "ok": true, "lint": { "error": 0, "warning": 0 } }
+dgv_apply({ name: "notes-app",
+            edges: [ { id: "jobs-s3", source: "jobs", target: "s3", kind: "data", protocol: "s3", targetPort: "put" } ],
+            remove: { edges: [ "pg-api" ] } })
+→ { "ok": true, "lint": { "ok": true, "error": 0, "warning": 0, "info": 0, "total": 0 } }
 
-dgv_layout({ name:"notes-app", direction:"TB" })  → { "ok": true, "nodes": 6, "frames": 3 }
-dgv_open({ name:"notes-app" })                    → http://127.0.0.1:7710/#/notes-app
+dgv_layout({ name: "notes-app", direction: "TB" })
+→ { "ok": true, "nodes": 6, "frames": 3 }
+
+dgv_open({ name: "notes-app" })
+→ { "url": "http://127.0.0.1:7710/#/notes-app", "dir": "…/dgv" }
 ```
 
 <div align="center">
-  <img src="assets/viewer.png" width="880" alt="The DGV viewer: typed shaped nodes in frames, routed wires carrying protocols, inspector open on the HTTP API node"/>
+  <img src="assets/viewer.png" width="880" alt="The viewer: shaped nodes inside frames, routed wires with their protocol, inspector open on the HTTP API node"/>
 </div>
 
-Shapes carry the kind, so a `db` reads as a cylinder and a `queue` as a skewed box without reading a word. Wires carry their protocol. The inspector edits every field including ports; the `!` tab lists live diagnostics and jumps to the subject. `Ctrl+S` saves, and when the agent edits the file the page reloads — or warns you first if you have unsaved changes.
+A `db` is a cylinder and a `queue` a skewed box, so the kind reads before the label does. The inspector on the right edits every field, ports included; the `!` tab lists the live diagnostics and jumps to the element. `Ctrl+S` saves. If the agent changes the file while you have unsaved edits, the page tells you and lets you choose.
 
-### 4. Any of it, back out as a picture
+### 4. Out again, as a picture
 
-`Shift+S` in the viewer, or `dgv_export` from the agent. A standalone SVG: routed wires, cropped to the content, no external fonts or images, nothing fetched — it works pasted into a README exactly as this one is.
+`Shift+S` in the viewer, or `dgv_export` with `format: "svg"`. The result is a self-contained SVG — wires routed as on the canvas, cropped to the content, no external fonts or images. The image below is that file, linked from this README:
 
 <div align="center">
-  <img src="assets/notes-app.svg" width="760" alt="The notes-app diagram exported as a standalone SVG"/>
+  <img src="assets/notes-app.svg" width="760" alt="notes-app exported as SVG"/>
 </div>
 
-The whole example is [`examples/notes-app.dgv.json`](examples/notes-app.dgv.json) — 3.6 kB of JSON for the entire system.
+The source is [`examples/notes-app.dgv.json`](examples/notes-app.dgv.json): under 4 kB for the whole system.
 
-### At real size
+### At full size
 
-Small systems fit on a screen. This is [Cerveau](https://github.com/ShAInyXYZ/Cerveau) itself — 35 components, 7 boundaries, 44 typed connections:
+The same tool on Cerveau itself — 35 components, 7 boundaries, 44 connections:
 
 <div align="center">
   <img src="assets/architecture.svg" width="880" alt="Cerveau's architecture: 35 components across 7 boundaries"/>
 </div>
 
-**Fold it and the same file answers a different question.** Every frame collapses into one node, the wires crossing each boundary merge into one labelled link, and a system you cannot take in at a glance becomes seven boxes you can. Same document — no second diagram to keep in sync, no moment where the overview and the detail disagree:
+Fold the frames (`S` in the viewer) and every boundary becomes one node, with the wires that crossed it merged into a single labelled link. It is the same file — there is no second overview diagram to keep in step with the first:
 
 <div align="center">
-  <img src="assets/architecture-folded.svg" width="620" alt="The same architecture folded to 7 nodes and 11 merged links"/>
+  <img src="assets/architecture-folded.svg" width="620" alt="The same architecture folded: 7 nodes, 11 merged links"/>
 </div>
 
 ## Install
 
-The only thing you install yourself is **Node 20+** (npm comes with it). Everything the
-project needs — Svelte 5 and Svelte Flow for the canvas, Vite and TypeScript to build it,
-dagre for layout, the MCP SDK — is fetched by `npm install` into `node_modules`: about
-100 MB, nothing global, nothing to configure. No database, no account, and no network once
-it is installed.
+You need **Node 20.19+ or 22.12+** (the viewer is built with Vite 8, which sets that floor). Everything else — Svelte 5, Svelte Flow, dagre, the MCP SDK, TypeScript — is fetched by `npm install` into `node_modules`, about 100 MB. Nothing global, nothing to configure, and no network needed after install.
 
 ```bash
 git clone https://github.com/ShAInyXYZ/Dia-GramV.git
 cd Dia-GramV
-npm install                            # pulls Svelte, Svelte Flow, Vite, dagre, the MCP SDK
-npm run build                          # compiles the viewer — this is the step that needs Svelte
-
-node packages/mcp/bin/dgv.mjs doctor   # checks node + viewer, prints the next line with your real path
+npm install
+npm run build                          # compiles the viewer (this is the step that needs Svelte)
+node packages/mcp/bin/dgv.mjs doctor   # checks Node and the build; prints the mcp add line with your path
 ```
 
-The build ships no prebuilt bundle on purpose, so what you run is compiled from the source
-you just cloned. If you only want the MCP tools and never the browser canvas you can skip
-`npm run build` — every tool works without it except `dgv_open` and `serve`, which have a
-viewer to serve.
-
-Register the MCP server with Claude Code (user scope, so it works in every project):
+Register the server with Claude Code. User scope means every project can use it:
 
 ```bash
 claude mcp add dgv -s user -- node /ABS/PATH/Dia-GramV/packages/mcp/bin/dgv.mjs mcp
 ```
 
-Optionally install the skill, which teaches the planning workflow — when to draw, what to lint, how to repair:
+The skill is optional. It teaches the agent the workflow — catalog first, apply, read the lint, repair, layout, open:
 
 ```bash
 ln -s /ABS/PATH/Dia-GramV/skill ~/.claude/skills/dgv
 ```
 
-Then just ask: *"map this project's architecture in DGV before we start."*
+Then, in any project: *"map this system in DGV before we start."* Diagrams go to `./dgv` under the directory the agent was started in; set `DGV_DIR` to put them elsewhere.
 
-Diagrams are written to `./dgv` under the directory the agent was started in. Override with `DGV_DIR=/some/path`.
+No prebuilt viewer ships in the repo, so what runs is compiled from the source you cloned. If you only want the MCP tools, `npm run build` can be skipped: everything works without it except `dgv_open` and `serve`, which need a viewer to serve.
 
 <details>
-<summary>Using it without an agent</summary>
+<summary>CLI, for use without an agent</summary>
 
 ```bash
-node packages/mcp/bin/dgv.mjs serve                    # viewer on http://127.0.0.1:7710
+node packages/mcp/bin/dgv.mjs serve [--dir d] [--port p] [--no-open]     # viewer, default http://127.0.0.1:7710
 node packages/mcp/bin/dgv.mjs lint   <name|file> [--json]
 node packages/mcp/bin/dgv.mjs layout <name|file> [--direction TB|LR]
 node packages/mcp/bin/dgv.mjs export <name|file> [--format markdown|mermaid|summary|svg]
@@ -219,86 +218,120 @@ node packages/mcp/bin/dgv.mjs list | catalog | doctor | open <name>
 
 | tool | does |
 |---|---|
-| `dgv_catalog` | node kinds (shape + meaning), edge kinds, protocols, statuses — read once per session |
-| `dgv_list`, `dgv_read` | find and read diagrams (compact outline or full JSON) |
-| `dgv_create` | new empty diagram |
-| `dgv_apply` | upsert frames/nodes/edges by id, remove by id; auto-places new nodes; **returns the lint report** |
-| `dgv_lint` | diagnostics with `code`, `severity`, `subject`, `fixes` |
-| `dgv_layout` | dagre layout; members stay inside their frame |
-| `dgv_open` | start the viewer if needed, open the diagram in the browser |
-| `dgv_export` | markdown tables (for docs / CLAUDE.md), mermaid, outline, or standalone SVG |
+| `dgv_catalog` | the node kinds (shape and meaning), edge kinds, protocols and statuses — read once per session |
+| `dgv_list` | the diagrams in the directory, with counts |
+| `dgv_read` | one diagram: `mode: "summary"` (the outline above, default) or `mode: "json"` (the full document) |
+| `dgv_create` | a new, empty diagram |
+| `dgv_apply` | upsert frames, nodes and edges by id; remove by id; places new nodes; **returns the lint report** |
+| `dgv_lint` | the diagnostics: `code`, `severity`, `subject`, `fixes` |
+| `dgv_layout` | dagre layout, `TB` or `LR`; overwrites positions |
+| `dgv_open` | starts the viewer if it is not running and opens the diagram |
+| `dgv_export` | `markdown` (tables), `mermaid`, `summary` (the outline), or `svg` |
 
-Every write returns the lint report, so the agent never has to remember to check.
+## What the linter checks
 
-## What the linter catches
+Shape first (`schema/invalid`), then references (`ref/missing-node`, `ref/missing-frame`, `ref/duplicate-id`), then the rules below. Every diagnostic names its subject and carries `fixes`. Errors block `ok`; warnings and info are advice.
 
-Structure first — unknown ids, duplicate ids, broken references — then the semantic rules that make a plan *wrong* rather than malformed:
+**Errors** — the write is refused (`ok: false`) until they are fixed.
 
-| code | when |
+| code | fires when |
 |---|---|
-| `port/undeclared` | an edge points at a port the target never declared |
+| `port/undeclared` | an edge names a port the node does not declare |
+| `port/protocol-mismatch` | the edge's protocol is not the port's protocol |
+| `port/direction` | an edge enters an `out` port, or leaves an `in` port |
+| `graph/import-cycle` | modules import each other in a loop |
+| `frame/nested` | a frame has a `parent` — frames do not nest, see below |
+| `ref/missing-node`, `ref/missing-frame`, `ref/duplicate-id`, `schema/invalid` | the file does not hold together |
+
+**Warnings** — the write goes through; the plan probably has a hole.
+
+| code | fires when |
+|---|---|
 | `port/unbound` | the target declares ports and the edge names none |
-| `kind/store-initiates` | a database or bucket making calls out |
-| `kind/protocol-mismatch` | a protocol a kind cannot speak |
-| `kind/import-across-programs` | an import crossing a process boundary |
-| `edge/cycle` | an import cycle |
-| `node/unreachable` | an API nobody calls |
-| `bridge/one-sided` | a bridge wired on one side only |
-| `frame/nested` | a frame inside a frame |
+| `contract/unspecified` | an edge between different kinds has neither a protocol nor a label |
+| `kind/store-initiates` | a database, cache or bucket is the *source* of a call |
+| `kind/import-across-programs` | an import crosses a frame boundary — two processes cannot share one |
+| `kind/api-unused` | an API that nothing calls |
+| `kind/bridge-one-sided` | a bridge touching fewer than two other nodes |
+| `graph/orphan` | a node with no edges |
+| `layout/overlap`, `layout/outside-frame` | cards overlap, or sit outside their frame — `dgv_layout` fixes both |
 
-Every one carries `fixes`. `info`-level findings can be silenced per subject with an `ack` that records *why*, so an acknowledged exception is documented in the file instead of forgotten.
+**Info** — worth a look, silent in the counts.
 
-Frames do not nest. Folding one had to answer "and what about the frames inside it", and every answer was a special case; one flat level makes a frame exactly one node.
+| code | fires when |
+|---|---|
+| `kind/store-access` | a call into a store is `sync` where `data` reads better |
+| `kind/module-loose` | a module makes runtime calls but sits in no frame — which program runs it? |
+| `kind/external-inside` | an external component drawn inside your own boundary |
+| `graph/shared-store` | one store written directly by more than two nodes |
+| `layout/unplaced` | nodes that have no position yet |
+
+Setting `ack: "<reason>"` on an element turns its **warnings** into info with the reason attached — the count stops nagging, the fact stays in the file. Errors cannot be acknowledged.
+
+Frames do not nest. Folding a frame into one node had to answer *what about the frames inside it*, and every answer was a special case. One level keeps the fold, the layout and the file simple; `frame/nested` is an error so an old file with a `parent` says so rather than rendering wrongly.
 
 ## The viewer
 
 `node packages/mcp/bin/dgv.mjs serve` → http://127.0.0.1:7710
 
-- add nodes by kind (`A`), drag from a node's right handle to connect, drag nodes into frames (frames grow to fit), resize frames
-- the inspector edits every field including ports; the problems panel lints live and jumps to the subject
-- colour by kind (`1`) or by build status (`2`); `Ctrl+S` saves
-- **fold a frame into one node** — hover a frame and fold it, or `S` for the simple view. The folded view keeps its own layout, per diagram, in your browser — never in the file
-- **snapshot** (`Shift+S`) saves what is on screen as a standalone SVG
-- the page reloads when the agent changes the file, or warns you if you have unsaved edits
-- `npm run dev` runs Vite on 5190 with `/api` proxied to 7710, for hacking on the viewer itself
+| | |
+|---|---|
+| `A` / double-click | add a node, choosing its kind |
+| drag from a node's right handle | connect; drop on a port chip to bind the edge to that port |
+| drag a node into a frame | it joins the frame; frames grow to fit |
+| `G` | wrap the selection in a new frame |
+| `1` / `2` | colour by kind / by status |
+| `L` | cycle wire style: floating, routed, straight |
+| `S` | fold every frame into one node; again to unfold. Hover a single frame to fold just that one |
+| `Shift+S` | save what is on screen as SVG |
+| `F` | fit to view · `I` inspector · `P` problems · `Ctrl+S` save · `Ctrl+Z` undo |
+
+The folded view keeps its own arrangement per diagram in your browser, never in the file. Dragging a folded node moves only the folded view.
 
 ## The file format
 
 ```jsonc
 { "dgv": 1,
   "meta":   { "title": "Notes app", "description": "…", "colorBy": "kind" },
-  "frames": [ { "id": "server", "label": "Server · one process", "tone": "amber" } ],
+  "frames": [ { "id": "server", "label": "Server · one process", "tone": "amber",
+                "position": { "x": 480, "y": 60 }, "size": { "width": 380, "height": 300 } } ],
   "nodes":  [ { "id": "api", "kind": "api", "label": "HTTP API", "sublabel": "/api/notes",
-                "frame": "server", "status": "done",
+                "frame": "server", "status": "done", "position": { "x": 520, "y": 120 },
                 "ports": [ { "id": "rest", "protocol": "http", "dir": "in" } ] } ],
   "edges":  [ { "id": "web-api", "source": "web", "target": "api",
                 "kind": "sync", "protocol": "http", "targetPort": "rest", "label": "fetch" } ] }
 ```
 
-Positions live in the file too, so a layout you arranged stays arranged. [`skill/references/format.md`](skill/references/format.md) has the full schema, every kind, and every lint code.
+<div align="center">
+  <img src="assets/kinds.svg" width="880" alt="Every node kind with its shape, and every wire kind with its dash — drawn from the catalog"/>
+</div>
+
+`kind` is required on a node. On an edge it is inferred from the protocol when omitted — `data` for `sql` `redis` `s3` `fs` `smb`, `async` for `kafka` `nats` `amqp` `mqtt` `sse` `ws`, otherwise `sync`. `protocol`, `ports`, `status` and `frame` are optional; the linter asks for them when their absence matters. Positions are saved, so an arrangement you made stays made.
+
+The full catalog — every kind with its shape, every protocol, every lint code — is in [`skill/references/format.md`](skill/references/format.md).
 
 ## Packages
 
 | path | what |
 |---|---|
-| `packages/core` | isomorphic ESM: catalog, validator, lint, dagre layout, orthogonal router, exports, file store |
-| `packages/mcp` | `dgv` CLI + MCP server + local HTTP/SSE server for the viewer |
-| `packages/viewer` | Svelte 5 + Svelte Flow editor: shaped nodes, frames, folding, inspector, live problems |
-| `skill/` | Claude Code skill (`SKILL.md`) teaching the planning workflow |
+| `packages/core` | plain ESM, no DOM: catalog, schema, lint, dagre layout, orthogonal wire router, fold, exports, file store |
+| `packages/mcp` | the `dgv` CLI, the MCP server, and the local HTTP/SSE server behind the viewer |
+| `packages/viewer` | Svelte 5 + Svelte Flow: shaped nodes, frames, folding, inspector, live problems |
+| `skill/` | a Claude Code skill (`SKILL.md`) that teaches the workflow |
 | `examples/` | [`notes-app`](examples/notes-app.dgv.json), [`local-ai-harness`](examples/local-ai-harness.dgv.json) |
 
 ```bash
 npm test    # core: schema, lint rules, patch semantics, layout containment, folding, exports, SVG
 ```
 
-## Honest limits
+## Limits
 
-DGV records the plan. **It does not read your source**, so it cannot tell you the code matches — only that the plan is coherent, and that what you wrote down still says what you meant. Keeping the two in step is a habit, not a feature; the file living in the repo is what makes that habit reviewable.
+DGV records the plan; it does not read your source. It can tell you the plan is coherent. It cannot tell you the code matches it — that is a habit, and keeping the file in the repo is what makes the habit reviewable.
 
-Not here yet: collaboration and hosting, sequence and lifecycle diagram types, repository auto-discovery. The format is versioned (`dgv: 1`) so those can arrive without breaking existing diagrams.
+Not here: collaboration or hosting, sequence and lifecycle diagrams, discovery of a repository's structure. The format is versioned (`dgv: 1`) so those can be added without breaking existing files.
 
 ## Credits
 
-Inspired by [archify](https://github.com/tt-a1i/archify) — typed IR and repairable diagnostics — and grown out of the `arch-viewer` draft inside [Cerveau](https://github.com/ShAInyXYZ/Cerveau) ([cerveau.sh](https://cerveau.sh)), where the Svelte Flow canvas and the idea of frames came from.
+[archify](https://github.com/tt-a1i/archify) for the idea of a typed intermediate representation with repairable diagnostics. [Cerveau](https://github.com/ShAInyXYZ/Cerveau) ([cerveau.sh](https://cerveau.sh)) for the `arch-viewer` draft this grew out of — the canvas, the frames, and the hierarchy-aware layout that became `layout.js`.
 
 MIT © Mounir Belahbib

@@ -1,4 +1,4 @@
-// Generates ../banner.svg. Run: node assets/banner.mjs
+// Generates assets/banner.svg. Run: node assets/banner.mjs
 // The cards are the real catalog shapes (core/shapes.js) in the catalog's own colours;
 // the red wire is a real diagnostic (kind/store-initiates). Fonts are embedded as
 // subsets so GitHub renders them — an <img> SVG cannot fetch web fonts.
@@ -96,5 +96,5 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" wid
   ${title}
 </svg>
 `;
-fs.writeFileSync(path.join(here, '..', 'banner.svg'), svg);
+fs.writeFileSync(path.join(here, 'banner.svg'), svg);
 console.log(`banner.svg ${(svg.length / 1024).toFixed(0)} kB`);

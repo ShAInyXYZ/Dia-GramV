@@ -22,7 +22,10 @@
     <!-- svelte-ignore a11y_autofocus -->
     <input class="frame-edit nodrag nopan" bind:value={draft} autofocus onblur={commit} onkeydown={(e) => { e.stopPropagation(); if (e.key === 'Enter') commit(); if (e.key === 'Escape') editing = false; }} />
   {:else}
-    <div class="frame-label" ondblclick={start} role="heading" aria-level="3">{data.label}{#if problem}<span class="prob {problem}">●</span>{/if}</div>
+    <div class="frame-label" ondblclick={start} role="heading" aria-level="3">
+      <button class="fold nodrag nopan" onclick={(e) => { e.stopPropagation(); dg.setCollapsed(id, true); }} data-tip="fold into one node" aria-label="fold {data.label}">⤡</button>
+      {data.label}{#if problem}<span class="prob {problem}">●</span>{/if}
+    </div>
   {/if}
   {#if data.note}<div class="frame-note">{data.note}</div>{/if}
 </div>
@@ -30,7 +33,12 @@
 <style>
   .frame { width: 100%; height: 100%; border: 1px dashed var(--hair2); border-radius: 12px; background: color-mix(in srgb, var(--tone) 3%, transparent); transition: border-color .12s, background .12s; }
   .frame.drop { border-color: var(--accent); border-style: solid; background: color-mix(in srgb, var(--accent) 6%, transparent); }
-  .frame-label { position: absolute; top: -10px; left: 14px; padding: 1px 10px; background: var(--bg); color: var(--tone); font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; cursor: text; }
+  .frame-label { position: absolute; top: -10px; left: 14px; display: flex; align-items: center; gap: 6px; padding: 1px 10px; background: var(--bg); color: var(--tone); font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; cursor: text; }
+  /* Only inked on hover: a frame's job is to be a quiet boundary, and a
+     permanent button on every one of them would out-shout the labels. */
+  .fold { padding: 0; background: transparent; border: none; color: inherit; font-size: 11px; line-height: 1; opacity: 0; transition: opacity .12s; }
+  .frame:hover .fold, .fold:focus-visible { opacity: .7; }
+  .fold:hover { opacity: 1; }
   .frame-edit { position: absolute; top: -13px; left: 14px; width: 220px; padding: 2px 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; background: var(--bg); }
   .frame-note { position: absolute; top: 12px; left: 16px; right: 16px; font-size: 10.5px; color: var(--dim); }
   .prob { margin-left: 6px; font-size: 9px; } .prob.error { color: var(--err); } .prob.warning { color: var(--warn); }

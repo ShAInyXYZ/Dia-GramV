@@ -12,6 +12,11 @@
   const warns = $derived(dg.diagnostics.filter((d) => d.severity === 'warning').length);
   let width = $state(320), dragging = $state(false);
 
+  function snapshot() {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([dg.snapshotSVG()], { type: 'image/svg+xml' }));
+    a.download = `${dg.name}${dg.simple ? '-simple' : ''}.svg`; a.click(); URL.revokeObjectURL(a.href);
+  }
   function open(tab: 'inspect' | 'problems') { if (ui.sideOpen && ui.tab === tab) ui.sideOpen = false; else { ui.sideOpen = true; ui.tab = tab; } }
   function key(e: KeyboardEvent) {
     const mod = e.ctrlKey || e.metaKey;
@@ -21,9 +26,10 @@
     if (e.key === 'Escape') { if (ui.quickAdd) ui.quickAdd = null; else if (dg.selected) dg.select(null); else ui.sideOpen = false; dg.setActive(null); return; }
     if (!dg.name) return;
     switch (e.key.toLowerCase()) {
-      case 'a': e.preventDefault(); ui.quickAdd = { ...ui.mouse }; break;
-      case 'g': e.preventDefault(); { const p = flow.screenToFlowPosition(ui.mouse); dg.addFrame({ x: p.x, y: p.y }); } break;
+      case 'a': if (dg.simple) break; e.preventDefault(); ui.quickAdd = { ...ui.mouse }; break;
+      case 'g': if (dg.simple) break; e.preventDefault(); { const p = flow.screenToFlowPosition(ui.mouse); dg.addFrame({ x: p.x, y: p.y }); } break;
       case 'f': flow.fitView({ duration: 300 }); break;
+      case 's': if (e.shiftKey) { snapshot(); break; } if (dg.frames().length) { dg.simple ? dg.expandAll() : dg.collapseAll(); flow.fitView({ duration: 300 }); } break;
       case 'l': hl.edgeStyle = EDGE_STYLES[(EDGE_STYLES.indexOf(hl.edgeStyle) + 1) % EDGE_STYLES.length]; dg.touch(); break;
       case '1': hl.colorBy = 'kind'; dg.touch(); break;
       case '2': hl.colorBy = 'status'; dg.touch(); break;

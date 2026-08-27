@@ -20,9 +20,18 @@
     const n = name.trim().replace(/[^a-zA-Z0-9_-]/g, '-'); if (!n) return;
     await dg.create(n, title.trim() || n); creating = false; menu = false; name = ''; title = '';
   }
+  function download(name: string, body: string, type: string) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([body], { type }));
+    a.download = name; a.click(); URL.revokeObjectURL(a.href);
+  }
+  function snapshot() {
+    // named for what it is a picture OF: folded views and full ones land in
+    // different files rather than one overwriting the other
+    download(`${dg.name}${dg.simple ? '-simple' : ''}.svg`, dg.snapshotSVG(), 'image/svg+xml');
+  }
   function exportJson() {
-    const blob = new Blob([JSON.stringify(dg.doc, null, 2)], { type: 'application/json' });
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${dg.name}.dgv.json`; a.click(); URL.revokeObjectURL(a.href);
+    download(`${dg.name}.dgv.json`, JSON.stringify(dg.doc, null, 2), 'application/json');
   }
   export function addFrame() { dg.addFrame(centerOfView()); }
 </script>
@@ -64,13 +73,21 @@
       <button onclick={() => (ui.quickAdd = { x: window.innerWidth / 2 - 150, y: 120 })} disabled={!dg.name} data-tip="add a node (A, or double-click the canvas)"><Icon name="node" /><span class="lbl">node</span></button>
     </div>
     <div class="group">
-      <button onclick={() => dg.relayout('TB')} disabled={!dg.name} data-tip="auto layout, top to bottom"><Icon name="layout-v" /><span class="lbl">layout</span></button>
-      <button onclick={() => dg.relayout('LR')} disabled={!dg.name} data-tip="auto layout, left to right"><Icon name="layout-h" /><span class="lbl">layout</span></button>
+      <button onclick={() => { dg.relayout('TB'); flow.fitView({ duration: 300 }); }} disabled={!dg.name} data-tip={dg.simple ? 'lay the folded view out top to bottom' : 'auto layout, top to bottom'}><Icon name="layout-v" /><span class="lbl">layout</span></button>
+      <button onclick={() => { dg.relayout('LR'); flow.fitView({ duration: 300 }); }} disabled={!dg.name} data-tip={dg.simple ? 'lay the folded view out left to right' : 'auto layout, left to right'}><Icon name="layout-h" /><span class="lbl">layout</span></button>
       <button onclick={() => flow.fitView({ duration: 300 })} data-tip="fit (F)"><Icon name="fit" /><span class="lbl">fit</span></button>
+      <!-- A way of looking, not an edit: nothing here reaches the file. -->
+      <button
+        class:active={dg.simple}
+        onclick={() => { dg.simple ? dg.expandAll() : dg.collapseAll(); flow.fitView({ duration: 300 }); }}
+        disabled={!dg.name || !dg.frames().length}
+        data-tip={dg.simple ? 'unfold every group — back to the full diagram (S)' : 'fold every group into one node each (S)'}
+      ><Icon name="group" /><span class="lbl">{dg.simple ? 'detail' : 'simple'}</span></button>
     </div>
     <div class="group">
       <button onclick={() => { hl.edgeStyle = EDGE_STYLES[(EDGE_STYLES.indexOf(hl.edgeStyle) + 1) % EDGE_STYLES.length]; dg.touch(); }} data-tip="link style: {hl.edgeStyle} (L)"><Icon name="links" /><span class="lbl">{hl.edgeStyle}</span></button>
       <button class:active={hl.colorBy === 'status'} onclick={() => { hl.colorBy = hl.colorBy === 'kind' ? 'status' : 'kind'; dg.touch(); }} data-tip="colour by {hl.colorBy} — click to switch (1 / 2)"><Icon name="palette" /><span class="lbl">{hl.colorBy}</span></button>
+      <button onclick={snapshot} disabled={!dg.name} data-tip="save this view as an SVG — for a README or docs (Shift+S)"><Icon name="snapshot" /><span class="lbl">snapshot</span></button>
       <button onclick={exportJson} disabled={!dg.name} data-tip="download the JSON"><Icon name="export" /><span class="lbl">export</span></button>
     </div>
   </div>

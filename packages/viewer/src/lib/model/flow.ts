@@ -7,7 +7,8 @@
 import type { Node, Edge } from '@xyflow/svelte';
 import { frameDepth, normalize, NODE_W, estimateHeight } from '@dgv/core';
 
-export type NodeData = { kind: string; label: string; sublabel?: string; note?: string; tech?: string; status?: string; tags?: string[]; ports?: Port[]; ack?: string };
+export type Master = { tone: string; nodes: number; frames: number; members: string[]; kinds: { kind: string; n: number }[] };
+export type NodeData = { kind: string; label: string; sublabel?: string; note?: string; tech?: string; status?: string; tags?: string[]; ports?: Port[]; ack?: string; master?: Master };
 export type Port = { id: string; protocol?: string; dir?: 'in' | 'out' | 'both'; shape?: string };
 export type FrameData = { label: string; tone?: string; note?: string; ack?: string; isFrame: true };
 export type EdgeData = { kind?: string; protocol?: string; label?: string; sourcePort?: string; targetPort?: string; payload?: string; note?: string; ack?: string };
@@ -15,6 +16,7 @@ export type FNode = Node<NodeData | FrameData>;
 export type FEdge = Edge<EdgeData>;
 
 export const isFrame = (n: FNode) => n.type === 'frame';
+export const isMaster = (n: FNode) => n.type === 'master';
 
 export function toFlow(rawDoc: any): { nodes: FNode[]; edges: FEdge[] } {
   const doc = normalize(rawDoc);
@@ -43,10 +45,11 @@ export function toFlow(rawDoc: any): { nodes: FNode[]; edges: FEdge[] } {
     const p = pid ? frameById.get(pid) : null;
     const a = n.position ?? { x: 0, y: 0 };
     return {
-      id: n.id, type: 'dgv',
+      // A collapsed frame arrives as a node carrying `master` — same shape, own card.
+      id: n.id, type: n.master ? 'master' : 'dgv',
       position: p ? { x: a.x - abs(p).x, y: a.y - abs(p).y } : { ...a },
       zIndex: 10,
-      data: { kind: n.kind, label: n.label, sublabel: n.sublabel, note: n.note, tech: n.tech, status: n.status, tags: n.tags ?? [], ports: n.ports ?? [], ack: n.ack },
+      data: { kind: n.kind, label: n.label, sublabel: n.sublabel, note: n.note, tech: n.tech, status: n.status, tags: n.tags ?? [], ports: n.ports ?? [], ack: n.ack, master: n.master },
       ...(pid ? { parentId: pid } : {}),
     };
   });

@@ -11,7 +11,7 @@
     <img src="https://img.shields.io/badge/cloud-none-e8873a?style=flat-square&labelColor=161513" alt="No cloud"/>
   </p>
 
-  <p>Your diagrams are files in your repo. No accounts, no server, no telemetry.</p>
+  <p>Your diagrams are files in your repo. Runs on your machine — no accounts, no cloud, no telemetry.</p>
 
   <p>
     <a href="#install"><strong>Install ↓</strong></a> ·
@@ -167,16 +167,25 @@ Small systems fit on a screen. This is [Cerveau](https://github.com/ShAInyXYZ/Ce
 
 ## Install
 
-Needs **Node 20+**. Nothing else — no database, no account, no network.
+The only thing you install yourself is **Node 20+** (npm comes with it). Everything the
+project needs — Svelte 5 and Svelte Flow for the canvas, Vite and TypeScript to build it,
+dagre for layout, the MCP SDK — is fetched by `npm install` into `node_modules`: about
+100 MB, nothing global, nothing to configure. No database, no account, and no network once
+it is installed.
 
 ```bash
 git clone https://github.com/ShAInyXYZ/Dia-GramV.git
 cd Dia-GramV
-npm install
-npm run build                          # builds the viewer once
+npm install                            # pulls Svelte, Svelte Flow, Vite, dagre, the MCP SDK
+npm run build                          # compiles the viewer — this is the step that needs Svelte
 
 node packages/mcp/bin/dgv.mjs doctor   # checks node + viewer, prints the next line with your real path
 ```
+
+The build ships no prebuilt bundle on purpose, so what you run is compiled from the source
+you just cloned. If you only want the MCP tools and never the browser canvas you can skip
+`npm run build` — every tool works without it except `dgv_open` and `serve`, which have a
+viewer to serve.
 
 Register the MCP server with Claude Code (user scope, so it works in every project):
 

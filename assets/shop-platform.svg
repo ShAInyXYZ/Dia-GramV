@@ -1,155 +1,155 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2646" height="1010" viewBox="0 0 2646 1010" font-family="Manrope, 'Segoe UI', system-ui, -apple-system, sans-serif">
 <title>Shop platform</title>
-<rect class="bg" fill="#0e0d0b" width="2646" height="1010"/>
+<rect class="bg" fill="#1d1d1d" width="2646" height="1010"/>
 <g data-frame="clients">
 <rect x="32" y="32" width="348" height="482" rx="12" fill="#5ec8d8" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="42" y="23" width="58.2" height="17" fill="#0e0d0b"/>
+<rect x="42" y="23" width="58.2" height="17" fill="#1d1d1d"/>
 <text x="48" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#5ec8d8">CLIENTS</text>
 </g>
 <g data-frame="edge">
 <rect x="520" y="32" width="348" height="224" rx="12" fill="#8a8580" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="530" y="23" width="38.4" height="17" fill="#0e0d0b"/>
+<rect x="530" y="23" width="38.4" height="17" fill="#1d1d1d"/>
 <text x="536" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#8a8580">EDGE</text>
 </g>
 <g data-frame="services">
 <rect x="1008" y="32" width="1118" height="666" rx="12" fill="#e8873a" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="1018" y="23" width="203.4" height="17" fill="#0e0d0b"/>
+<rect x="1018" y="23" width="203.4" height="17" fill="#1d1d1d"/>
 <text x="1024" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#e8873a">SERVICES · K8S NAMESPACE SHOP</text>
 </g>
 <g data-frame="data">
 <rect x="2266" y="32" width="348" height="728" rx="12" fill="#c98cff" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="2276" y="23" width="38.4" height="17" fill="#0e0d0b"/>
+<rect x="2276" y="23" width="38.4" height="17" fill="#1d1d1d"/>
 <text x="2282" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#c98cff">DATA</text>
 </g>
 <g data-frame="providers">
 <rect x="1008" y="788" width="656" height="190" rx="12" fill="#e86a8f" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="1018" y="779" width="71.4" height="17" fill="#0e0d0b"/>
+<rect x="1018" y="779" width="71.4" height="17" fill="#1d1d1d"/>
 <text x="1024" y="791.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#e86a8f">PROVIDERS</text>
 </g>
 <g data-edge="web-gateway">
-<path d="M 336,139 L 360,139 L 467.5,139 Q 474,139 474,145.5 L 474,145.5 Q 474,152 480.5,152 L 588,152 L 564,152" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(564 152) rotate(0)"/>
-<rect x="404.2" y="137.5" width="139.6" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 336,139 L 360,139 L 467.5,139 Q 474,139 474,145.5 L 474,145.5 Q 474,152 480.5,152 L 588,152 L 564,152" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(564 152) rotate(0)"/>
+<rect x="404.2" y="137.5" width="139.6" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="474" y="148.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">browse, checkout · https</text>
 </g>
 <g data-edge="app-gateway">
-<path d="M 336,281 L 360,281 L 440,281 Q 474,281 474,247 L 474,186 Q 474,152 508,152 L 588,152 L 564,152" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(564 152) rotate(0)"/>
-<rect x="425.8" y="208.5" width="96.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 336,281 L 360,281 L 440,281 Q 474,281 474,247 L 474,186 Q 474,152 508,152 L 588,152 L 564,152" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(564 152) rotate(0)"/>
+<rect x="425.8" y="208.5" width="96.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="474" y="219.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">same API · https</text>
 </g>
 <g data-edge="admin-gateway">
-<path d="M 206,376 L 206,364 Q 206,352 218,352 L 416,352 Q 450,352 450,318 L 450,222 Q 450,188 484,188 L 682,188 Q 694,188 694,200 L 694,212" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(694 212) rotate(-90)"/>
-<rect x="396.4" y="262" width="107.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 206,376 L 206,364 Q 206,352 218,352 L 416,352 Q 450,352 450,318 L 450,222 Q 450,188 484,188 L 682,188 Q 694,188 694,200 L 694,212" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(694 212) rotate(-90)"/>
+<rect x="396.4" y="262" width="107.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="450" y="273" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">staff only · https</text>
 </g>
 <g data-edge="gateway-api">
-<path d="M 824,152 L 848,152 L 1035,152 Q 1039,152 1039,156 L 1039,156 Q 1039,160 1043,160 L 1230,160 L 1206,160" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1206 160) rotate(0)"/>
-<rect x="990.8" y="148" width="96.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 824,152 L 848,152 L 1035,152 Q 1039,152 1039,156 L 1039,156 Q 1039,160 1043,160 L 1230,160 L 1206,160" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1206 160) rotate(0)"/>
+<rect x="990.8" y="148" width="96.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1039" y="159" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">route /v1 · http</text>
 </g>
 <g data-edge="api-web">
-<path d="M 1206,160 L 1182,160 L 757.5,160 Q 747,160 747,149.5 L 747,149.5 Q 747,139 736.5,139 L 312,139 L 336,139" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(336 139) rotate(180)"/>
-<rect x="693.4" y="141.5" width="107.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1206,160 L 1182,160 L 757.5,160 Q 747,160 747,149.5 L 747,149.5 Q 747,139 736.5,139 L 312,139 L 336,139" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(336 139) rotate(180)"/>
+<rect x="693.4" y="141.5" width="107.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="747" y="152.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">order status · sse</text>
 </g>
 <g data-edge="api-catalog">
-<path d="M 1466,160 L 1490,160 L 1557,160 Q 1591,160 1591,194 L 1591,318 Q 1591,352 1625,352 L 1692,352 L 1668,352" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1668 352) rotate(0)"/>
-<rect x="1532" y="248" width="118" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1466,160 L 1490,160 L 1557,160 Q 1591,160 1591,194 L 1591,318 Q 1591,352 1625,352 L 1692,352 L 1668,352" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1668 352) rotate(0)"/>
+<rect x="1532" y="248" width="118" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1591" y="259" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">search, stock · grpc</text>
 </g>
 <g data-edge="api-orders">
-<path d="M 1336,228 L 1336,240 Q 1336,252 1348,252 L 1381,252 Q 1413,252 1413,284 L 1413,284 Q 1413,316 1445,316 L 1478,316 Q 1490,316 1490,304 L 1490,292" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1490 292) rotate(90)"/>
-<rect x="1343.2" y="276" width="139.6" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1336,228 L 1336,240 Q 1336,252 1348,252 L 1381,252 Q 1413,252 1413,284 L 1413,284 Q 1413,316 1445,316 L 1478,316 Q 1490,316 1490,304 L 1490,292" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1490 292) rotate(90)"/>
+<rect x="1343.2" y="276" width="139.6" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1413" y="287" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">cart, place order · grpc</text>
 </g>
 <g data-edge="api-recs">
-<path d="M 1336,228 L 1336,240 Q 1336,252 1324,252 L 1291,252 Q 1259,252 1259,284 L 1259,284 Q 1259,316 1227,316 L 1194,316 Q 1182,316 1182,304 L 1182,292" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1182 292) rotate(90)"/>
-<rect x="1197.3" y="276" width="123.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1336,228 L 1336,240 Q 1336,252 1324,252 L 1291,252 Q 1259,252 1259,284 L 1259,284 Q 1259,316 1227,316 L 1194,316 Q 1182,316 1182,304 L 1182,292" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1182 292) rotate(90)"/>
+<rect x="1197.3" y="276" width="123.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1259" y="287" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">home page recs · http</text>
 </g>
 <g data-edge="orders-payments">
-<path d="M 1490,412 L 1490,436 L 1490,500 L 1490,476" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1490 476) rotate(90)"/>
-<rect x="1449.9" y="460" width="80.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1490,412 L 1490,436 L 1490,500 L 1490,476" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1490 476) rotate(90)"/>
+<rect x="1449.9" y="460" width="80.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1490" y="471" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">charge · grpc</text>
 </g>
 <g data-edge="payments-stripe">
-<path d="M 1490,654 L 1490,666 Q 1490,678 1478,678 L 1370,678 Q 1336,678 1336,712 L 1336,838 Q 1336,872 1302,872 L 1194,872 Q 1182,872 1182,860 L 1182,848" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1182 848) rotate(90)"/>
-<rect x="1274.3" y="767" width="123.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1490,654 L 1490,666 Q 1490,678 1478,678 L 1370,678 Q 1336,678 1336,712 L 1336,838 Q 1336,872 1302,872 L 1194,872 Q 1182,872 1182,860 L 1182,848" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1182 848) rotate(90)"/>
+<rect x="1274.3" y="767" width="123.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1336" y="778" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">PaymentIntent · https</text>
 </g>
 <g data-edge="stripe-payments">
-<path d="M 1182,848 L 1182,836 Q 1182,824 1194,824 L 1302,824 Q 1336,824 1336,790 L 1336,664 Q 1336,630 1370,630 L 1478,630 Q 1490,630 1490,642 L 1490,654" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1490 654) rotate(-90)"/>
-<rect x="1220.3" y="719" width="231.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1182,848 L 1182,836 Q 1182,824 1194,824 L 1302,824 Q 1336,824 1336,790 L 1336,664 Q 1336,630 1370,630 L 1478,630 Q 1490,630 1490,642 L 1490,654" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1490 654) rotate(-90)"/>
+<rect x="1220.3" y="719" width="231.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1336" y="730" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">webhook: payment_intent.succeeded · https</text>
 </g>
 <g data-edge="orders-events">
-<path d="M 1620,352 L 1644,352 L 1955,352 Q 1989,352 1989,386 L 1989,454 Q 1989,488 2023,488 L 2334,488 L 2310,488" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2310 488) rotate(0)"/>
-<rect x="1943.5" y="412" width="91" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1620,352 L 1644,352 L 1955,352 Q 1989,352 1989,386 L 1989,454 Q 1989,488 2023,488 L 2334,488 L 2310,488" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2310 488) rotate(0)"/>
+<rect x="1943.5" y="412" width="91" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1989" y="423" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">publish · kafka</text>
 </g>
 <g data-edge="events-notifier">
-<path d="M 2310,488 L 2286,488 L 1999,488 Q 1965,488 1965,454 L 1965,217 Q 1965,183 1931,183 L 1656,183 Q 1644,183 1644,195 L 1644,207" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1644 207) rotate(-90)"/>
-<rect x="1919.5" y="327.5" width="91" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 2310,488 L 2286,488 L 1999,488 Q 1965,488 1965,454 L 1965,217 Q 1965,183 1931,183 L 1656,183 Q 1644,183 1644,195 L 1644,207" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1644 207) rotate(-90)"/>
+<rect x="1919.5" y="327.5" width="91" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1965" y="338.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">consume · kafka</text>
 </g>
 <g data-edge="notifier-email">
-<path d="M 1644,207 L 1644,219 Q 1644,231 1632,231 L 1597,231 Q 1563,231 1563,265 L 1563,838 Q 1563,872 1529,872 L 1494,872 Q 1482,872 1482,860 L 1482,848" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1482 848) rotate(90)"/>
-<rect x="1525.6" y="543.5" width="74.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1644,207 L 1644,219 Q 1644,231 1632,231 L 1597,231 Q 1563,231 1563,265 L 1563,838 Q 1563,872 1529,872 L 1494,872 Q 1482,872 1482,860 L 1482,848" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1482 848) rotate(90)"/>
+<rect x="1525.6" y="543.5" width="74.8" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1563" y="554.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">send · https</text>
 </g>
 <g data-edge="catalog-pg">
-<path d="M 1928,352 L 1952,352 L 2109,352 Q 2143,352 2143,318 L 2143,186 Q 2143,152 2177,152 L 2334,152 L 2310,152" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2310 152) rotate(0)"/>
-<rect x="2129.9" y="244" width="26.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1928,352 L 1952,352 L 2109,352 Q 2143,352 2143,318 L 2143,186 Q 2143,152 2177,152 L 2334,152 L 2310,152" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2310 152) rotate(0)"/>
+<rect x="2129.9" y="244" width="26.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="2143" y="255" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">sql</text>
 </g>
 <g data-edge="orders-pg">
-<path d="M 1620,352 L 1644,352 L 1955,352 Q 1989,352 1989,318 L 1989,186 Q 1989,152 2023,152 L 2334,152 L 2310,152" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2310 152) rotate(0)"/>
-<rect x="1975.9" y="244" width="26.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1620,352 L 1644,352 L 1955,352 Q 1989,352 1989,318 L 1989,186 Q 1989,152 2023,152 L 2334,152 L 2310,152" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2310 152) rotate(0)"/>
+<rect x="1975.9" y="244" width="26.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1989" y="255" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">sql</text>
 </g>
 <g data-edge="orders-redis">
-<path d="M 1620,352 L 1644,352 L 1973,352 Q 1989,352 1989,336 L 1989,336 Q 1989,320 2005,320 L 2334,320 L 2310,320" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2310 320) rotate(0)"/>
-<rect x="1913.8" y="328" width="150.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1620,352 L 1644,352 L 1973,352 Q 1989,352 1989,336 L 1989,336 Q 1989,320 2005,320 L 2334,320 L 2310,320" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2310 320) rotate(0)"/>
+<rect x="1913.8" y="328" width="150.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1989" y="339" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">carts, stock holds · redis</text>
 </g>
 <g data-edge="api-redis">
-<path d="M 1466,160 L 1490,160 L 1878,160 Q 1912,160 1912,194 L 1912,286 Q 1912,320 1946,320 L 2334,320 L 2310,320" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2310 320) rotate(0)"/>
-<rect x="1863.8" y="232" width="96.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1466,160 L 1490,160 L 1878,160 Q 1912,160 1912,194 L 1912,286 Q 1912,320 1946,320 L 2334,320 L 2310,320" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2310 320) rotate(0)"/>
+<rect x="1863.8" y="232" width="96.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1912" y="243" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">sessions · redis</text>
 </g>
 <g data-edge="catalog-media">
-<path d="M 1798,412 L 1798,424 Q 1798,436 1810,436 L 2085,436 Q 2119,436 2119,470 L 2119,586 Q 2119,620 2153,620 L 2428,620 Q 2440,620 2440,608 L 2440,596" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2440 596) rotate(90)"/>
-<rect x="2073.5" y="520" width="91" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1798,412 L 1798,424 Q 1798,436 1810,436 L 2085,436 Q 2119,436 2119,470 L 2119,586 Q 2119,620 2153,620 L 2428,620 Q 2440,620 2440,608 L 2440,596" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2440 596) rotate(90)"/>
+<rect x="2073.5" y="520" width="91" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="2119" y="531" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">image URLs · s3</text>
 </g>
 <g data-edge="recs-pg">
-<path d="M 1312,352 L 1336,352 L 1801,352 Q 1835,352 1835,318 L 1835,186 Q 1835,152 1869,152 L 2334,152 L 2310,152" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2310 152) rotate(0)"/>
-<rect x="1781.4" y="244" width="107.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1312,352 L 1336,352 L 1801,352 Q 1835,352 1835,318 L 1835,186 Q 1835,152 1869,152 L 2334,152 L 2310,152" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2310 152) rotate(0)"/>
+<rect x="1781.4" y="244" width="107.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1835" y="255" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">nightly read · sql</text>
 </g>
 <g data-edge="migrate-pg">
-<path d="M 2082,160 L 2106,160 L 2216,160 Q 2220,160 2220,156 L 2220,156 Q 2220,152 2224,152 L 2334,152 L 2310,152" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2310 152) rotate(0)"/>
-<rect x="2155.6" y="148" width="128.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 2082,160 L 2106,160 L 2216,160 Q 2220,160 2220,156 L 2220,156 Q 2220,152 2224,152 L 2334,152 L 2310,152" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2310 152) rotate(0)"/>
+<rect x="2155.6" y="148" width="128.8" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="2220" y="159" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">apply migrations · sql</text>
 </g>
 <g data-node="web" transform="translate(76 92)">

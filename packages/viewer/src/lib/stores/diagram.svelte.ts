@@ -454,7 +454,7 @@ class DiagramStore {
 }
 
 export function accentOf(d: NodeData): string {
-  if (hl.colorBy === 'status') return STATUSES[d.status ?? '']?.color ?? '#5a564f';
+  if (hl.colorBy === 'status') return STATUSES[d.status ?? '']?.color ?? '#6a6a6a';
   return kindColor(d.kind);
 }
 const rel = (a: { x: number; y: number }, p: { x: number; y: number }) => ({ x: a.x - p.x, y: a.y - p.y });

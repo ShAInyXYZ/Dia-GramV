@@ -1,49 +1,49 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1388" height="570" viewBox="0 0 1388 570" font-family="Manrope, 'Segoe UI', system-ui, -apple-system, sans-serif">
 <title>Notes app</title>
-<rect class="bg" fill="#0e0d0b" width="1388" height="570"/>
+<rect class="bg" fill="#1d1d1d" width="1388" height="570"/>
 <g data-frame="browser">
 <rect x="32" y="32" width="348" height="180" rx="12" fill="#5ec8d8" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="42" y="23" width="58.2" height="17" fill="#0e0d0b"/>
+<rect x="42" y="23" width="58.2" height="17" fill="#1d1d1d"/>
 <text x="48" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#5ec8d8">BROWSER</text>
 </g>
 <g data-frame="server">
 <rect x="520" y="32" width="348" height="330" rx="12" fill="#e8873a" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="530" y="23" width="144" height="17" fill="#0e0d0b"/>
+<rect x="530" y="23" width="144" height="17" fill="#1d1d1d"/>
 <text x="536" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#e8873a">SERVER · ONE PROCESS</text>
 </g>
 <g data-frame="data">
 <rect x="1008" y="32" width="348" height="506" rx="12" fill="#c98cff" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="1018" y="23" width="38.4" height="17" fill="#0e0d0b"/>
+<rect x="1018" y="23" width="38.4" height="17" fill="#1d1d1d"/>
 <text x="1024" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#c98cff">DATA</text>
 </g>
 <g data-edge="web-api">
-<path d="M336,133.46 L564,139.54" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(564 139.54) rotate(1.53)"/>
-<rect x="412.6" y="128.5" width="74.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M336,133.46 L564,139.54" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(564 139.54) rotate(1.53)"/>
+<rect x="412.6" y="128.5" width="74.8" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="450" y="139.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">fetch · http</text>
 </g>
 <g data-edge="api-pg">
-<path d="M824,143 L1052,143" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1052 143) rotate(0)"/>
-<rect x="924.9" y="135" width="26.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M824,143 L1052,143" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1052 143) rotate(0)"/>
+<rect x="924.9" y="135" width="26.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="938" y="146" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">sql</text>
 </g>
 <g data-edge="api-redis">
-<path d="M824,182.96 L1052,253.04" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1052 253.04) rotate(17.09)"/>
-<rect x="892.5" y="210" width="91" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M824,182.96 L1052,253.04" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1052 253.04) rotate(17.09)"/>
+<rect x="892.5" y="210" width="91" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="938" y="221" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">enqueue · redis</text>
 </g>
 <g data-edge="jobs-redis">
-<path d="M824,283.46 L1052,289.54" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1052 289.54) rotate(1.53)"/>
-<rect x="892.5" y="278.5" width="91" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M824,283.46 L1052,289.54" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1052 289.54) rotate(1.53)"/>
+<rect x="892.5" y="278.5" width="91" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="938" y="289.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">consume · redis</text>
 </g>
 <g data-edge="jobs-s3">
-<path d="M807.77,318 L1052,399.58" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1052 399.58) rotate(18.47)"/>
-<rect x="919.48" y="350.79" width="20.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M807.77,318 L1052,399.58" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1052 399.58) rotate(18.47)"/>
+<rect x="919.48" y="350.79" width="20.8" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="929.88" y="361.79" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">s3</text>
 </g>
 <g data-node="web" transform="translate(76 92)">

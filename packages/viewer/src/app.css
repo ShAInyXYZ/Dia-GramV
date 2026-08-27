@@ -1,16 +1,16 @@
 /* Emberdeck tokens: warm charcoal, flat 3-step surface ladder, hairlines for depth,
    ONE accent (ember) reserved for interactive / selection signal. */
 :root {
-  --bg: #0e0d0b;
-  --s1: #161513;
-  --s2: #1e1c19;
-  --s3: #262320;
-  --hair: #2c2a27;
-  --hair2: #3a3733;
-  --text: #e6e3de;
-  --muted: #a49e95;
-  --dim: #7d766c;
-  --accent: #e8873a;
+  --bg: #1d1d1d;
+  --s1: #232323;
+  --s2: #2a2a2a;
+  --s3: #323232;
+  --hair: #363636;
+  --hair2: #444444;
+  --text: #e8e8e8;
+  --muted: #a8a8a8;
+  --dim: #7e7e7e;
+  --accent: #22a06b;
   --ok: #4ec9a5;
   --warn: #c9b458;
   --err: #f93c31;

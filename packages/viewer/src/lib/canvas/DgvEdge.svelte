@@ -54,7 +54,7 @@
   const connected = $derived(!!hl.activeId && (source === hl.activeId || target === hl.activeId));
   const problem = $derived(dg.problemIds.get(id));
   const filtered = $derived((!!hl.edgeFilter && kind !== hl.edgeFilter) || (!!hl.kindFilter && (dg.node(source)?.data as any)?.kind !== hl.kindFilter && (dg.node(target)?.data as any)?.kind !== hl.kindFilter));
-  const stroke = $derived(selected ? 'var(--accent)' : problem === 'error' ? 'var(--err)' : connected ? hl.color : (hl.activeId || filtered) ? '#3a3733' : kind === 'import' ? '#4a4640' : '#6a655d');
+  const stroke = $derived(selected ? 'var(--accent)' : problem === 'error' ? 'var(--err)' : connected ? hl.color : (hl.activeId || filtered) ? '#404040' : kind === 'import' ? '#4a4a4a' : '#767676');
   const width = $derived(selected || connected ? 2.4 : kind === 'import' ? 1 : kind === 'data' ? 2 : 1.5);
   const dash = $derived(({ async: '7 5', data: '2 4', deploy: '12 6', control: '8 4 2 4', import: '' } as Record<string, string>)[kind] ?? '');
   const text = $derived([data?.label, data?.protocol].filter(Boolean).join(' · '));

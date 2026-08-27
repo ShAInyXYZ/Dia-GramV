@@ -15,7 +15,7 @@ import { shapePath, shapeDetail } from './shapes.js';
 import { routeOrthogonal, toBeveledPath, DIR, STUB, BEVEL } from './router.js';
 
 const TONES = { neutral: '#8a8580', amber: '#e8873a', cyan: '#5ec8d8', violet: '#c98cff', green: '#4ec9a5', rose: '#e86a8f' };
-const INK = { text: '#efece6', muted: '#a8a29a', dim: '#6f6a62', hair: '#2a2825', surface: '#161412', wire: '#6a655d' };
+const INK = { text: '#efece6', muted: '#a8a29a', dim: '#6f6a62', hair: '#2a2825', surface: '#161412', wire: '#767676' };
 const SANS = "Manrope, 'Segoe UI', system-ui, -apple-system, sans-serif";
 const MONO = "'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace";
 const DASH = { async: '7 5', data: '2 4', deploy: '12 6', control: '8 4 2 4', import: '' };
@@ -28,7 +28,7 @@ const n2 = (v) => Math.round(v * 100) / 100;
  * @param opts    { padding, background, measured, labels }
  */
 export function toSVG(rawDoc, opts = {}) {
-  const { padding = 32, background = '#0e0d0b', measured = {}, labels = true } = opts;
+  const { padding = 32, background = '#1d1d1d', measured = {}, labels = true } = opts;
   // The canvas draws wires in the style the document records; an export that
   // ignored it would not be a picture of what is on screen.
   const style = opts.edgeStyle ?? rawDoc?.meta?.edgeStyle ?? 'floating';
@@ -84,7 +84,7 @@ export function toSVG(rawDoc, opts = {}) {
     const s0 = boxes.get(e.source), t0 = boxes.get(e.target);
     if (!s0 || !t0) continue;
     const kind = e.kind ?? 'sync';
-    const stroke = kind === 'import' ? '#4a4640' : INK.wire;
+    const stroke = kind === 'import' ? '#4a4a4a' : INK.wire;
     const width = kind === 'data' ? 2 : kind === 'import' ? 1 : 1.5;
     const dash = DASH[kind] ? ` stroke-dasharray="${DASH[kind]}"` : '';
 

@@ -61,10 +61,10 @@
     onselectionchange={({ nodes, edges }: { nodes: FNode[]; edges: FEdge[] }) => dg.onSelectionChange(nodes, edges)}
   >
     <!-- two-level grid: fine 24px lines, stronger 120px lines — snapping is 12px so cards land on the fine grid -->
-    <Background id="minor" variant={BackgroundVariant.Lines} bgColor="#0e0d0b" patternColor="#151412" gap={24} lineWidth={1} />
-    <Background id="major" variant={BackgroundVariant.Lines} patternColor="#1c1a17" gap={120} lineWidth={1} />
+    <Background id="minor" variant={BackgroundVariant.Lines} bgColor="#1d1d1d" patternColor="#242424" gap={24} lineWidth={1} />
+    <Background id="major" variant={BackgroundVariant.Lines} patternColor="#2c2c2c" gap={120} lineWidth={1} />
     <Controls showLock={false} />
-    <MiniMap width={148} height={104} nodeColor={(n: any) => (n.type === 'frame' ? tones[n.data?.tone ?? 'neutral'] : kindColor(n.data?.kind))} maskColor="rgba(14,13,11,0.75)" pannable zoomable />
+    <MiniMap width={148} height={104} nodeColor={(n: any) => (n.type === 'frame' ? tones[n.data?.tone ?? 'neutral'] : kindColor(n.data?.kind))} maskColor="rgba(29,29,29,0.75)" pannable zoomable />
   </SvelteFlow>
   {#if ui.quickAdd}<QuickAdd at={ui.quickAdd} onpick={pick} onclose={() => (ui.quickAdd = null)} />{/if}
 </div>

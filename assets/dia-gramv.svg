@@ -1,96 +1,96 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2424" height="488" viewBox="0 0 2424 488" font-family="Manrope, 'Segoe UI', system-ui, -apple-system, sans-serif">
 <title>Dia-GramV</title>
-<rect class="bg" fill="#0e0d0b" width="2424" height="488"/>
+<rect class="bg" fill="#1d1d1d" width="2424" height="488"/>
 <g data-frame="agent">
 <rect x="432" y="32" width="348" height="356" rx="12" fill="#c98cff" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="442" y="23" width="170.4" height="17" fill="#0e0d0b"/>
+<rect x="442" y="23" width="170.4" height="17" fill="#1d1d1d"/>
 <text x="448" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#c98cff">AGENT SIDE · CLAUDE CODE</text>
 </g>
 <g data-frame="dgv">
 <rect x="920" y="32" width="984" height="424" rx="12" fill="#e8873a" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="930" y="23" width="157.2" height="17" fill="#0e0d0b"/>
+<rect x="930" y="23" width="157.2" height="17" fill="#1d1d1d"/>
 <text x="936" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#e8873a">DGV · ONE NODE PROCESS</text>
 </g>
 <g data-frame="browser">
 <rect x="2044" y="32" width="348" height="198" rx="12" fill="#5ec8d8" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="2054" y="23" width="58.2" height="17" fill="#0e0d0b"/>
+<rect x="2054" y="23" width="58.2" height="17" fill="#1d1d1d"/>
 <text x="2060" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#5ec8d8">BROWSER</text>
 </g>
 <g data-edge="claude-mcp">
-<path d="M 736,139 L 760,139 L 1098.5,139 Q 1105,139 1105,145.5 L 1105,145.5 Q 1105,152 1111.5,152 L 1450,152 L 1426,152" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1426 152) rotate(0)"/>
-<rect x="1056.8" y="137.5" width="96.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 736,139 L 760,139 L 1098.5,139 Q 1105,139 1105,145.5 L 1105,145.5 Q 1105,152 1111.5,152 L 1450,152 L 1426,152" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1426 152) rotate(0)"/>
+<rect x="1056.8" y="137.5" width="96.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1105" y="148.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">tool calls · ipc</text>
 </g>
 <g data-edge="claude-hooks">
-<path d="M 606,186 L 606,210 L 606,274 L 606,250" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(606 250) rotate(90)"/>
-<rect x="530.8" y="234" width="150.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 606,186 L 606,210 L 606,274 L 606,250" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(606 250) rotate(90)"/>
+<rect x="530.8" y="234" width="150.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="606" y="245" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">SessionStart · Stop · exec</text>
 </g>
 <g data-edge="mcp-core">
-<path d="M 1426,152 L 1402,152 L 1282,152 Q 1248,152 1248,186 L 1248,287 Q 1248,321 1214,321 L 1106,321 Q 1094,321 1094,309 L 1094,297" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(1094 297) rotate(90)"/>
+<path d="M 1426,152 L 1402,152 L 1282,152 Q 1248,152 1248,186 L 1248,287 Q 1248,321 1214,321 L 1106,321 Q 1094,321 1094,309 L 1094,297" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(1094 297) rotate(90)"/>
 </g>
 <g data-edge="cli-core">
-<path d="M 1104,199 L 1104,220.5 Q 1104,223 1101.5,223 L 1101.5,223 Q 1099,223 1099,225.5 L 1099,318.5 Q 1099,321 1096.5,321 L 1096.5,321 Q 1094,321 1094,318.5 L 1094,297" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(1094 297) rotate(90)"/>
+<path d="M 1104,199 L 1104,220.5 Q 1104,223 1101.5,223 L 1101.5,223 Q 1099,223 1099,225.5 L 1099,318.5 Q 1099,321 1096.5,321 L 1096.5,321 Q 1094,321 1094,318.5 L 1094,297" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(1094 297) rotate(90)"/>
 </g>
 <g data-edge="mcp-walk">
-<path d="M 1556,212 L 1556,224 Q 1556,236 1544,236 L 1522.5,236 Q 1489,236 1489,269.5 L 1489,287.5 Q 1489,321 1455.5,321 L 1434,321 Q 1422,321 1422,309 L 1422,297" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(1422 297) rotate(90)"/>
+<path d="M 1556,212 L 1556,224 Q 1556,236 1544,236 L 1522.5,236 Q 1489,236 1489,269.5 L 1489,287.5 Q 1489,321 1455.5,321 L 1434,321 Q 1422,321 1422,309 L 1422,297" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(1422 297) rotate(90)"/>
 </g>
 <g data-edge="cli-walk">
-<path d="M 1104,199 L 1104,211 Q 1104,223 1116,223 L 1229,223 Q 1263,223 1263,257 L 1263,287 Q 1263,321 1297,321 L 1410,321 Q 1422,321 1422,309 L 1422,297" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(1422 297) rotate(90)"/>
+<path d="M 1104,199 L 1104,211 Q 1104,223 1116,223 L 1229,223 Q 1263,223 1263,257 L 1263,287 Q 1263,321 1297,321 L 1410,321 Q 1422,321 1422,309 L 1422,297" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(1422 297) rotate(90)"/>
 </g>
 <g data-edge="hooks-core">
-<path d="M 736,297 L 760,297 L 850.5,297 Q 874,297 874,320.5 L 874,320.5 Q 874,344 897.5,344 L 988,344 L 964,344" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(964 344) rotate(0)"/>
+<path d="M 736,297 L 760,297 L 850.5,297 Q 874,297 874,320.5 L 874,320.5 Q 874,344 897.5,344 L 988,344 L 964,344" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(964 344) rotate(0)"/>
 </g>
 <g data-edge="hooks-walk">
-<path d="M 736,297 L 760,297 L 1014.5,297 Q 1038,297 1038,320.5 L 1038,320.5 Q 1038,344 1061.5,344 L 1316,344 L 1292,344" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(1292 344) rotate(0)"/>
+<path d="M 736,297 L 760,297 L 1014.5,297 Q 1038,297 1038,320.5 L 1038,320.5 Q 1038,344 1061.5,344 L 1316,344 L 1292,344" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(1292 344) rotate(0)"/>
 </g>
 <g data-edge="mcp-files">
-<path d="M 1426,152 L 1402,152 L 865,152 Q 835,152 835,122 L 835,122 Q 835,92 805,92 L 268,92 L 292,92" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(292 92) rotate(180)"/>
-<rect x="784.1" y="114" width="101.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1426,152 L 1402,152 L 865,152 Q 835,152 835,122 L 835,122 Q 835,92 805,92 L 268,92 L 292,92" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(292 92) rotate(180)"/>
+<rect x="784.1" y="114" width="101.8" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="835" y="125" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">read · write · fs</text>
 </g>
 <g data-edge="cli-files">
-<path d="M 974,152 L 950,152 L 639,152 Q 609,152 609,122 L 609,122 Q 609,92 579,92 L 268,92 L 292,92" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(292 92) rotate(180)"/>
-<rect x="598.6" y="114" width="20.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 974,152 L 950,152 L 639,152 Q 609,152 609,122 L 609,122 Q 609,92 579,92 L 268,92 L 292,92" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(292 92) rotate(180)"/>
+<rect x="598.6" y="114" width="20.8" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="609" y="125" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">fs</text>
 </g>
 <g data-edge="http-files">
-<path d="M 1600,344 L 1576,344 L 956,344 Q 922,344 922,310 L 922,126 Q 922,92 888,92 L 268,92 L 292,92" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(292 92) rotate(180)"/>
-<rect x="849.5" y="210" width="145" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1600,344 L 1576,344 L 956,344 Q 922,344 922,310 L 922,126 Q 922,92 888,92 L 268,92 L 292,92" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(292 92) rotate(180)"/>
+<rect x="849.5" y="210" width="145" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="922" y="221" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">read · write · watch · fs</text>
 </g>
 <g data-edge="mcp-http">
-<path d="M 1556,212 L 1556,224 Q 1556,236 1568,236 L 1611,236 Q 1643,236 1643,268 L 1643,268 Q 1643,300 1675,300 L 1718,300 Q 1730,300 1730,288 L 1730,276" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1730 276) rotate(90)"/>
-<rect x="1535.4" y="260" width="215.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1556,212 L 1556,224 Q 1556,236 1568,236 L 1611,236 Q 1643,236 1643,268 L 1643,268 Q 1643,300 1675,300 L 1718,300 Q 1730,300 1730,288 L 1730,276" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1730 276) rotate(90)"/>
+<rect x="1535.4" y="260" width="215.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1643" y="271" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">dgv_open starts serve if needed · exec</text>
 </g>
 <g data-edge="viewer-http">
-<path d="M 2218,186 L 2218,198 Q 2218,210 2206,210 L 2061,210 Q 2027,210 2027,244 L 2027,310 Q 2027,344 1993,344 L 1836,344 L 1860,344" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1860 344) rotate(180)"/>
-<rect x="1973.4" y="269" width="107.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 2218,186 L 2218,198 Q 2218,210 2206,210 L 2061,210 Q 2027,210 2027,244 L 2027,310 Q 2027,344 1993,344 L 1836,344 L 1860,344" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1860 344) rotate(180)"/>
+<rect x="1973.4" y="269" width="107.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="2027" y="280" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">load · save · http</text>
 </g>
 <g data-edge="http-viewer">
-<path d="M 1860,344 L 1884,344 L 2017,344 Q 2051,344 2051,310 L 2051,196 Q 2051,162 2085,162 L 2206,162 Q 2218,162 2218,174 L 2218,186" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2218 186) rotate(-90)"/>
-<rect x="1986.6" y="245" width="128.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1860,344 L 1884,344 L 2017,344 Q 2051,344 2051,310 L 2051,196 Q 2051,162 2085,162 L 2206,162 Q 2218,162 2218,174 L 2218,186" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2218 186) rotate(-90)"/>
+<rect x="1986.6" y="245" width="128.8" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="2051" y="256" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">reload on change · sse</text>
 </g>
 <g data-edge="viewer-core">
-<path d="M 2088,139 L 2064,139 L 1666,139 Q 1632,139 1632,173 L 1632,310 Q 1632,344 1598,344 L 1200,344 L 1224,344" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(1224 344) rotate(180)"/>
+<path d="M 2088,139 L 2064,139 L 1666,139 Q 1632,139 1632,173 L 1632,310 Q 1632,344 1598,344 L 1200,344 L 1224,344" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(1224 344) rotate(180)"/>
 </g>
 <g data-node="claude" transform="translate(476 92)">
 <path d="M7,0 H253 Q260,0 260,7 V87 Q260,94 253,94 H7 Q0,94 0,87 V7 Q0,0 7,0 Z" fill="#161412" stroke="#8a8580" stroke-width="1.5" stroke-dasharray="6 4"/>

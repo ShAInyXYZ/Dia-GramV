@@ -1,291 +1,291 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="3846" height="1954" viewBox="0 0 3846 1954" font-family="Manrope, 'Segoe UI', system-ui, -apple-system, sans-serif">
 <title>Cerveau Architecture</title>
-<rect class="bg" fill="#0e0d0b" width="3846" height="1954"/>
+<rect class="bg" fill="#1d1d1d" width="3846" height="1954"/>
 <g data-frame="crv">
 <rect x="32" y="32" width="2062" height="1003" rx="12" fill="#e8873a" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="42" y="23" width="150.6" height="17" fill="#0e0d0b"/>
+<rect x="42" y="23" width="150.6" height="17" fill="#1d1d1d"/>
 <text x="48" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#e8873a">CRV · GO CORE · :7700</text>
 </g>
 <g data-frame="memory">
 <rect x="2234" y="32" width="1580" height="492" rx="12" fill="#c98cff" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="2244" y="23" width="124.2" height="17" fill="#0e0d0b"/>
+<rect x="2244" y="23" width="124.2" height="17" fill="#1d1d1d"/>
 <text x="2250" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#c98cff">MEMORY · 5 STORES</text>
 </g>
 <g data-frame="serving">
 <rect x="32" y="1175" width="964" height="740" rx="12" fill="#4ec9a5" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="42" y="1166" width="190.2" height="17" fill="#0e0d0b"/>
+<rect x="42" y="1166" width="190.2" height="17" fill="#1d1d1d"/>
 <text x="48" y="1178.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#4ec9a5">BRAIN CORES · MODEL SERVING</text>
 </g>
 <g data-frame="edge">
 <rect x="1136" y="1175" width="348" height="424" rx="12" fill="#e86a8f" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="1146" y="1166" width="190.2" height="17" fill="#0e0d0b"/>
+<rect x="1146" y="1166" width="190.2" height="17" fill="#1d1d1d"/>
 <text x="1152" y="1178.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#e86a8f">FRONT DOOR · WAKE ON DEMAND</text>
 </g>
 <g data-frame="outside">
 <rect x="1624" y="1175" width="348" height="747" rx="12" fill="#8a8580" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="1634" y="1166" width="137.4" height="17" fill="#0e0d0b"/>
+<rect x="1634" y="1166" width="137.4" height="17" fill="#1d1d1d"/>
 <text x="1640" y="1178.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#8a8580">OUTSIDE THE MACHINE</text>
 </g>
 <g data-frame="targets">
 <rect x="2112" y="1175" width="348" height="482" rx="12" fill="#8a8580" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="2122" y="1166" width="150.6" height="17" fill="#0e0d0b"/>
+<rect x="2122" y="1166" width="150.6" height="17" fill="#1d1d1d"/>
 <text x="2128" y="1178.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#8a8580">WHAT THE TOOLS ACT ON</text>
 </g>
 <g data-frame="lifecycle">
 <rect x="2600" y="1175" width="656" height="413" rx="12" fill="#e8873a" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
-<rect x="2610" y="1166" width="170.4" height="17" fill="#0e0d0b"/>
+<rect x="2610" y="1166" width="170.4" height="17" fill="#1d1d1d"/>
 <text x="2616" y="1178.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#e8873a">LIFECYCLE · START &amp; PARK</text>
 </g>
 <g data-edge="panel-api">
-<path d="M 1798,1235 L 1798,1223 Q 1798,1211 1786,1211 L 1171,1211 Q 1137,1211 1137,1177 L 1137,230.5 Q 1137,196.5 1103,196.5 L 476,196.5 L 500,196.5" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(500 196.5) rotate(180)"/>
-<rect x="1002.4" y="695.75" width="269.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1798,1235 L 1798,1223 Q 1798,1211 1786,1211 L 1171,1211 Q 1137,1211 1137,1177 L 1137,230.5 Q 1137,196.5 1103,196.5 L 476,196.5 L 500,196.5" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(500 196.5) rotate(180)"/>
+<rect x="1002.4" y="695.75" width="269.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1137" y="706.75" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">chat, steer, sessions, memory, rfx, cores · http</text>
 </g>
 <g data-edge="api-panel-stream">
-<path d="M 500,196.5 L 524,196.5 L 1127,196.5 Q 1161,196.5 1161,230.5 L 1161,1225 Q 1161,1259 1195,1259 L 1786,1259 Q 1798,1259 1798,1247 L 1798,1235" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1798 1235) rotate(90)"/>
-<rect x="1091.2" y="719.75" width="139.6" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 500,196.5 L 524,196.5 L 1127,196.5 Q 1161,196.5 1161,230.5 L 1161,1225 Q 1161,1259 1195,1259 L 1786,1259 Q 1798,1259 1798,1247 L 1798,1235" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1798 1235) rotate(90)"/>
+<rect x="1091.2" y="719.75" width="139.6" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1161" y="730.75" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">stream turn events · sse</text>
 </g>
 <g data-edge="api-panel-static">
-<path d="M 500,196.5 L 524,196.5 L 1127,196.5 Q 1161,196.5 1161,230.5 L 1161,1225 Q 1161,1259 1195,1259 L 1786,1259 Q 1798,1259 1798,1247 L 1798,1235" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="12 6"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1798 1235) rotate(90)"/>
-<rect x="1053.4" y="719.75" width="215.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 500,196.5 L 524,196.5 L 1127,196.5 Q 1161,196.5 1161,230.5 L 1161,1225 Q 1161,1259 1195,1259 L 1786,1259 Q 1798,1259 1798,1247 L 1798,1235" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="12 6"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1798 1235) rotate(90)"/>
+<rect x="1053.4" y="719.75" width="215.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1161" y="730.75" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">serves embedded dist (go:embed) · http</text>
 </g>
 <g data-edge="crvcli-api">
-<path d="M 1798,1419 L 1798,1407 Q 1798,1395 1786,1395 L 1118,1395 Q 1084,1395 1084,1361 L 1084,311 Q 1084,277 1050,277 L 382,277 Q 370,277 370,289 L 370,301" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(370 301) rotate(-90)"/>
-<rect x="1000.7" y="828" width="166.6" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1798,1419 L 1798,1407 Q 1798,1395 1786,1395 L 1118,1395 Q 1084,1395 1084,1361 L 1084,311 Q 1084,277 1050,277 L 382,277 Q 370,277 370,289 L 370,301" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(370 301) rotate(-90)"/>
+<rect x="1000.7" y="828" width="166.6" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1084" y="839" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">ask / new / pair / rfx · http</text>
 </g>
 <g data-edge="phone-tailscale">
-<path d="M 1798,1603 L 1798,1591 Q 1798,1579 1786,1579 L 1588,1579 Q 1554,1579 1554,1545 L 1554,1339 Q 1554,1305 1520,1305 L 1322,1305 Q 1310,1305 1310,1317 L 1310,1329" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1310 1329) rotate(-90)"/>
-<rect x="1446.4" y="1434" width="215.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1798,1603 L 1798,1591 Q 1798,1579 1786,1579 L 1588,1579 Q 1554,1579 1554,1545 L 1554,1339 Q 1554,1305 1520,1305 L 1322,1305 Q 1310,1305 1310,1317 L 1310,1329" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1310 1329) rotate(-90)"/>
+<rect x="1446.4" y="1434" width="215.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1554" y="1445" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">open PWA · bearer + device sig · https</text>
 </g>
 <g data-edge="tailscale-ignite">
-<path d="M 1310,1329 L 1310,1353 L 1310,1417 L 1310,1393" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1310 1393) rotate(90)"/>
-<rect x="1226.7" y="1377" width="166.6" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1310,1329 L 1310,1353 L 1310,1417 L 1310,1393" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1310 1393) rotate(90)"/>
+<rect x="1226.7" y="1377" width="166.6" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1310" y="1388" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">terminate TLS, forward · http</text>
 </g>
 <g data-edge="ignite-api">
-<path d="M 1310,1393 L 1310,1381 Q 1310,1369 1298,1369 L 874,1369 Q 840,1369 840,1335 L 840,311 Q 840,277 806,277 L 382,277 Q 370,277 370,289 L 370,301" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(370 301) rotate(-90)"/>
-<rect x="737.8" y="815" width="204.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1310,1393 L 1310,1381 Q 1310,1369 1298,1369 L 874,1369 Q 840,1369 840,1335 L 840,311 Q 840,277 806,277 L 382,277 Q 370,277 370,289 L 370,301" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(370 301) rotate(-90)"/>
+<rect x="737.8" y="815" width="204.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="840" y="826" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">reverse proxy once core is up · http</text>
 </g>
 <g data-edge="ignite-systemd">
-<path d="M 1440,1474 L 1464,1474 L 2054.5,1474 Q 2066,1474 2066,1485.5 L 2066,1485.5 Q 2066,1497 2077.5,1497 L 2668,1497 L 2644,1497" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2644 1497) rotate(0)"/>
-<rect x="1926" y="1477.5" width="280" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1440,1474 L 1464,1474 L 2054.5,1474 Q 2066,1474 2066,1485.5 L 2066,1485.5 Q 2066,1497 2077.5,1497 L 2668,1497 L 2644,1497" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2644 1497) rotate(0)"/>
+<rect x="1926" y="1477.5" width="280" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="2066" y="1488.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">systemctl --user start (core, llama, embed) · exec</text>
 </g>
 <g data-edge="systemd-llama">
-<path d="M 2644,1497 L 2620,1497 L 1500,1497 Q 1466,1497 1466,1531 L 1466,1568 Q 1466,1602 1432,1602 L 312,1602 L 336,1602" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(336 1602) rotate(180)"/>
-<rect x="1390.8" y="1541.5" width="150.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 2644,1497 L 2620,1497 L 1500,1497 Q 1466,1497 1466,1531 L 1466,1568 Q 1466,1602 1432,1602 L 312,1602 L 336,1602" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(336 1602) rotate(180)"/>
+<rect x="1390.8" y="1541.5" width="150.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1466" y="1552.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">runs cerveau-llama.service</text>
 </g>
 <g data-edge="systemd-embed">
-<path d="M 2774,1450 L 2774,1438 Q 2774,1426 2762,1426 L 2625,1426 Q 2591,1426 2591,1392 L 2591,490 Q 2591,456 2557,456 L 2420,456 Q 2408,456 2408,468 L 2408,480" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2408 480) rotate(-90)"/>
-<rect x="2515.8" y="933" width="150.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 2774,1450 L 2774,1438 Q 2774,1426 2762,1426 L 2625,1426 Q 2591,1426 2591,1392 L 2591,490 Q 2591,456 2557,456 L 2420,456 Q 2408,456 2408,468 L 2408,480" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2408 480) rotate(-90)"/>
+<rect x="2515.8" y="933" width="150.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="2591" y="944" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">runs cerveau-embed.service</text>
 </g>
 <g data-edge="systemd-vllm">
-<path d="M 2644,1497 L 2620,1497 L 1654,1497 Q 1620,1497 1620,1531 L 1620,1568 Q 1620,1602 1586,1602 L 620,1602 L 644,1602" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(644 1602) rotate(180)"/>
-<rect x="1504.3" y="1541.5" width="231.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 2644,1497 L 2620,1497 L 1654,1497 Q 1620,1497 1620,1531 L 1620,1568 Q 1620,1602 1586,1602 L 620,1602 L 644,1602" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(644 1602) rotate(180)"/>
+<rect x="1504.3" y="1541.5" width="231.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1620" y="1552.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">socket activation → crv-core-vllm.service</text>
 </g>
 <g data-edge="api-loop">
-<path d="M 500,196.5 L 524,196.5 L 750,196.5 Q 784,196.5 784,230.5 L 784,414 Q 784,448 818,448 L 1044,448 L 1020,448" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1020 448) rotate(0)"/>
-<rect x="649.4" y="314.25" width="269.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 500,196.5 L 524,196.5 L 750,196.5 Q 784,196.5 784,230.5 L 784,414 Q 784,448 818,448 L 1044,448 L 1020,448" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1020 448) rotate(0)"/>
+<rect x="649.4" y="314.25" width="269.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="784" y="325.25" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">start turn · steer · pause · kill · rewind · ipc</text>
 </g>
 <g data-edge="api-session">
-<path d="M 370,301 L 370,322.5 Q 370,325 372.5,325 L 372.5,325 Q 375,325 375,327.5 L 375,646.5 Q 375,649 377.5,649 L 377.5,649 Q 380,649 380,646.5 L 380,625" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(380 625) rotate(90)"/>
+<path d="M 370,301 L 370,322.5 Q 370,325 372.5,325 L 372.5,325 Q 375,325 375,327.5 L 375,646.5 Q 375,649 377.5,649 L 377.5,649 Q 380,649 380,646.5 L 380,625" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(380 625) rotate(90)"/>
 </g>
 <g data-edge="api-idle">
-<path d="M 370,301 L 370,313 Q 370,325 358,325 L 322,325 Q 288,325 288,359 L 288,370 Q 288,404 254,404 L 218,404 Q 206,404 206,392 L 206,380" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(206 380) rotate(90)"/>
-<rect x="215.5" y="356.5" width="145" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 370,301 L 370,313 Q 370,325 358,325 L 322,325 Q 288,325 288,359 L 288,370 Q 288,404 254,404 L 218,404 Q 206,404 206,392 L 206,380" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(206 380) rotate(90)"/>
+<rect x="215.5" y="356.5" width="145" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="288" y="367.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">activity ticks, /api/idle</text>
 </g>
 <g data-edge="api-coresjson">
-<path d="M 370,301 L 370,313 Q 370,325 382,325 L 562,325 Q 596,325 596,359 L 596,1246 Q 596,1280 630,1280 L 810,1280 Q 822,1280 822,1268 L 822,1256" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(822 1256) rotate(90)"/>
-<rect x="510" y="794.5" width="172" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 370,301 L 370,313 Q 370,325 382,325 L 562,325 Q 596,325 596,359 L 596,1246 Q 596,1280 630,1280 L 810,1280 Q 822,1280 822,1268 L 822,1256" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(822 1256) rotate(90)"/>
+<rect x="510" y="794.5" width="172" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="596" y="805.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">list / select active core · fs</text>
 </g>
 <g data-edge="loop-window">
-<path d="M 1280,448 L 1304,448 L 1525,448 Q 1559,448 1559,482 L 1559,651.5 Q 1559,685.5 1593,685.5 L 1814,685.5 L 1790,685.5" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(1790 685.5) rotate(0)"/>
+<path d="M 1280,448 L 1304,448 L 1525,448 Q 1559,448 1559,482 L 1559,651.5 Q 1559,685.5 1593,685.5 L 1814,685.5 L 1790,685.5" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(1790 685.5) rotate(0)"/>
 </g>
 <g data-edge="loop-guard">
-<path d="M 1280,448 L 1304,448 L 1424,448 Q 1458,448 1458,482 L 1458,615 Q 1458,649 1492,649 L 1600,649 Q 1612,649 1612,637 L 1612,625" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(1612 625) rotate(90)"/>
+<path d="M 1280,448 L 1304,448 L 1424,448 Q 1458,448 1458,482 L 1458,615 Q 1458,649 1492,649 L 1600,649 Q 1612,649 1612,637 L 1612,625" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(1612 625) rotate(90)"/>
 </g>
 <g data-edge="loop-llmclient">
-<path d="M 1150,531 L 1150,543 Q 1150,555 1162,555 L 1193,555 Q 1227,555 1227,589 L 1227,615 Q 1227,649 1261,649 L 1292,649 Q 1304,649 1304,637 L 1304,625" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(1304 625) rotate(90)"/>
+<path d="M 1150,531 L 1150,543 Q 1150,555 1162,555 L 1193,555 Q 1227,555 1227,589 L 1227,615 Q 1227,649 1261,649 L 1292,649 Q 1304,649 1304,637 L 1304,625" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(1304 625) rotate(90)"/>
 </g>
 <g data-edge="loop-tools">
-<path d="M 1150,531 L 1150,543 Q 1150,555 1138,555 L 1105,555 Q 1073,555 1073,587 L 1073,587 Q 1073,619 1041,619 L 1008,619 Q 996,619 996,607 L 996,595" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(996 595) rotate(90)"/>
-<rect x="1016.7" y="579" width="112.6" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1150,531 L 1150,543 Q 1150,555 1138,555 L 1105,555 Q 1073,555 1073,587 L 1073,587 Q 1073,619 1041,619 L 1008,619 Q 996,619 996,607 L 996,595" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(996 595) rotate(90)"/>
+<rect x="1016.7" y="579" width="112.6" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1073" y="590" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">dispatch tool calls</text>
 </g>
 <g data-edge="loop-memclient">
-<path d="M 1020,448 L 996,448 L 929,448 Q 895,448 895,482 L 895,651.5 Q 895,685.5 861,685.5 L 794,685.5 L 818,685.5" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(818 685.5) rotate(180)"/>
-<rect x="817.1" y="558.75" width="155.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1020,448 L 996,448 L 929,448 Q 895,448 895,482 L 895,651.5 Q 895,685.5 861,685.5 L 794,685.5 L 818,685.5" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(818 685.5) rotate(180)"/>
+<rect x="817.1" y="558.75" width="155.8" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="895" y="569.75" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">recall before, curate after</text>
 </g>
 <g data-edge="loop-session">
-<path d="M 1020,448 L 996,448 L 775,448 Q 741,448 741,482 L 741,651.5 Q 741,685.5 707,685.5 L 486,685.5 L 510,685.5" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(510 685.5) rotate(180)"/>
+<path d="M 1020,448 L 996,448 L 775,448 Q 741,448 741,482 L 741,651.5 Q 741,685.5 707,685.5 L 486,685.5 L 510,685.5" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(510 685.5) rotate(180)"/>
 </g>
 <g data-edge="tools-rfx">
-<path d="M 996,776 L 996,788 Q 996,800 984,800 L 874,800 Q 842,800 842,832 L 842,832 Q 842,864 810,864 L 700,864 Q 688,864 688,852 L 688,840" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(688 840) rotate(90)"/>
-<rect x="780.3" y="824" width="123.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 996,776 L 996,788 Q 996,800 984,800 L 874,800 Q 842,800 842,832 L 842,832 Q 842,864 810,864 L 700,864 Q 688,864 688,852 L 688,840" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(688 840) rotate(90)"/>
+<rect x="780.3" y="824" width="123.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="842" y="835" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">reflexes become tools</text>
 </g>
 <g data-edge="tools-skills">
-<path d="M 996,776 L 996,800 L 996,879 L 996,855" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(996 855) rotate(90)"/>
+<path d="M 996,776 L 996,800 L 996,879 L 996,855" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(996 855) rotate(90)"/>
 </g>
 <g data-edge="tools-codeintel">
-<path d="M 996,776 L 996,788 Q 996,800 1008,800 L 1116,800 Q 1150,800 1150,834 L 1150,838 Q 1150,872 1184,872 L 1292,872 Q 1304,872 1304,860 L 1304,848" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(1304 848) rotate(90)"/>
-<rect x="1042.4" y="828" width="215.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 996,776 L 996,788 Q 996,800 1008,800 L 1116,800 Q 1150,800 1150,834 L 1150,838 Q 1150,872 1184,872 L 1292,872 Q 1304,872 1304,860 L 1304,848" fill="none" stroke="#4a4a4a" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4a4a" transform="translate(1304 848) rotate(90)"/>
+<rect x="1042.4" y="828" width="215.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1150" y="839" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">file_map, find_symbol, find_references</text>
 </g>
 <g data-edge="llmclient-llama">
-<path d="M 1304,746 L 1304,758 Q 1304,770 1292,770 L 789,770 Q 755,770 755,804 L 755,1511 Q 755,1545 721,1545 L 218,1545 Q 206,1545 206,1533 L 206,1521" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(206 1521) rotate(90)"/>
-<rect x="690.6" y="1149.5" width="128.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1304,746 L 1304,758 Q 1304,770 1292,770 L 789,770 Q 755,770 755,804 L 755,1511 Q 755,1545 721,1545 L 218,1545 Q 206,1545 206,1533 L 206,1521" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(206 1521) rotate(90)"/>
+<rect x="690.6" y="1149.5" width="128.8" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="755" y="1160.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">chat completion · http</text>
 </g>
 <g data-edge="llmclient-coreproxy">
-<path d="M 1304,746 L 1304,758 Q 1304,770 1292,770 L 943,770 Q 909,770 909,804 L 909,1225 Q 909,1259 875,1259 L 526,1259 Q 514,1259 514,1247 L 514,1235" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(514 1235) rotate(90)"/>
-<rect x="812.2" y="1006.5" width="193.6" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1304,746 L 1304,758 Q 1304,770 1292,770 L 943,770 Q 909,770 909,804 L 909,1225 Q 909,1259 875,1259 L 526,1259 Q 514,1259 514,1247 L 514,1235" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(514 1235) rotate(90)"/>
+<rect x="812.2" y="1006.5" width="193.6" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="909" y="1017.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">chat completion (vLLM core) · http</text>
 </g>
 <g data-edge="coreproxy-vllm">
-<path d="M 514,1427 L 514,1451 L 514,1515 L 514,1491" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(514 1491) rotate(90)"/>
-<rect x="436.1" y="1475" width="155.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 514,1427 L 514,1451 L 514,1515 L 514,1491" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(514 1491) rotate(90)"/>
+<rect x="436.1" y="1475" width="155.8" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="514" y="1486" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">proxy once listening · http</text>
 </g>
 <g data-edge="llama-weights">
-<path d="M 206,1683 L 206,1695 Q 206,1707 218,1707 L 249,1707 Q 283,1707 283,1741 L 283,1767 Q 283,1801 317,1801 L 348,1801 Q 360,1801 360,1789 L 360,1777" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(360 1777) rotate(90)"/>
-<rect x="240.2" y="1746" width="85.6" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 206,1683 L 206,1695 Q 206,1707 218,1707 L 249,1707 Q 283,1707 283,1741 L 283,1767 Q 283,1801 317,1801 L 348,1801 Q 360,1801 360,1789 L 360,1777" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(360 1777) rotate(90)"/>
+<rect x="240.2" y="1746" width="85.6" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="283" y="1757" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">mmap GGUF · fs</text>
 </g>
 <g data-edge="vllm-weights">
-<path d="M 514,1713 L 514,1725 Q 514,1737 502,1737 L 469,1737 Q 437,1737 437,1769 L 437,1769 Q 437,1801 405,1801 L 372,1801 Q 360,1801 360,1789 L 360,1777" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(360 1777) rotate(90)"/>
-<rect x="407.7" y="1761" width="58.6" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 514,1713 L 514,1725 Q 514,1737 502,1737 L 469,1737 Q 437,1737 437,1769 L 437,1769 Q 437,1801 405,1801 L 372,1801 Q 360,1801 360,1789 L 360,1777" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(360 1777) rotate(90)"/>
+<rect x="407.7" y="1761" width="58.6" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="437" y="1772" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">load · fs</text>
 </g>
 <g data-edge="memclient-typesense">
-<path d="M 818,685.5 L 842,685.5 L 1538,685.5 Q 1572,685.5 1572,651.5 L 1572,207 Q 1572,173 1606,173 L 2302,173 L 2278,173" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2278 173) rotate(0)"/>
-<rect x="1483.3" y="421.25" width="177.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 818,685.5 L 842,685.5 L 1538,685.5 Q 1572,685.5 1572,651.5 L 1572,207 Q 1572,173 1606,173 L 2302,173 L 2278,173" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2278 173) rotate(0)"/>
+<rect x="1483.3" y="421.25" width="177.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1572" y="432.25" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">recall · index · promote · http</text>
 </g>
 <g data-edge="memclient-sessions">
-<path d="M 818,685.5 L 842,685.5 L 1692,685.5 Q 1726,685.5 1726,651.5 L 1726,207.5 Q 1726,173.5 1760,173.5 L 2610,173.5 L 2586,173.5" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2586 173.5) rotate(0)"/>
-<rect x="1658.9" y="421.5" width="134.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 818,685.5 L 842,685.5 L 1692,685.5 Q 1726,685.5 1726,651.5 L 1726,207.5 Q 1726,173.5 1760,173.5 L 2610,173.5 L 2586,173.5" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2586 173.5) rotate(0)"/>
+<rect x="1658.9" y="421.5" width="134.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1726" y="432.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">index events.jsonl · fs</text>
 </g>
 <g data-edge="session-sessions">
-<path d="M 510,685.5 L 534,685.5 L 1538,685.5 Q 1572,685.5 1572,651.5 L 1572,207.5 Q 1572,173.5 1606,173.5 L 2610,173.5 L 2586,173.5" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2586 173.5) rotate(0)"/>
-<rect x="1521.1" y="421.5" width="101.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 510,685.5 L 534,685.5 L 1538,685.5 Q 1572,685.5 1572,651.5 L 1572,207.5 Q 1572,173.5 1606,173.5 L 2610,173.5 L 2586,173.5" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2586 173.5) rotate(0)"/>
+<rect x="1521.1" y="421.5" width="101.8" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1572" y="432.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">append turns · fs</text>
 </g>
 <g data-edge="typesense-embed">
-<path d="M 2408,254 L 2408,278 L 2408,342 L 2408,318" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2408 318) rotate(90)"/>
-<rect x="2332.8" y="302" width="150.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 2408,254 L 2408,278 L 2408,342 L 2408,318" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2408 318) rotate(90)"/>
+<rect x="2332.8" y="302" width="150.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="2408" y="313" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">auto-embed on write · http</text>
 </g>
 <g data-edge="codeintel-codegraph">
-<path d="M 1434,916 L 1458,916 L 2154,916 Q 2188,916 2188,882 L 2188,207 Q 2188,173 2222,173 L 2918,173 L 2894,173" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2894 173) rotate(0)"/>
-<rect x="2112.8" y="536.5" width="150.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1434,916 L 1458,916 L 2154,916 Q 2188,916 2188,882 L 2188,207 Q 2188,173 2222,173 L 2918,173 L 2894,173" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2894 173) rotate(0)"/>
+<rect x="2112.8" y="536.5" width="150.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="2188" y="547.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">symbols + references · sql</text>
 </g>
 <g data-edge="codeintel-workspace">
-<path d="M 1434,916 L 1458,916 L 1838,916 Q 1872,916 1872,950 L 1872,1225 Q 1872,1259 1906,1259 L 2274,1259 Q 2286,1259 2286,1247 L 2286,1235" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2286 1235) rotate(90)"/>
-<rect x="1818.4" y="1079.5" width="107.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1434,916 L 1458,916 L 1838,916 Q 1872,916 1872,950 L 1872,1225 Q 1872,1259 1906,1259 L 2274,1259 Q 2286,1259 2286,1247 L 2286,1235" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2286 1235) rotate(90)"/>
+<rect x="1818.4" y="1079.5" width="107.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1872" y="1090.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">parse sources · fs</text>
 </g>
 <g data-edge="tools-workspace">
-<path d="M 1126,685.5 L 1150,685.5 L 1684,685.5 Q 1718,685.5 1718,719.5 L 1718,1225 Q 1718,1259 1752,1259 L 2274,1259 Q 2286,1259 2286,1247 L 2286,1235" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2286 1235) rotate(90)"/>
-<rect x="1629.3" y="964.25" width="177.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1126,685.5 L 1150,685.5 L 1684,685.5 Q 1718,685.5 1718,719.5 L 1718,1225 Q 1718,1259 1752,1259 L 2274,1259 Q 2286,1259 2286,1247 L 2286,1235" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2286 1235) rotate(90)"/>
+<rect x="1629.3" y="964.25" width="177.4" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1718" y="975.25" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">read / edit / write / bash · fs</text>
 </g>
 <g data-edge="tools-chromium">
-<path d="M 1126,685.5 L 1150,685.5 L 1684,685.5 Q 1718,685.5 1718,719.5 L 1718,1367 Q 1718,1401 1752,1401 L 2274,1401 Q 2286,1401 2286,1389 L 2286,1377" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2286 1377) rotate(90)"/>
-<rect x="1667.1" y="1035.25" width="101.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1126,685.5 L 1150,685.5 L 1684,685.5 Q 1718,685.5 1718,719.5 L 1718,1367 Q 1718,1401 1752,1401 L 2274,1401 Q 2286,1401 2286,1389 L 2286,1377" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2286 1377) rotate(90)"/>
+<rect x="1667.1" y="1035.25" width="101.8" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1718" y="1046.25" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">check_page · exec</text>
 </g>
 <g data-edge="tools-web">
-<path d="M 996,776 L 996,788 Q 996,800 1008,800 L 1363,800 Q 1397,800 1397,834 L 1397,1792 Q 1397,1826 1431,1826 L 1786,1826 Q 1798,1826 1798,1814 L 1798,1802" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1798 1802) rotate(90)"/>
-<rect x="1346.1" y="1305" width="101.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 996,776 L 996,788 Q 996,800 1008,800 L 1363,800 Q 1397,800 1397,834 L 1397,1792 Q 1397,1826 1431,1826 L 1786,1826 Q 1798,1826 1798,1814 L 1798,1802" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(1798 1802) rotate(90)"/>
+<rect x="1346.1" y="1305" width="101.8" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1397" y="1316" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">web_fetch · https</text>
 </g>
 <g data-edge="tools-reflexprog">
-<path d="M 1126,685.5 L 1150,685.5 L 1684,685.5 Q 1718,685.5 1718,719.5 L 1718,1509 Q 1718,1543 1752,1543 L 2274,1543 Q 2286,1543 2286,1531 L 2286,1519" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2286 1519) rotate(90)"/>
-<rect x="1578" y="1106.25" width="280" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1126,685.5 L 1150,685.5 L 1684,685.5 Q 1718,685.5 1718,719.5 L 1718,1509 Q 1718,1543 1752,1543 L 2274,1543 Q 2286,1543 2286,1531 L 2286,1519" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2286 1519) rotate(90)"/>
+<rect x="1578" y="1106.25" width="280" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1718" y="1117.25" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">exec reflex: JSON args in, JSON result out · stdio</text>
 </g>
 <g data-edge="skills-skillsdir">
-<path d="M 1126,915.5 L 1150,915.5 L 2154,915.5 Q 2188,915.5 2188,881.5 L 2188,207 Q 2188,173 2222,173 L 3226,173 L 3202,173" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(3202 173) rotate(0)"/>
-<rect x="2134.4" y="536.25" width="107.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 1126,915.5 L 1150,915.5 L 2154,915.5 Q 2188,915.5 2188,881.5 L 2188,207 Q 2188,173 2222,173 L 3226,173 L 3202,173" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(3202 173) rotate(0)"/>
+<rect x="2134.4" y="536.25" width="107.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="2188" y="547.25" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">load SKILL.md · fs</text>
 </g>
 <g data-edge="rfx-rfxdir">
-<path d="M 818,915.5 L 842,915.5 L 2154,915.5 Q 2188,915.5 2188,881.5 L 2188,207 Q 2188,173 2222,173 L 3534,173 L 3510,173" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(3510 173) rotate(0)"/>
-<rect x="2091.2" y="536.25" width="193.6" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 818,915.5 L 842,915.5 L 2154,915.5 Q 2188,915.5 2188,881.5 L 2188,207 Q 2188,173 2222,173 L 3534,173 L 3510,173" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(3510 173) rotate(0)"/>
+<rect x="2091.2" y="536.25" width="193.6" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="2188" y="547.25" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">discover + validate manifests · fs</text>
 </g>
 <g data-edge="idle-idlereq">
-<path d="M 336,448 L 360,448 L 1687,448 Q 1721,448 1721,482 L 1721,1440 Q 1721,1474 1755,1474 L 3070,1474 Q 3082,1474 3082,1462 L 3082,1450" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(3082 1450) rotate(90)"/>
-<rect x="1653.9" y="953" width="134.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 336,448 L 360,448 L 1687,448 Q 1721,448 1721,482 L 1721,1440 Q 1721,1474 1755,1474 L 3070,1474 Q 3082,1474 3082,1462 L 3082,1450" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(3082 1450) rotate(90)"/>
+<rect x="1653.9" y="953" width="134.2" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="1721" y="964" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">write park request · fs</text>
 </g>
 <g data-edge="watchdog-idlereq">
-<path d="M 2928,1386 L 2928,1398 Q 2928,1410 2940,1410 L 2973,1410 Q 3005,1410 3005,1442 L 3005,1442 Q 3005,1474 3037,1474 L 3070,1474 Q 3082,1474 3082,1462 L 3082,1450" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(3082 1450) rotate(90)"/>
-<rect x="2975.7" y="1434" width="58.6" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 2928,1386 L 2928,1398 Q 2928,1410 2940,1410 L 2973,1410 Q 3005,1410 3005,1442 L 3005,1442 Q 3005,1474 3037,1474 L 3070,1474 Q 3082,1474 3082,1462 L 3082,1450" fill="none" stroke="#767676" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(3082 1450) rotate(90)"/>
+<rect x="2975.7" y="1434" width="58.6" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="3005" y="1445" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">poll · fs</text>
 </g>
 <g data-edge="watchdog-systemd">
-<path d="M 2928,1386 L 2928,1398 Q 2928,1410 2916,1410 L 2883,1410 Q 2851,1410 2851,1442 L 2851,1442 Q 2851,1474 2819,1474 L 2786,1474 Q 2774,1474 2774,1462 L 2774,1450" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(2774 1450) rotate(90)"/>
-<rect x="2778.5" y="1434" width="145" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<path d="M 2928,1386 L 2928,1398 Q 2928,1410 2916,1410 L 2883,1410 Q 2851,1410 2851,1442 L 2851,1442 Q 2851,1474 2819,1474 L 2786,1474 Q 2774,1474 2774,1462 L 2774,1450" fill="none" stroke="#767676" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#767676" transform="translate(2774 1450) rotate(90)"/>
+<rect x="2778.5" y="1434" width="145" height="15" rx="3" fill="#1d1d1d" fill-opacity="0.92"/>
 <text x="2851" y="1445" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">stop the Core unit · exec</text>
 </g>
 <g data-node="panel" transform="translate(1668 1235)">

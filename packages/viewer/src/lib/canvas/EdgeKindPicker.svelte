@@ -7,7 +7,7 @@
 <div class="kinds">
   {#each Object.entries(EDGE_KINDS) as [k, v]}
     <button class="k" class:on={value === k} onclick={() => onchange(k)} data-tip={v.hint}>
-      <EdgeGlyph kind={k} w={28} color={value === k ? 'var(--accent)' : '#a49e95'} />
+      <EdgeGlyph kind={k} w={28} color={value === k ? 'var(--accent)' : '#a8a8a8'} />
       <span>{v.label}</span>
     </button>
   {/each}

@@ -1,0 +1,207 @@
+{
+  "dgv": 1,
+  "meta": {
+    "title": "Notes app",
+    "description": "A small web app with background jobs \u2014 the kind of thing you'd vibecode in an afternoon.",
+    "updated": "2026-08-27",
+    "colorBy": "kind"
+  },
+  "frames": [
+    {
+      "tone": "cyan",
+      "id": "browser",
+      "label": "Browser",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "width": 348,
+        "height": 180
+      }
+    },
+    {
+      "tone": "amber",
+      "id": "server",
+      "label": "Server \u00b7 one process",
+      "position": {
+        "x": 488,
+        "y": 0
+      },
+      "size": {
+        "width": 348,
+        "height": 330
+      }
+    },
+    {
+      "tone": "violet",
+      "id": "data",
+      "label": "Data",
+      "position": {
+        "x": 976,
+        "y": 0
+      },
+      "size": {
+        "width": 348,
+        "height": 506
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "ports": [],
+      "tags": [],
+      "id": "web",
+      "kind": "ui",
+      "label": "Notes UI",
+      "sublabel": "SvelteKit",
+      "frame": "browser",
+      "position": {
+        "x": 44,
+        "y": 60
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "rest",
+          "protocol": "http",
+          "dir": "in"
+        }
+      ],
+      "tags": [],
+      "id": "api",
+      "kind": "api",
+      "label": "HTTP API",
+      "sublabel": "/api/notes",
+      "frame": "server",
+      "position": {
+        "x": 532,
+        "y": 60
+      }
+    },
+    {
+      "ports": [],
+      "tags": [],
+      "id": "jobs",
+      "kind": "worker",
+      "label": "Job runner",
+      "sublabel": "thumbnails, exports",
+      "frame": "server",
+      "position": {
+        "x": 532,
+        "y": 210
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "sql",
+          "protocol": "sql",
+          "dir": "in"
+        }
+      ],
+      "tags": [],
+      "id": "pg",
+      "kind": "db",
+      "label": "Postgres",
+      "sublabel": "notes, users",
+      "frame": "data",
+      "position": {
+        "x": 1020,
+        "y": 60
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "jobs",
+          "protocol": "redis",
+          "dir": "in"
+        }
+      ],
+      "tags": [],
+      "id": "redis",
+      "kind": "queue",
+      "label": "Job queue",
+      "sublabel": "Redis lists",
+      "frame": "data",
+      "position": {
+        "x": 1020,
+        "y": 210
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "put",
+          "protocol": "s3",
+          "dir": "in"
+        }
+      ],
+      "tags": [],
+      "id": "s3",
+      "kind": "storage",
+      "label": "Object store",
+      "sublabel": "uploads",
+      "frame": "data",
+      "position": {
+        "x": 1020,
+        "y": 360
+      }
+    }
+  ],
+  "edges": [
+    {
+      "kind": "sync",
+      "id": "web-api",
+      "source": "web",
+      "target": "api",
+      "protocol": "http",
+      "label": "fetch",
+      "targetPort": "rest"
+    },
+    {
+      "kind": "data",
+      "id": "api-pg",
+      "source": "api",
+      "target": "pg",
+      "protocol": "sql",
+      "targetPort": "sql"
+    },
+    {
+      "kind": "async",
+      "id": "api-redis",
+      "source": "api",
+      "target": "redis",
+      "protocol": "redis",
+      "label": "enqueue",
+      "targetPort": "jobs"
+    },
+    {
+      "kind": "async",
+      "id": "jobs-redis",
+      "source": "jobs",
+      "target": "redis",
+      "protocol": "redis",
+      "label": "consume",
+      "targetPort": "jobs"
+    },
+    {
+      "kind": "data",
+      "id": "jobs-s3",
+      "source": "jobs",
+      "target": "s3",
+      "protocol": "s3",
+      "targetPort": "upload"
+    },
+    {
+      "id": "pg-api",
+      "source": "pg",
+      "target": "api",
+      "kind": "sync",
+      "protocol": "http",
+      "label": "notify on change"
+    }
+  ]
+}

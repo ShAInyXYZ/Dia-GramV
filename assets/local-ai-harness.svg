@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1892" height="763" viewBox="0 0 1892 763" font-family="Manrope, 'Segoe UI', system-ui, -apple-system, sans-serif">
+<title>Local AI Harness</title>
+<rect class="bg" fill="#0e0d0b" width="1892" height="763"/>
+<g data-frame="core">
+<rect x="412" y="32" width="356" height="699" rx="12" fill="#e8873a" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
+<rect x="422" y="23" width="97.8" height="17" fill="#0e0d0b"/>
+<text x="428" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#e8873a">GO CORE · CRV</text>
+</g>
+<g data-frame="serving">
+<rect x="792" y="32" width="356" height="358" rx="12" fill="#4ec9a5" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
+<rect x="802" y="23" width="97.8" height="17" fill="#0e0d0b"/>
+<text x="808" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#4ec9a5">MODEL SERVING</text>
+</g>
+<g data-frame="memory">
+<rect x="1172" y="32" width="356" height="518" rx="12" fill="#c98cff" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
+<rect x="1182" y="23" width="51.6" height="17" fill="#0e0d0b"/>
+<text x="1188" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#c98cff">MEMORY</text>
+</g>
+<g data-frame="remote">
+<rect x="32" y="32" width="356" height="508" rx="12" fill="#5ec8d8" fill-opacity="0.03" stroke="#2a2825" stroke-width="1" stroke-dasharray="6 5"/>
+<rect x="42" y="23" width="58.2" height="17" fill="#0e0d0b"/>
+<text x="48" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#5ec8d8">CLIENTS</text>
+</g>
+<g data-edge="panel-api">
+<path d="M340,156 L460,156" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(460 156) rotate(0)"/>
+<rect x="351.8" y="148" width="96.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="400" y="159" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">send turn · http</text>
+</g>
+<g data-edge="api-panel">
+<path d="M460,156 L340,156" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(340 156) rotate(180)"/>
+<rect x="343.7" y="148" width="112.6" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="400" y="159" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">stream tokens · sse</text>
+</g>
+<g data-edge="api-loop">
+<path d="M590,224 L590,264" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(590 264) rotate(90)"/>
+<rect x="531" y="236" width="118" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="590" y="247" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">handler → loop · ipc</text>
+</g>
+<g data-edge="loop-tools">
+<path d="M590,415 L590,455" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(590 455) rotate(90)"/>
+</g>
+<g data-edge="loop-rfx">
+<path d="M590,415 L590,589" fill="none" stroke="#4a4640" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#4a4640" transform="translate(590 589) rotate(90)"/>
+</g>
+<g data-edge="loop-llama">
+<path d="M720,273.99 L850.94,208" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(850.94 208) rotate(-26.75)"/>
+<rect x="721.07" y="232.99" width="128.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="785.47" y="243.99" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">chat completion · http</text>
+</g>
+<g data-edge="llama-weights">
+<path d="M970,208 L970,248" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(970 248) rotate(90)"/>
+<rect x="940.7" y="220" width="58.6" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="970" y="231" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">mmap · fs</text>
+</g>
+<g data-edge="loop-typesense">
+<path d="M720,306.74 L1220,180.76" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1220 180.76) rotate(-14.14)"/>
+<rect x="908.3" y="235.75" width="123.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="970" y="246.75" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">recall / store · http</text>
+</g>
+<g data-edge="loop-sidecar">
+<path d="M720,334.11 L1220,313.39" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1220 313.39) rotate(-2.37)"/>
+<rect x="932.6" y="315.75" width="74.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="970" y="326.75" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">embed · http</text>
+</g>
+<g data-edge="loop-sessions">
+<path d="M720,359.26 L1220,435.24" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1220 435.24) rotate(8.64)"/>
+<rect x="919.1" y="389.25" width="101.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="970" y="400.25" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">append turns · fs</text>
+</g>
+<g data-edge="phone-tailnet">
+<path d="M210,358 L210,398" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(210 398) rotate(90)"/>
+<rect x="164.5" y="370" width="91" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="210" y="381" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">tailnet · https</text>
+</g>
+<g data-edge="tailnet-api">
+<path d="M271.8,398 L500.59,224" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(500.59 224) rotate(-37.25)"/>
+<rect x="343.39" y="303" width="85.6" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="386.19" y="314" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">forward · http</text>
+</g>
+<g data-edge="loop-ntfy">
+<path d="M720,315.15 L1600,150.35" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1600 150.35) rotate(-10.61)"/>
+<rect x="1109.1" y="224.75" width="101.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="1160" y="235.75" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">turn done · https</text>
+</g>
+<g data-node="panel" transform="translate(80 88)">
+<path d="M7,0 H253 Q260,0 260,7 V129 Q260,136 253,136 H7 Q0,136 0,129 V7 Q0,0 7,0 Z" fill="#161412" stroke="#6ea8fe" stroke-width="1.5"/>
+<text x="12" y="41" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#6ea8fe">UI</text>
+<text x="35.2" y="41" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">Svelte</text>
+<text x="248" y="41" text-anchor="end" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" letter-spacing="0.8" fill="#4ec9a5">DONE</text>
+<text x="12" y="57" font-size="13.5" font-weight="650" fill="#efece6">Panel</text>
+<text x="12" y="72" font-size="11.5" fill="#a8a29a">Svelte 5 SPA</text>
+</g>
+<g data-node="api" transform="translate(460 88)">
+<path d="M22,0 H238 A22,22 0 0 1 238,136 H22 A22,22 0 0 1 22,0 Z" fill="#161412" stroke="#4ec9a5" stroke-width="1.5"/>
+<text x="12" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#4ec9a5">API</text>
+<text x="41.8" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">Go net/http</text>
+<text x="248" y="25" text-anchor="end" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" letter-spacing="0.8" fill="#4ec9a5">DONE</text>
+<text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">HTTP API</text>
+<text x="12" y="56" font-size="11.5" fill="#a8a29a">/api/v1</text>
+<text x="12" y="71" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#a8a29a">↘ rest:http</text>
+<text x="12" y="86" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#a8a29a">↗ events:sse</text>
+</g>
+<g data-node="loop" transform="translate(460 264)">
+<path d="M7,0 H253 Q260,0 260,7 V144 Q260,151 253,151 H7 Q0,151 0,144 V7 Q0,0 7,0 Z" fill="#161412" stroke="#e8873a" stroke-width="1.5"/>
+<text x="12" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#e8873a">SERVICE</text>
+<text x="68.19999999999999" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">Go</text>
+<text x="248" y="25" text-anchor="end" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" letter-spacing="0.8" fill="#4ec9a5">DONE</text>
+<text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">Agent Loop</text>
+<text x="12" y="56" font-size="11.5" fill="#a8a29a">observe → think → act</text>
+</g>
+<g data-node="tools" transform="translate(460 455)">
+<path d="M0,7 Q0,0 7,0 H90 l10,9 H253 Q260,9 260,16 V87 Q260,94 253,94 H7 Q0,94 0,87 Z" fill="#161412" stroke="#c98cff" stroke-width="1.5"/>
+<text x="12" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#c98cff">MODULE</text>
+<text x="61.599999999999994" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">Go</text>
+<text x="248" y="25" text-anchor="end" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" letter-spacing="0.8" fill="#4ec9a5">DONE</text>
+<text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">Tool Registry</text>
+<text x="12" y="56" font-size="11.5" fill="#a8a29a">grammars + guards</text>
+</g>
+<g data-node="rfx" transform="translate(460 589)">
+<path d="M0,7 Q0,0 7,0 H90 l10,9 H253 Q260,9 260,16 V87 Q260,94 253,94 H7 Q0,94 0,87 Z" fill="#161412" stroke="#c98cff" stroke-width="1.5"/>
+<text x="12" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#c98cff">MODULE</text>
+<text x="61.599999999999994" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">Go</text>
+<text x="248" y="25" text-anchor="end" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" letter-spacing="0.8" fill="#e8873a">WIP</text>
+<text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">RFX Runtime</text>
+<text x="12" y="56" font-size="11.5" fill="#a8a29a">declarative capabilities</text>
+</g>
+<g data-node="llama" transform="translate(840 88)">
+<path d="M12,0 H248 L260,12 V108 L248,120 H12 L0,108 V12 Z" fill="#161412" stroke="#4ec9a5" stroke-width="1.5"/>
+<text x="12" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#4ec9a5">MODEL</text>
+<text x="55" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">C++</text>
+<text x="248" y="25" text-anchor="end" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" letter-spacing="0.8" fill="#4ec9a5">DONE</text>
+<text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">llama-server</text>
+<text x="12" y="56" font-size="11.5" fill="#a8a29a">llama.cpp · OpenAI-compatible</text>
+<text x="12" y="71" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#a8a29a">↘ chat:http</text>
+</g>
+<g data-node="weights" transform="translate(840 248)">
+<path d="M0,15 Q0,8 7,8 H70 l8,-8 H253 Q260,0 260,7 V87 Q260,94 253,94 H7 Q0,94 0,87 Z" fill="#161412" stroke="#b8a27e" stroke-width="1.5"/>
+<text x="12" y="33" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#b8a27e">STORAGE</text>
+<text x="248" y="33" text-anchor="end" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" letter-spacing="0.8" fill="#4ec9a5">DONE</text>
+<text x="12" y="49" font-size="13.5" font-weight="650" fill="#efece6">Model Weights</text>
+<text x="12" y="64" font-size="11.5" fill="#a8a29a">GGUF on disk</text>
+</g>
+<g data-node="typesense" transform="translate(1220 88)">
+<path d="M0,9 A130,9 0 0 1 260,9 V111 A130,9 0 0 1 0,111 Z" fill="#161412" stroke="#c9b458" stroke-width="1.5"/>
+<path d="M0,9 A130,9 0 0 0 260,9" fill="none" stroke="#c9b458" stroke-width="1.5"/>
+<text x="12" y="33" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#c9b458">DATABASE</text>
+<text x="248" y="33" text-anchor="end" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" letter-spacing="0.8" fill="#4ec9a5">DONE</text>
+<text x="12" y="49" font-size="13.5" font-weight="650" fill="#efece6">Typesense</text>
+<text x="12" y="64" font-size="11.5" fill="#a8a29a">semantic + episodic memory</text>
+<text x="12" y="79" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#a8a29a">↘ search:http</text>
+</g>
+<g data-node="sidecar" transform="translate(1220 248)">
+<path d="M7,0 H253 Q260,0 260,7 V113 Q260,120 253,120 H7 Q0,120 0,113 V7 Q0,0 7,0 Z" fill="#161412" stroke="#c98cff" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="12" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#c98cff">SIDECAR</text>
+<text x="68.19999999999999" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">Python</text>
+<text x="248" y="25" text-anchor="end" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" letter-spacing="0.8" fill="#e8873a">WIP</text>
+<text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">Embed Sidecar</text>
+<text x="12" y="56" font-size="11.5" fill="#a8a29a">optional Python</text>
+<text x="12" y="71" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#a8a29a">↘ embed:http</text>
+</g>
+<g data-node="sessions" transform="translate(1220 408)">
+<path d="M0,15 Q0,8 7,8 H70 l8,-8 H253 Q260,0 260,7 V87 Q260,94 253,94 H7 Q0,94 0,87 Z" fill="#161412" stroke="#b8a27e" stroke-width="1.5"/>
+<text x="12" y="33" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#b8a27e">STORAGE</text>
+<text x="248" y="33" text-anchor="end" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" letter-spacing="0.8" fill="#4ec9a5">DONE</text>
+<text x="12" y="49" font-size="13.5" font-weight="650" fill="#efece6">Session Files</text>
+<text x="12" y="64" font-size="11.5" fill="#a8a29a">~/.crv/sessions</text>
+</g>
+<g data-node="phone" transform="translate(80 264)">
+<path d="M16,0 H244 Q260,0 260,16 V78 Q260,94 244,94 H16 Q0,94 0,78 V16 Q0,0 16,0 Z" fill="#161412" stroke="#6ea8fe" stroke-width="1.5"/>
+<text x="12" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#6ea8fe">DEVICE</text>
+<text x="248" y="25" text-anchor="end" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" letter-spacing="0.8" fill="#4ec9a5">DONE</text>
+<text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">Phone</text>
+<text x="12" y="56" font-size="11.5" fill="#a8a29a">same panel, small screen</text>
+</g>
+<g data-node="tailnet" transform="translate(80 398)">
+<path d="M7,0 H253 Q260,0 260,7 V87 Q260,94 253,94 H7 Q0,94 0,87 V7 Q0,0 7,0 Z" fill="#161412" stroke="#7d766c" stroke-width="1"/>
+<text x="12" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#7d766c">INFRA</text>
+<text x="248" y="25" text-anchor="end" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" letter-spacing="0.8" fill="#4ec9a5">DONE</text>
+<text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">Tailscale</text>
+<text x="12" y="56" font-size="11.5" fill="#a8a29a">tailnet-only exposure</text>
+</g>
+<g data-node="ntfy" transform="translate(1600 88)">
+<path d="M7,0 H253 Q260,0 260,7 V69 Q260,76 253,76 H7 Q0,76 0,69 V7 Q0,0 7,0 Z" fill="#161412" stroke="#8a8580" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="12" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#8a8580">EXTERNAL</text>
+<text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">ntfy</text>
+<text x="12" y="56" font-size="11.5" fill="#a8a29a">push notifications</text>
+</g>
+</svg>

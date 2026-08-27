@@ -1,0 +1,597 @@
+{
+  "dgv": 1,
+  "meta": {
+    "title": "Shop platform",
+    "description": "A storefront with a mobile app, three services, a queue, a payment bridge and two providers you do not control \u2014 mid-build, so status is on.",
+    "updated": "2026-08-27",
+    "colorBy": "status",
+    "edgeStyle": "routed"
+  },
+  "frames": [
+    {
+      "tone": "cyan",
+      "id": "clients",
+      "label": "Clients",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "width": 348,
+        "height": 482
+      }
+    },
+    {
+      "tone": "neutral",
+      "id": "edge",
+      "label": "Edge",
+      "position": {
+        "x": 488,
+        "y": 0
+      },
+      "size": {
+        "width": 348,
+        "height": 224
+      }
+    },
+    {
+      "tone": "amber",
+      "id": "services",
+      "label": "Services \u00b7 k8s namespace shop",
+      "position": {
+        "x": 976,
+        "y": 0
+      },
+      "size": {
+        "width": 1118,
+        "height": 666
+      }
+    },
+    {
+      "tone": "violet",
+      "id": "data",
+      "label": "Data",
+      "position": {
+        "x": 2234,
+        "y": 0
+      },
+      "size": {
+        "width": 348,
+        "height": 728
+      }
+    },
+    {
+      "tone": "rose",
+      "id": "providers",
+      "label": "Providers",
+      "position": {
+        "x": 976,
+        "y": 756
+      },
+      "size": {
+        "width": 656,
+        "height": 190
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "ports": [],
+      "tags": [],
+      "id": "web",
+      "kind": "ui",
+      "label": "Storefront",
+      "sublabel": "Next.js",
+      "tech": "React",
+      "frame": "clients",
+      "status": "done",
+      "position": {
+        "x": 44,
+        "y": 60
+      }
+    },
+    {
+      "ports": [],
+      "tags": [],
+      "id": "app",
+      "kind": "device",
+      "label": "Mobile app",
+      "sublabel": "React Native \u00b7 WebView checkout",
+      "tech": "RN",
+      "frame": "clients",
+      "status": "wip",
+      "position": {
+        "x": 44,
+        "y": 202
+      }
+    },
+    {
+      "ports": [],
+      "tags": [],
+      "id": "admin",
+      "kind": "ui",
+      "label": "Admin",
+      "sublabel": "orders, catalog, refunds",
+      "tech": "Svelte",
+      "frame": "clients",
+      "status": "todo",
+      "position": {
+        "x": 44,
+        "y": 344
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "https",
+          "protocol": "https",
+          "dir": "in",
+          "shape": "public :443"
+        }
+      ],
+      "tags": [],
+      "id": "gateway",
+      "kind": "infra",
+      "label": "API gateway",
+      "sublabel": "TLS \u00b7 rate limit \u00b7 auth",
+      "tech": "Envoy",
+      "frame": "edge",
+      "status": "done",
+      "position": {
+        "x": 532,
+        "y": 60
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "rest",
+          "protocol": "http",
+          "dir": "in",
+          "shape": "JSON /v1/*"
+        },
+        {
+          "id": "events",
+          "protocol": "sse",
+          "dir": "out",
+          "shape": "order status"
+        }
+      ],
+      "tags": [],
+      "id": "api",
+      "kind": "api",
+      "label": "Shop API",
+      "sublabel": "/v1 \u00b7 REST + SSE",
+      "tech": "Go",
+      "frame": "services",
+      "status": "done",
+      "position": {
+        "x": 1174,
+        "y": 60
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "grpc",
+          "protocol": "grpc",
+          "dir": "in",
+          "shape": "CatalogService"
+        }
+      ],
+      "tags": [],
+      "id": "catalog",
+      "kind": "service",
+      "label": "Catalog",
+      "sublabel": "products, stock, search",
+      "tech": "Go",
+      "frame": "services",
+      "status": "done",
+      "position": {
+        "x": 1636,
+        "y": 260
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "grpc",
+          "protocol": "grpc",
+          "dir": "in",
+          "shape": "OrderService"
+        }
+      ],
+      "tags": [],
+      "id": "orders",
+      "kind": "service",
+      "label": "Orders",
+      "sublabel": "cart \u2192 order \u2192 fulfilment",
+      "tech": "Go",
+      "frame": "services",
+      "status": "wip",
+      "position": {
+        "x": 1328,
+        "y": 260
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "charge",
+          "protocol": "grpc",
+          "dir": "in",
+          "shape": "Charge(order) \u2192 receipt"
+        },
+        {
+          "id": "webhook",
+          "protocol": "https",
+          "dir": "in",
+          "shape": "signed Stripe events"
+        }
+      ],
+      "tags": [],
+      "id": "payments",
+      "kind": "bridge",
+      "label": "Payments adapter",
+      "sublabel": "our model \u2194 Stripe's",
+      "tech": "Go",
+      "frame": "services",
+      "status": "blocked",
+      "note": "Blocked on webhook signing key from finance.",
+      "position": {
+        "x": 1328,
+        "y": 444
+      }
+    },
+    {
+      "ports": [],
+      "tags": [],
+      "id": "notifier",
+      "kind": "worker",
+      "label": "Notifier",
+      "sublabel": "email + push on order events",
+      "tech": "Go",
+      "frame": "services",
+      "status": "todo",
+      "position": {
+        "x": 1482,
+        "y": 81
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "predict",
+          "protocol": "http",
+          "dir": "in",
+          "shape": "user_id \u2192 product_id[]"
+        }
+      ],
+      "tags": [],
+      "id": "recs",
+      "kind": "model",
+      "label": "Recommender",
+      "sublabel": "nightly-trained \u00b7 served over HTTP",
+      "tech": "Python",
+      "frame": "services",
+      "status": "todo",
+      "position": {
+        "x": 1020,
+        "y": 260
+      }
+    },
+    {
+      "ports": [],
+      "tags": [],
+      "id": "migrate",
+      "kind": "program",
+      "label": "migrate",
+      "sublabel": "schema migrations on deploy",
+      "tech": "Go",
+      "frame": "services",
+      "status": "done",
+      "position": {
+        "x": 1790,
+        "y": 81
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "sql",
+          "protocol": "sql",
+          "dir": "in"
+        }
+      ],
+      "tags": [],
+      "id": "pg",
+      "kind": "db",
+      "label": "Postgres",
+      "sublabel": "orders, users, products",
+      "tech": "Postgres 16",
+      "frame": "data",
+      "status": "done",
+      "position": {
+        "x": 2278,
+        "y": 60
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "kv",
+          "protocol": "redis",
+          "dir": "in"
+        }
+      ],
+      "tags": [],
+      "id": "redis",
+      "kind": "cache",
+      "label": "Redis",
+      "sublabel": "sessions, carts, stock counters",
+      "frame": "data",
+      "status": "done",
+      "position": {
+        "x": 2278,
+        "y": 228
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "topic",
+          "protocol": "kafka",
+          "dir": "both",
+          "shape": "OrderCreated \u00b7 OrderPaid \u00b7 OrderShipped"
+        }
+      ],
+      "tags": [],
+      "id": "events",
+      "kind": "queue",
+      "label": "Order events",
+      "sublabel": "orders.v1 \u00b7 7-day retention",
+      "tech": "Kafka",
+      "frame": "data",
+      "status": "wip",
+      "position": {
+        "x": 2278,
+        "y": 396
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "objects",
+          "protocol": "s3",
+          "dir": "in"
+        }
+      ],
+      "tags": [],
+      "id": "media",
+      "kind": "storage",
+      "label": "Media bucket",
+      "sublabel": "product images",
+      "tech": "S3",
+      "frame": "data",
+      "status": "done",
+      "position": {
+        "x": 2278,
+        "y": 564
+      }
+    },
+    {
+      "ports": [],
+      "tags": [],
+      "id": "stripe",
+      "kind": "external",
+      "label": "Stripe",
+      "sublabel": "cards \u00b7 webhooks",
+      "frame": "providers",
+      "position": {
+        "x": 1020,
+        "y": 816
+      }
+    },
+    {
+      "ports": [],
+      "tags": [],
+      "id": "email",
+      "kind": "external",
+      "label": "Email provider",
+      "sublabel": "transactional mail",
+      "frame": "providers",
+      "position": {
+        "x": 1320,
+        "y": 816
+      }
+    }
+  ],
+  "edges": [
+    {
+      "kind": "sync",
+      "id": "web-gateway",
+      "source": "web",
+      "target": "gateway",
+      "protocol": "https",
+      "targetPort": "https",
+      "label": "browse, checkout"
+    },
+    {
+      "kind": "sync",
+      "id": "app-gateway",
+      "source": "app",
+      "target": "gateway",
+      "protocol": "https",
+      "targetPort": "https",
+      "label": "same API"
+    },
+    {
+      "kind": "sync",
+      "id": "admin-gateway",
+      "source": "admin",
+      "target": "gateway",
+      "protocol": "https",
+      "targetPort": "https",
+      "label": "staff only"
+    },
+    {
+      "kind": "sync",
+      "id": "gateway-api",
+      "source": "gateway",
+      "target": "api",
+      "protocol": "http",
+      "targetPort": "rest",
+      "label": "route /v1"
+    },
+    {
+      "kind": "async",
+      "id": "api-web",
+      "source": "api",
+      "target": "web",
+      "protocol": "sse",
+      "sourcePort": "events",
+      "label": "order status"
+    },
+    {
+      "kind": "sync",
+      "id": "api-catalog",
+      "source": "api",
+      "target": "catalog",
+      "protocol": "grpc",
+      "targetPort": "grpc",
+      "label": "search, stock"
+    },
+    {
+      "kind": "sync",
+      "id": "api-orders",
+      "source": "api",
+      "target": "orders",
+      "protocol": "grpc",
+      "targetPort": "grpc",
+      "label": "cart, place order"
+    },
+    {
+      "kind": "sync",
+      "id": "api-recs",
+      "source": "api",
+      "target": "recs",
+      "protocol": "http",
+      "targetPort": "predict",
+      "label": "home page recs"
+    },
+    {
+      "kind": "sync",
+      "id": "orders-payments",
+      "source": "orders",
+      "target": "payments",
+      "protocol": "grpc",
+      "targetPort": "charge",
+      "label": "charge",
+      "payload": "order total, card token"
+    },
+    {
+      "kind": "sync",
+      "id": "payments-stripe",
+      "source": "payments",
+      "target": "stripe",
+      "protocol": "https",
+      "label": "PaymentIntent"
+    },
+    {
+      "kind": "async",
+      "id": "stripe-payments",
+      "source": "stripe",
+      "target": "payments",
+      "protocol": "https",
+      "label": "webhook: payment_intent.succeeded",
+      "targetPort": "webhook"
+    },
+    {
+      "kind": "async",
+      "id": "orders-events",
+      "source": "orders",
+      "target": "events",
+      "protocol": "kafka",
+      "targetPort": "topic",
+      "label": "publish"
+    },
+    {
+      "kind": "async",
+      "id": "events-notifier",
+      "source": "events",
+      "target": "notifier",
+      "protocol": "kafka",
+      "sourcePort": "topic",
+      "label": "consume"
+    },
+    {
+      "kind": "sync",
+      "id": "notifier-email",
+      "source": "notifier",
+      "target": "email",
+      "protocol": "https",
+      "label": "send"
+    },
+    {
+      "kind": "data",
+      "id": "catalog-pg",
+      "source": "catalog",
+      "target": "pg",
+      "protocol": "sql",
+      "targetPort": "sql"
+    },
+    {
+      "kind": "data",
+      "id": "orders-pg",
+      "source": "orders",
+      "target": "pg",
+      "protocol": "sql",
+      "targetPort": "sql"
+    },
+    {
+      "kind": "data",
+      "id": "orders-redis",
+      "source": "orders",
+      "target": "redis",
+      "protocol": "redis",
+      "targetPort": "kv",
+      "label": "carts, stock holds"
+    },
+    {
+      "kind": "data",
+      "id": "api-redis",
+      "source": "api",
+      "target": "redis",
+      "protocol": "redis",
+      "targetPort": "kv",
+      "label": "sessions"
+    },
+    {
+      "kind": "data",
+      "id": "catalog-media",
+      "source": "catalog",
+      "target": "media",
+      "protocol": "s3",
+      "targetPort": "objects",
+      "label": "image URLs"
+    },
+    {
+      "kind": "data",
+      "id": "recs-pg",
+      "source": "recs",
+      "target": "pg",
+      "protocol": "sql",
+      "targetPort": "sql",
+      "label": "nightly read"
+    },
+    {
+      "kind": "control",
+      "id": "migrate-pg",
+      "source": "migrate",
+      "target": "pg",
+      "protocol": "sql",
+      "targetPort": "sql",
+      "label": "apply migrations"
+    }
+  ]
+}

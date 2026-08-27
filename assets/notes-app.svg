@@ -17,56 +17,56 @@
 <text x="1024" y="35.5" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="11" font-weight="600" letter-spacing="1.1" fill="#c98cff">DATA</text>
 </g>
 <g data-edge="web-api">
-<path d="M336,138.3 L564,139.7" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(564 139.7) rotate(0.35)"/>
-<rect x="412.6" y="131" width="74.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
-<text x="450" y="142" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">fetch · http</text>
+<path d="M336,133.46 L564,139.54" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(564 139.54) rotate(1.53)"/>
+<rect x="412.6" y="128.5" width="74.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="450" y="139.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">fetch · http</text>
 </g>
 <g data-edge="api-pg">
-<path d="M824,141.83 L1052,144.17" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1052 144.17) rotate(0.59)"/>
+<path d="M824,143 L1052,143" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1052 143) rotate(0)"/>
 <rect x="924.9" y="135" width="26.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
 <text x="938" y="146" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">sql</text>
 </g>
 <g data-edge="api-redis">
-<path d="M824,180.46 L1052,250.54" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1052 250.54) rotate(17.09)"/>
-<rect x="892.5" y="207.5" width="91" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
-<text x="938" y="218.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">enqueue · redis</text>
+<path d="M824,182.96 L1052,253.04" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1052 253.04) rotate(17.09)"/>
+<rect x="892.5" y="210" width="91" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="938" y="221" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">enqueue · redis</text>
 </g>
 <g data-edge="jobs-redis">
-<path d="M824,282.43 L1052,287.57" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1052 287.57) rotate(1.29)"/>
-<rect x="892.5" y="277" width="91" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
-<text x="938" y="288" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">consume · redis</text>
+<path d="M824,283.46 L1052,289.54" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1052 289.54) rotate(1.53)"/>
+<rect x="892.5" y="278.5" width="91" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="938" y="289.5" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">consume · redis</text>
 </g>
 <g data-edge="jobs-s3">
-<path d="M804.91,317 L1052,400.55" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
-<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1052 400.55) rotate(18.68)"/>
-<rect x="918.05" y="350.77" width="20.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
-<text x="928.45" y="361.77" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">s3</text>
+<path d="M807.77,318 L1052,399.58" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(1052 399.58) rotate(18.47)"/>
+<rect x="919.48" y="350.79" width="20.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="929.88" y="361.79" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">s3</text>
 </g>
 <g data-node="web" transform="translate(76 92)">
-<path d="M7,0 H253 Q260,0 260,7 V84 Q260,91 253,91 H7 Q0,91 0,84 V7 Q0,0 7,0 Z" fill="#161412" stroke="#6ea8fe" stroke-width="1.5"/>
+<path d="M7,0 H253 Q260,0 260,7 V69 Q260,76 253,76 H7 Q0,76 0,69 V7 Q0,0 7,0 Z" fill="#161412" stroke="#6ea8fe" stroke-width="1.5"/>
 <text x="12" y="41" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#6ea8fe">UI</text>
 <text x="12" y="57" font-size="13.5" font-weight="650" fill="#efece6">Notes UI</text>
 <text x="12" y="72" font-size="11.5" fill="#a8a29a">SvelteKit</text>
 </g>
 <g data-node="api" transform="translate(564 92)">
-<path d="M22,0 H238 A22,22 0 0 1 238,97 H22 A22,22 0 0 1 22,0 Z" fill="#161412" stroke="#4ec9a5" stroke-width="1.5"/>
+<path d="M22,0 H238 A22,22 0 0 1 238,102 H22 A22,22 0 0 1 22,0 Z" fill="#161412" stroke="#4ec9a5" stroke-width="1.5"/>
 <text x="12" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#4ec9a5">API</text>
 <text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">HTTP API</text>
 <text x="12" y="56" font-size="11.5" fill="#a8a29a">/api/notes</text>
 <text x="12" y="71" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#a8a29a">↘ rest:http</text>
 </g>
 <g data-node="jobs" transform="translate(564 242)">
-<path d="M7,0 H253 Q260,0 260,7 V68 Q260,75 253,75 H7 Q0,75 0,68 V7 Q0,0 7,0 Z" fill="#161412" stroke="#d9a75b" stroke-width="1.5"/>
+<path d="M7,0 H253 Q260,0 260,7 V69 Q260,76 253,76 H7 Q0,76 0,69 V7 Q0,0 7,0 Z" fill="#161412" stroke="#d9a75b" stroke-width="1.5"/>
 <text x="12" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#d9a75b">WORKER</text>
 <text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">Job runner</text>
 <text x="12" y="56" font-size="11.5" fill="#a8a29a">thumbnails, exports</text>
 </g>
 <g data-node="pg" transform="translate(1052 92)">
-<path d="M0,9 A130,9 0 0 1 260,9 V98 A130,9 0 0 1 0,98 Z" fill="#161412" stroke="#c9b458" stroke-width="1.5"/>
+<path d="M0,9 A130,9 0 0 1 260,9 V93 A130,9 0 0 1 0,93 Z" fill="#161412" stroke="#c9b458" stroke-width="1.5"/>
 <path d="M0,9 A130,9 0 0 0 260,9" fill="none" stroke="#c9b458" stroke-width="1.5"/>
 <text x="12" y="33" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#c9b458">DATABASE</text>
 <text x="12" y="49" font-size="13.5" font-weight="650" fill="#efece6">Postgres</text>
@@ -74,14 +74,14 @@
 <text x="12" y="79" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#a8a29a">↘ sql:sql</text>
 </g>
 <g data-node="redis" transform="translate(1052 242)">
-<path d="M16,0 H260 L244,97 H0 Z" fill="#161412" stroke="#e86a8f" stroke-width="1.5"/>
+<path d="M16,0 H260 L244,102 H0 Z" fill="#161412" stroke="#e86a8f" stroke-width="1.5"/>
 <text x="12" y="25" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#e86a8f">QUEUE</text>
 <text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">Job queue</text>
 <text x="12" y="56" font-size="11.5" fill="#a8a29a">Redis lists</text>
 <text x="12" y="71" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#a8a29a">↘ jobs:redis</text>
 </g>
 <g data-node="s3" transform="translate(1052 392)">
-<path d="M0,15 Q0,8 7,8 H70 l8,-8 H253 Q260,0 260,7 V98 Q260,105 253,105 H7 Q0,105 0,98 Z" fill="#161412" stroke="#b8a27e" stroke-width="1.5"/>
+<path d="M0,15 Q0,8 7,8 H70 l8,-8 H253 Q260,0 260,7 V95 Q260,102 253,102 H7 Q0,102 0,95 Z" fill="#161412" stroke="#b8a27e" stroke-width="1.5"/>
 <text x="12" y="33" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#b8a27e">STORAGE</text>
 <text x="12" y="49" font-size="13.5" font-weight="650" fill="#efece6">Object store</text>
 <text x="12" y="64" font-size="11.5" fill="#a8a29a">uploads</text>

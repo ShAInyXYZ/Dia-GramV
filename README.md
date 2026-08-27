@@ -28,7 +28,69 @@ Claude Code  ──MCP (stdio)──▶  dgv mcp  ──▶  dgv/*.dgv.json  ◀
                                                     └──────── save / drag / edit ──┘
 ```
 
-Inspired by [archify](https://github.com/tt-a1i/archify) (typed IR + repairable diagnostics) and by the arch-viewer draft in Cerveau (Svelte Flow, nested frames). DGV differs on purpose: a live editable canvas instead of static SVG, explicit frame membership instead of geometry inference, dagre layout, and ports/contracts on edges.
+Inspired by [archify](https://github.com/tt-a1i/archify) (typed IR + repairable diagnostics) and by the arch-viewer draft in [Cerveau](https://github.com/ShAInyXYZ/Cerveau) ([cerveau.sh](https://cerveau.sh)) — the local-first agentic coding harness DGV was built to plan. DGV differs from both on purpose: a live editable canvas instead of static SVG, explicit frame membership instead of geometry inference, dagre layout, and ports/contracts on edges.
+
+## Why this belongs in every stage
+
+A vibecoded system gets written faster than anyone can hold it in their head — you, your
+teammates and the agent all end up guessing at a shape nobody wrote down. DGV writes it down
+in a form all three can read, and that a linter can argue with.
+
+Both pictures below are real exports from this repo's snapshot button: the architecture of
+[Cerveau](https://github.com/ShAInyXYZ/Cerveau), 35 components across 7 boundaries, planned
+in DGV before the code was written.
+
+<div align="center">
+  <img src="assets/architecture.svg" width="880" alt="Cerveau's architecture: 35 components, 7 boundaries, 44 typed connections"/>
+</div>
+
+**Fold it and the same file answers a different question.** Every frame becomes one node, the
+wires crossing each boundary merge into one labelled link, and a system you cannot take in at
+a glance becomes seven boxes you can. Same document — there is no second diagram to keep in
+sync, and no moment where the overview and the detail disagree.
+
+<div align="center">
+  <img src="assets/architecture-folded.svg" width="620" alt="The same architecture folded: 7 masternodes, 11 merged links"/>
+</div>
+
+### Planning — before a day of tokens goes the wrong way
+
+The cheapest bug is the one caught in the plan. `dgv_lint` returns a stable code, the exact
+subject and concrete fixes, so an agent can repair the plan in the same turn it broke it: an
+edge into a port the target never declared, a protocol a kind cannot speak, a store that
+initiates calls, a one-sided bridge, an import cycle, an API nobody calls.
+
+A wrong plan does not announce itself. It gets *implemented*, and you find out a day of
+generation later.
+
+### Building — the map an agent reads instead of the whole tree
+
+Point an agent at a 200-file repo and it greps, opens and infers, burning context to rebuild a
+picture that already exists. `dgv_export` hands it that picture directly — which component
+owns what, which port carries which protocol, what is allowed to call what — as markdown, an
+outline, mermaid or an SVG.
+
+The typed contracts are the part that prevents the invented endpoint. A model that can read
+`memclient → typesense · search · http` does not have to guess whether the store speaks SQL.
+
+### Reviewing — architecture drift shows up in the diff
+
+The diagram is a JSON file in the repo, so a change that quietly makes a module call a
+database directly arrives in the pull request as a changed edge, next to the code that did it.
+No screenshot, no stale Figma, no whiteboard photo in a wiki.
+
+### Maintaining — a plan that gets argued with stays true
+
+Documentation rots because nothing checks it. This one is checked on every read — and it still
+needs your honesty. While this README was being written, lint caught Cerveau's diagram calling
+the vLLM core work-in-progress when `cores.json` had it as the **active** core, and flagged an
+import crossing what the diagram described as two processes but the code runs as one. Both
+were the diagram lying about shipped work. Both were a one-line fix, found by the tool instead
+of by someone tripping over it later.
+
+DGV records the plan; it does not read your source. It cannot tell you the code matches — only
+that the plan is coherent, and that what you wrote down still says what you meant. That is the
+honest boundary, and it is the reason the file lives in the repo where review can reach it.
 
 ## Packages
 

@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="696" viewBox="0 0 980 696" font-family="Manrope, 'Segoe UI', system-ui, -apple-system, sans-serif">
+<title>Cerveau Architecture</title>
+<rect class="bg" fill="#0e0d0b" width="980" height="696"/>
+<g data-edge="panel-api+crvcli-api">
+<path d="M 490,172 L 490,160 Q 490,148 478,148 L 472,148 Q 454,148 454,130 L 454,98 Q 454,80 436,80 L 430,80 Q 418,80 418,92 L 418,104" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(418 104) rotate(-90)"/>
+<rect x="430.1" y="106" width="47.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="454" y="117" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">2 links</text>
+</g>
+<g data-edge="api-panel-stream+api-panel-static+tools-web">
+<path d="M 418,104 L 418,116 Q 418,128 430,128 L 436,128 Q 454,128 454,146 L 454,178 Q 454,196 472,196 L 478,196 Q 490,196 490,184 L 490,172" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(490 172) rotate(90)"/>
+<rect x="430.1" y="154" width="47.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="454" y="165" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">3 links</text>
+</g>
+<g data-edge="phone-tailscale">
+<path d="M 490,244 L 490,256 Q 490,268 502,268 L 510.5,268 Q 531,268 531,288.5 L 531,315.5 Q 531,336 551.5,336 L 560,336 Q 572,336 572,324 L 572,312" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(572 312) rotate(90)"/>
+<rect x="423.4" y="294" width="215.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="531" y="305" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">open PWA · bearer + device sig · https</text>
+</g>
+<g data-edge="ignite-api">
+<path d="M 572,312 L 572,300 Q 572,288 560,288 L 529,288 Q 495,288 495,254 L 495,114 Q 495,80 461,80 L 430,80 Q 418,80 418,92 L 418,104" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(418 104) rotate(-90)"/>
+<rect x="392.8" y="176" width="204.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="495" y="187" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">reverse proxy once core is up · http</text>
+</g>
+<g data-edge="ignite-systemd">
+<path d="M 572,384 L 572,396 Q 572,408 560,408 L 551.5,408 Q 531,408 531,428.5 L 531,455.5 Q 531,476 510.5,476 L 502,476 Q 490,476 490,464 L 490,452" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(490 452) rotate(90)"/>
+<rect x="391" y="434" width="280" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="531" y="445" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">systemctl --user start (core, llama, embed) · exec</text>
+</g>
+<g data-edge="systemd-llama+systemd-vllm">
+<path d="M 490,524 L 490,536 Q 490,548 502,548 L 620,548 Q 654,548 654,582 L 654,582 Q 654,616 688,616 L 806,616 Q 818,616 818,604 L 818,592" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(818 592) rotate(90)"/>
+<rect x="630.1" y="574" width="47.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="654" y="585" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">2 links</text>
+</g>
+<g data-edge="systemd-embed">
+<path d="M 490,524 L 490,536 Q 490,548 478,548 L 442,548 Q 408,548 408,582 L 408,582 Q 408,616 374,616 L 338,616 Q 326,616 326,604 L 326,592" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="8 4 2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(326 592) rotate(90)"/>
+<rect x="332.8" y="574" width="150.4" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="408" y="585" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">runs cerveau-embed.service</text>
+</g>
+<g data-edge="api-coresjson+llmclient-llama+llmclient-coreproxy">
+<path d="M 418,104 L 418,116 Q 418,128 430,128 L 584,128 Q 618,128 618,162 L 618,582 Q 618,616 652,616 L 806,616 Q 818,616 818,604 L 818,592" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(818 592) rotate(90)"/>
+<rect x="594.1" y="364" width="47.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="618" y="375" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">3 links</text>
+</g>
+<g data-edge="memclient-typesense+memclient-sessions+session-sessions+codeintel-codegraph+skills-skillsdir+rfx-rfxdir">
+<path d="M 418,104 L 418,116 Q 418,128 406,128 L 395,128 Q 372,128 372,151 L 372,593 Q 372,616 349,616 L 338,616 Q 326,616 326,604 L 326,592" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(326 592) rotate(90)"/>
+<rect x="348.1" y="364" width="47.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="372" y="375" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">6 links</text>
+</g>
+<g data-edge="codeintel-workspace+tools-workspace+tools-chromium+tools-reflexprog">
+<path d="M 418,104 L 418,116 Q 418,128 406,128 L 324,128 Q 290,128 290,162 L 290,162 Q 290,196 256,196 L 174,196 Q 162,196 162,184 L 162,172" fill="none" stroke="#6a655d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(162 172) rotate(90)"/>
+<rect x="266.1" y="154" width="47.8" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="290" y="165" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">4 links</text>
+</g>
+<g data-edge="idle-idlereq">
+<path d="M 418,104 L 418,116 Q 418,128 430,128 L 436,128 Q 454,128 454,146 L 454,458 Q 454,476 472,476 L 478,476 Q 490,476 490,464 L 490,452" fill="none" stroke="#6a655d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/>
+<polygon points="0,0 -9,-4 -9,4" fill="#6a655d" transform="translate(490 452) rotate(90)"/>
+<rect x="386.9" y="294" width="134.2" height="15" rx="3" fill="#0e0d0b" fill-opacity="0.92"/>
+<text x="454" y="305" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">write park request · fs</text>
+</g>
+<g data-node="crv" transform="translate(288 32)">
+<rect x="8" y="8" width="260" height="72" rx="7" fill="#0e0d0b" stroke="#2a2825" opacity="0.55"/>
+<rect x="4" y="4" width="260" height="72" rx="7" fill="#0e0d0b" stroke="#2a2825"/>
+<rect width="260" height="72" rx="7" fill="#161412" stroke="#e8873a"/>
+<text x="12" y="22" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#e8873a">GROUP</text>
+<text x="58" y="22" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">12 nodes</text>
+<text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">crv · Go core · :7700</text>
+<g transform="translate(12 50)"><path d="M0,1.05 Q0,0 1.05,0 H7.2 l1.5,1.3499999999999999 H16.95 Q18,1.3499999999999999 18,2.4 V9.95 Q18,11 16.95,11 H1.05 Q0,11 0,9.95 Z" fill="#161412" stroke="#c98cff" stroke-width="1"/></g>
+<text x="34" y="59" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" fill="#6f6a62">10</text>
+<g transform="translate(47 50)"><path d="M5.5,0 H12.5 A5.5,5.5 0 0 1 12.5,11 H5.5 A5.5,5.5 0 0 1 5.5,0 Z" fill="#161412" stroke="#4ec9a5" stroke-width="1"/></g>
+<g transform="translate(73 50)"><path d="M1.05,0 H16.95 Q18,0 18,1.05 V9.95 Q18,11 16.95,11 H1.05 Q0,11 0,9.95 V1.05 Q0,0 1.05,0 Z" fill="#161412" stroke="#e8873a" stroke-width="1"/></g>
+</g>
+<g data-node="memory" transform="translate(196 592)">
+<rect x="8" y="8" width="260" height="72" rx="7" fill="#0e0d0b" stroke="#2a2825" opacity="0.55"/>
+<rect x="4" y="4" width="260" height="72" rx="7" fill="#0e0d0b" stroke="#2a2825"/>
+<rect width="260" height="72" rx="7" fill="#161412" stroke="#c98cff"/>
+<text x="12" y="22" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#c98cff">GROUP</text>
+<text x="58" y="22" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">6 nodes</text>
+<text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">Memory · 5 stores</text>
+<g transform="translate(12 50)"><path d="M0,2.25 Q0,1.2 1.05,1.2 H5.3999999999999995 l1.2,-1.2 H16.95 Q18,0 18,1.05 V9.95 Q18,11 16.95,11 H1.05 Q0,11 0,9.95 Z" fill="#161412" stroke="#b8a27e" stroke-width="1"/></g>
+<text x="34" y="59" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" fill="#6f6a62">3</text>
+<g transform="translate(47 50)"><path d="M0,1.3499999999999999 A9,1.3499999999999999 0 0 1 18,1.3499999999999999 V9.65 A9,1.3499999999999999 0 0 1 0,9.65 Z" fill="#161412" stroke="#c9b458" stroke-width="1"/></g>
+<text x="69" y="59" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" fill="#6f6a62">2</text>
+<g transform="translate(82 50)"><path d="M1.05,0 H16.95 Q18,0 18,1.05 V9.95 Q18,11 16.95,11 H1.05 Q0,11 0,9.95 V1.05 Q0,0 1.05,0 Z" fill="#161412" stroke="#c98cff" stroke-width="1"/></g>
+</g>
+<g data-node="serving" transform="translate(688 592)">
+<rect x="8" y="8" width="260" height="72" rx="7" fill="#0e0d0b" stroke="#2a2825" opacity="0.55"/>
+<rect x="4" y="4" width="260" height="72" rx="7" fill="#0e0d0b" stroke="#2a2825"/>
+<rect width="260" height="72" rx="7" fill="#161412" stroke="#4ec9a5"/>
+<text x="12" y="22" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#4ec9a5">GROUP</text>
+<text x="58" y="22" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">5 nodes</text>
+<text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">Brain Cores · model serving</text>
+<g transform="translate(12 50)"><path d="M1.7999999999999998,0 H16.2 L18,1.7999999999999998 V9.2 L16.2,11 H1.7999999999999998 L0,9.2 V1.7999999999999998 Z" fill="#161412" stroke="#4ec9a5" stroke-width="1"/></g>
+<text x="34" y="59" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" fill="#6f6a62">2</text>
+<g transform="translate(47 50)"><path d="M0,2.25 Q0,1.2 1.05,1.2 H5.3999999999999995 l1.2,-1.2 H16.95 Q18,0 18,1.05 V9.95 Q18,11 16.95,11 H1.05 Q0,11 0,9.95 Z" fill="#161412" stroke="#b8a27e" stroke-width="1"/></g>
+<text x="69" y="59" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" fill="#6f6a62">2</text>
+<g transform="translate(82 50)"><path d="M1.05,0 H16.95 Q18,0 18,1.05 V9.95 Q18,11 16.95,11 H1.05 Q0,11 0,9.95 V1.05 Q0,0 1.05,0 Z" fill="#161412" stroke="#7d766c" stroke-width="1"/></g>
+</g>
+<g data-node="edge" transform="translate(442 312)">
+<rect x="8" y="8" width="260" height="72" rx="7" fill="#0e0d0b" stroke="#2a2825" opacity="0.55"/>
+<rect x="4" y="4" width="260" height="72" rx="7" fill="#0e0d0b" stroke="#2a2825"/>
+<rect width="260" height="72" rx="7" fill="#161412" stroke="#e86a8f"/>
+<text x="12" y="22" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#e86a8f">GROUP</text>
+<text x="58" y="22" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">2 nodes</text>
+<text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">Front door · wake on demand</text>
+<g transform="translate(12 50)"><path d="M1.05,0 H16.95 Q18,0 18,1.05 V9.95 Q18,11 16.95,11 H1.05 Q0,11 0,9.95 V1.05 Q0,0 1.05,0 Z" fill="#161412" stroke="#7d766c" stroke-width="1"/></g>
+<g transform="translate(38 50)"><path d="M0,0 H15.3 L18,5.5 L15.3,11 H0 Z" fill="#161412" stroke="#9ab87a" stroke-width="1"/></g>
+</g>
+<g data-node="outside" transform="translate(360 172)">
+<rect x="8" y="8" width="260" height="72" rx="7" fill="#0e0d0b" stroke="#2a2825" opacity="0.55"/>
+<rect x="4" y="4" width="260" height="72" rx="7" fill="#0e0d0b" stroke="#2a2825"/>
+<rect width="260" height="72" rx="7" fill="#161412" stroke="#8a8580"/>
+<text x="12" y="22" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#8a8580">GROUP</text>
+<text x="58" y="22" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">4 nodes</text>
+<text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">Outside the machine</text>
+<g transform="translate(12 50)"><path d="M2.4,0 H15.6 Q18,0 18,2.4 V8.6 Q18,11 15.6,11 H2.4 Q0,11 0,8.6 V2.4 Q0,0 2.4,0 Z" fill="#161412" stroke="#6ea8fe" stroke-width="1"/></g>
+<g transform="translate(38 50)"><path d="M1.05,0 H16.95 Q18,0 18,1.05 V9.95 Q18,11 16.95,11 H1.05 Q0,11 0,9.95 V1.05 Q0,0 1.05,0 Z" fill="#161412" stroke="#8a8580" stroke-width="1"/></g>
+<g transform="translate(64 50)"><path d="M0,0 H15.3 L18,5.5 L15.3,11 H0 Z" fill="#161412" stroke="#9ab87a" stroke-width="1"/></g>
+<g transform="translate(90 50)"><path d="M1.05,0 H16.95 Q18,0 18,1.05 V9.95 Q18,11 16.95,11 H1.05 Q0,11 0,9.95 V1.05 Q0,0 1.05,0 Z" fill="#161412" stroke="#6ea8fe" stroke-width="1"/></g>
+</g>
+<g data-node="targets" transform="translate(32 172)">
+<rect x="8" y="8" width="260" height="72" rx="7" fill="#0e0d0b" stroke="#2a2825" opacity="0.55"/>
+<rect x="4" y="4" width="260" height="72" rx="7" fill="#0e0d0b" stroke="#2a2825"/>
+<rect width="260" height="72" rx="7" fill="#161412" stroke="#8a8580"/>
+<text x="12" y="22" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#8a8580">GROUP</text>
+<text x="58" y="22" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">3 nodes</text>
+<text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">What the tools act on</text>
+<g transform="translate(12 50)"><path d="M0,0 H15.3 L18,5.5 L15.3,11 H0 Z" fill="#161412" stroke="#9ab87a" stroke-width="1"/></g>
+<text x="34" y="59" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9" fill="#6f6a62">2</text>
+<g transform="translate(47 50)"><path d="M0,2.25 Q0,1.2 1.05,1.2 H5.3999999999999995 l1.2,-1.2 H16.95 Q18,0 18,1.05 V9.95 Q18,11 16.95,11 H1.05 Q0,11 0,9.95 Z" fill="#161412" stroke="#b8a27e" stroke-width="1"/></g>
+</g>
+<g data-node="lifecycle" transform="translate(360 452)">
+<rect x="8" y="8" width="260" height="72" rx="7" fill="#0e0d0b" stroke="#2a2825" opacity="0.55"/>
+<rect x="4" y="4" width="260" height="72" rx="7" fill="#0e0d0b" stroke="#2a2825"/>
+<rect width="260" height="72" rx="7" fill="#161412" stroke="#e8873a"/>
+<text x="12" y="22" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" letter-spacing="1.15" fill="#e8873a">GROUP</text>
+<text x="58" y="22" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" fill="#6f6a62">3 nodes</text>
+<text x="12" y="41" font-size="13.5" font-weight="650" fill="#efece6">Lifecycle · start &amp; park</text>
+<g transform="translate(12 50)"><path d="M1.05,0 H16.95 Q18,0 18,1.05 V9.95 Q18,11 16.95,11 H1.05 Q0,11 0,9.95 V1.05 Q0,0 1.05,0 Z" fill="#161412" stroke="#7d766c" stroke-width="1"/></g>
+<g transform="translate(38 50)"><path d="M0,0 H15.3 L18,5.5 L15.3,11 H0 Z" fill="#161412" stroke="#9ab87a" stroke-width="1"/></g>
+<g transform="translate(64 50)"><path d="M0,2.25 Q0,1.2 1.05,1.2 H5.3999999999999995 l1.2,-1.2 H16.95 Q18,0 18,1.05 V9.95 Q18,11 16.95,11 H1.05 Q0,11 0,9.95 Z" fill="#161412" stroke="#b8a27e" stroke-width="1"/></g>
+</g>
+</svg>

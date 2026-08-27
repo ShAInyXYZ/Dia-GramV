@@ -8,13 +8,15 @@
  *   dgv lint <name|file> [--json]     lint a diagram
  *   dgv layout <name|file>            auto layout in place
  *   dgv export <name|file> [--format markdown|mermaid|summary]
+ *   dgv drift <name|file> [--root r] [--depth n] [--json]   does the diagram still describe the code?
  *   dgv list | catalog | doctor
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { lint, layout, toMarkdown, toMermaid, toSVG, outline as textSummary, catalogSummary, normalize, summarizeDiagnostics as diagSummary } from '@dgv/core';
+import { lint, layout, drift, toMarkdown, toMermaid, toSVG, outline as textSummary, catalogSummary, normalize, summarizeDiagnostics as diagSummary } from '@dgv/core';
 import * as store from '@dgv/core/store';
+import { listFiles } from '../src/walk.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
@@ -76,6 +78,20 @@ switch (cmd) {
     process.stdout.write(f === 'svg' ? toSVG(doc) : f === 'mermaid' ? toMermaid(doc) : f === 'summary' ? textSummary(doc) : toMarkdown(doc));
     break;
   }
+  case 'drift': {
+    const { doc, file } = loadDoc(positional[0]);
+    const ddir = path.dirname(path.resolve(file));
+    const base = path.resolve(flag('--root') ?? path.dirname(ddir));
+    const r = drift(doc, listFiles(base, { exclude: [path.relative(base, ddir)] }), { depth: Number(flag('--depth') ?? 2) });
+    if (has('--json')) console.log(JSON.stringify(r, null, 2));
+    else {
+      if (!r.linked) console.log('not linked: no node has a path yet');
+      for (const x of r.findings.filter((f) => f.code !== 'drift/unmapped')) console.log(`${x.severity.padEnd(7)} ${x.code.padEnd(16)} ${x.message}${x.fixes.length ? `\n        fix: ${x.fixes.join(' | ')}` : ''}`);
+      const s = r.summary;
+      console.log(`\n${s.files} files · ${s.mapped} nodes mapped · ${s.unmapped} unmapped · ${s.missing} missing · ${s.unclaimed} unclaimed dir(s) · ${s.ignored} ignored`);
+    }
+    process.exit(r.ok ? 0 : 1);
+  }
   case 'list': { for (const d of store.list(dir)) console.log(`${d.name.padEnd(24)} ${String(d.nodes).padStart(3)} nodes ${String(d.edges).padStart(3)} edges  ${d.title ?? ''}`); break; }
   case 'catalog': { console.log(JSON.stringify(catalogSummary(), null, 2)); break; }
   case 'doctor': {
@@ -84,6 +100,10 @@ switch (cmd) {
     console.log(`diagrams   ${dir} ${fs.existsSync(dir) ? `(${store.list(dir).length} found)` : '(will be created)'}`);
     console.log(`viewer     ${fs.existsSync(dist) ? 'built' : 'NOT built — run: npm run build'}`);
     console.log(`mcp        claude mcp add dgv -s user -- node ${path.resolve(__dirname, 'dgv.mjs')} mcp`);
+    const hooks = path.resolve(__dirname, '../../../hooks');
+    console.log(`hooks      add to ~/.claude/settings.json (see ${hooks}/README.md):\n` + JSON.stringify({ hooks: {
+      SessionStart: [{ hooks: [{ type: 'command', command: `node ${hooks}/session-start.mjs`, timeout: 10 }] }],
+      Stop: [{ hooks: [{ type: 'command', command: `node ${hooks}/stop.mjs`, timeout: 10 }] }] } }, null, 2).replace(/^/gm, '           '));
     break;
   }
   default: usage();

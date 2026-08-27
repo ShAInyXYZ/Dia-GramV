@@ -8,7 +8,7 @@ import type { Node, Edge } from '@xyflow/svelte';
 import { frameDepth, normalize, NODE_W, estimateHeight } from '@dgv/core';
 
 export type Master = { tone: string; nodes: number; frames: number; members: string[]; kinds: { kind: string; n: number }[] };
-export type NodeData = { kind: string; label: string; sublabel?: string; note?: string; tech?: string; status?: string; tags?: string[]; ports?: Port[]; ack?: string; master?: Master };
+export type NodeData = { kind: string; label: string; sublabel?: string; note?: string; tech?: string; status?: string; tags?: string[]; ports?: Port[]; ack?: string; path?: string | string[]; master?: Master };
 export type Port = { id: string; protocol?: string; dir?: 'in' | 'out' | 'both'; shape?: string };
 export type FrameData = { label: string; tone?: string; note?: string; ack?: string; isFrame: true };
 export type EdgeData = { kind?: string; protocol?: string; label?: string; sourcePort?: string; targetPort?: string; payload?: string; note?: string; ack?: string };
@@ -49,7 +49,7 @@ export function toFlow(rawDoc: any): { nodes: FNode[]; edges: FEdge[] } {
       id: n.id, type: n.master ? 'master' : 'dgv',
       position: p ? { x: a.x - abs(p).x, y: a.y - abs(p).y } : { ...a },
       zIndex: 10,
-      data: { kind: n.kind, label: n.label, sublabel: n.sublabel, note: n.note, tech: n.tech, status: n.status, tags: n.tags ?? [], ports: n.ports ?? [], ack: n.ack, master: n.master },
+      data: { kind: n.kind, label: n.label, sublabel: n.sublabel, note: n.note, tech: n.tech, status: n.status, tags: n.tags ?? [], ports: n.ports ?? [], ack: n.ack, path: n.path, master: n.master },
       ...(pid ? { parentId: pid } : {}),
     };
   });
@@ -87,7 +87,7 @@ export function fromFlow(nodes: FNode[], edges: FEdge[], meta: any) {
   });
   const comps = nodes.filter((n) => !isFrame(n)).map((n) => {
     const a = absPos(nodes, n); const d = n.data as NodeData;
-    return clean({ id: n.id, kind: d.kind, label: d.label, sublabel: d.sublabel, note: d.note, frame: n.parentId, tech: d.tech, status: d.status,
+    return clean({ id: n.id, kind: d.kind, label: d.label, sublabel: d.sublabel, note: d.note, frame: n.parentId, tech: d.tech, status: d.status, path: d.path,
       tags: d.tags, ports: d.ports?.map((p) => clean({ ...p })), ack: d.ack, position: { x: r(a.x), y: r(a.y) } });
   });
   const es = edges.map((e) => clean({ id: e.id, source: e.source, target: e.target, ...(e.data ?? {}) }));

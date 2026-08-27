@@ -9,4 +9,5 @@ export * from './export.js';
 export * from './shapes.js';
 export * from './router.js';
 export * from './svg.js';
+export * from './drift.js';
 export * from './collapse.js';

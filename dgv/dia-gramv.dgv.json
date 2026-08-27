@@ -1,0 +1,351 @@
+{
+  "dgv": 1,
+  "meta": {
+    "title": "Dia-GramV",
+    "description": "DGV's own architecture, kept in DGV. Every node carries a path, so dgv_drift can say whether this file still matches the repository it lives in.",
+    "colorBy": "kind",
+    "edgeStyle": "routed",
+    "driftIgnore": [
+      "assets",
+      "examples",
+      "skill",
+      "README.md",
+      "LICENSE",
+      "banner.svg",
+      "package.json",
+      "package-lock.json",
+      ".gitignore"
+    ],
+    "updated": "2026-08-27"
+  },
+  "frames": [
+    {
+      "tone": "violet",
+      "id": "agent",
+      "label": "Agent side · Claude Code",
+      "position": {
+        "x": 400,
+        "y": 0
+      },
+      "size": {
+        "width": 348,
+        "height": 356
+      }
+    },
+    {
+      "tone": "amber",
+      "id": "dgv",
+      "label": "dgv · one Node process",
+      "position": {
+        "x": 888,
+        "y": 0
+      },
+      "size": {
+        "width": 984,
+        "height": 424
+      }
+    },
+    {
+      "tone": "cyan",
+      "id": "browser",
+      "label": "Browser",
+      "position": {
+        "x": 2012,
+        "y": 0
+      },
+      "size": {
+        "width": 348,
+        "height": 198
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "ports": [],
+      "tags": [],
+      "id": "claude",
+      "kind": "external",
+      "label": "Claude Code",
+      "sublabel": "launches dgv mcp over stdio",
+      "frame": "agent",
+      "status": "done",
+      "position": {
+        "x": 444,
+        "y": 60
+      }
+    },
+    {
+      "ports": [],
+      "tags": [],
+      "id": "hooks",
+      "kind": "program",
+      "label": "Session hooks",
+      "sublabel": "SessionStart · Stop",
+      "tech": "Node",
+      "frame": "agent",
+      "path": "hooks",
+      "status": "done",
+      "position": {
+        "x": 444,
+        "y": 218
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "tools",
+          "protocol": "ipc",
+          "dir": "in",
+          "shape": "MCP tool calls over stdio"
+        }
+      ],
+      "tags": [],
+      "id": "mcp",
+      "kind": "service",
+      "label": "MCP server",
+      "sublabel": "dgv_catalog … dgv_drift",
+      "tech": "@modelcontextprotocol/sdk · zod",
+      "frame": "dgv",
+      "path": [
+        "packages/mcp/src/server.js",
+        "packages/mcp/package.json"
+      ],
+      "status": "done",
+      "position": {
+        "x": 1394,
+        "y": 60
+      }
+    },
+    {
+      "ports": [],
+      "tags": [],
+      "id": "cli",
+      "kind": "program",
+      "label": "dgv CLI",
+      "sublabel": "lint · layout · drift · export · serve",
+      "tech": "Node",
+      "frame": "dgv",
+      "path": "packages/mcp/bin",
+      "status": "done",
+      "position": {
+        "x": 942,
+        "y": 73
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "api",
+          "protocol": "http",
+          "dir": "in",
+          "shape": "GET/PUT /api/diagrams/:name"
+        },
+        {
+          "id": "events",
+          "protocol": "sse",
+          "dir": "out",
+          "shape": "file changed on disk"
+        }
+      ],
+      "tags": [],
+      "id": "http",
+      "kind": "api",
+      "label": "Local HTTP + SSE",
+      "sublabel": "127.0.0.1:7710",
+      "frame": "dgv",
+      "path": "packages/mcp/src/http.js",
+      "status": "done",
+      "position": {
+        "x": 1568,
+        "y": 244
+      }
+    },
+    {
+      "ports": [],
+      "tags": [],
+      "id": "walk",
+      "kind": "module",
+      "label": "Project walker",
+      "sublabel": "git ls-files, or a walk",
+      "frame": "dgv",
+      "path": "packages/mcp/src/walk.js",
+      "status": "done",
+      "position": {
+        "x": 1260,
+        "y": 265
+      }
+    },
+    {
+      "ports": [],
+      "tags": [],
+      "id": "core",
+      "kind": "module",
+      "label": "core",
+      "sublabel": "catalog · lint · drift · layout · router · exports",
+      "tech": "plain ESM, no DOM",
+      "frame": "dgv",
+      "path": [
+        "packages/core/src",
+        "packages/core/test",
+        "packages/core/package.json"
+      ],
+      "status": "done",
+      "position": {
+        "x": 932,
+        "y": 265
+      }
+    },
+    {
+      "ports": [
+        {
+          "id": "fs",
+          "protocol": "fs",
+          "dir": "in"
+        }
+      ],
+      "tags": [],
+      "id": "files",
+      "kind": "storage",
+      "label": "dgv/*.dgv.json",
+      "sublabel": "the diagrams, in the project's repo",
+      "status": "done",
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "ports": [],
+      "tags": [],
+      "id": "viewer",
+      "kind": "ui",
+      "label": "Viewer",
+      "sublabel": "Svelte 5 · Svelte Flow",
+      "tech": "Vite 8",
+      "frame": "browser",
+      "path": "packages/viewer",
+      "status": "done",
+      "ack": "core is bundled into the viewer by Vite at build time; the import does not cross a process at runtime",
+      "position": {
+        "x": 2056,
+        "y": 60
+      }
+    }
+  ],
+  "edges": [
+    {
+      "kind": "sync",
+      "id": "claude-mcp",
+      "source": "claude",
+      "target": "mcp",
+      "protocol": "ipc",
+      "targetPort": "tools",
+      "label": "tool calls"
+    },
+    {
+      "kind": "control",
+      "id": "claude-hooks",
+      "source": "claude",
+      "target": "hooks",
+      "protocol": "exec",
+      "label": "SessionStart · Stop"
+    },
+    {
+      "kind": "import",
+      "id": "mcp-core",
+      "source": "mcp",
+      "target": "core"
+    },
+    {
+      "kind": "import",
+      "id": "cli-core",
+      "source": "cli",
+      "target": "core"
+    },
+    {
+      "kind": "import",
+      "id": "mcp-walk",
+      "source": "mcp",
+      "target": "walk"
+    },
+    {
+      "kind": "import",
+      "id": "cli-walk",
+      "source": "cli",
+      "target": "walk"
+    },
+    {
+      "kind": "import",
+      "id": "hooks-core",
+      "source": "hooks",
+      "target": "core",
+      "ack": "the hook runs in its own node process and loads core from disk by path"
+    },
+    {
+      "kind": "import",
+      "id": "hooks-walk",
+      "source": "hooks",
+      "target": "walk",
+      "ack": "same: loaded from disk by the hook process"
+    },
+    {
+      "kind": "data",
+      "id": "mcp-files",
+      "source": "mcp",
+      "target": "files",
+      "protocol": "fs",
+      "targetPort": "fs",
+      "label": "read · write"
+    },
+    {
+      "kind": "data",
+      "id": "cli-files",
+      "source": "cli",
+      "target": "files",
+      "protocol": "fs",
+      "targetPort": "fs"
+    },
+    {
+      "kind": "data",
+      "id": "http-files",
+      "source": "http",
+      "target": "files",
+      "protocol": "fs",
+      "targetPort": "fs",
+      "label": "read · write · watch"
+    },
+    {
+      "kind": "control",
+      "id": "mcp-http",
+      "source": "mcp",
+      "target": "http",
+      "protocol": "exec",
+      "label": "dgv_open starts serve if needed"
+    },
+    {
+      "kind": "sync",
+      "id": "viewer-http",
+      "source": "viewer",
+      "target": "http",
+      "protocol": "http",
+      "targetPort": "api",
+      "label": "load · save"
+    },
+    {
+      "kind": "async",
+      "id": "http-viewer",
+      "source": "http",
+      "target": "viewer",
+      "protocol": "sse",
+      "sourcePort": "events",
+      "label": "reload on change"
+    },
+    {
+      "kind": "import",
+      "id": "viewer-core",
+      "source": "viewer",
+      "target": "core",
+      "ack": "bundled by Vite at build time"
+    }
+  ]
+}

@@ -9,7 +9,7 @@
  *   dgv: 1,
  *   meta:   { title, description?, updated?, colorBy?: 'kind'|'status' },
  *   frames: [{ id, label, parent?, tone?, position:{x,y}, size:{width,height}, note?, ack? }],
- *   nodes:  [{ id, kind, label, sublabel?, note?, frame?, position:{x,y}, tech?, status?,
+ *   nodes:  [{ id, kind, label, sublabel?, note?, frame?, position:{x,y}, tech?, status?, path?: string | string[],
  *              tags?: string[], ports?: [{ id, protocol?, dir?: 'in'|'out'|'both', shape? }], ack? }],
  *   edges:  [{ id, source, target, kind?, protocol?, label?, sourcePort?, targetPort?, payload?, note?, ack? }]
  *
@@ -36,6 +36,7 @@ export function validateSchema(doc) {
   else {
     if (!isStr(doc.meta.title) || !doc.meta.title.trim()) bad('/meta/title', 'must be a non-empty string', 'give the diagram a title');
     if (doc.meta.colorBy != null && !['kind', 'status'].includes(doc.meta.colorBy)) bad('/meta/colorBy', 'must be "kind" or "status"');
+    if (doc.meta.driftIgnore != null && !(Array.isArray(doc.meta.driftIgnore) && doc.meta.driftIgnore.every(isStr))) bad('/meta/driftIgnore', 'driftIgnore must be a list of path globs');
     if (doc.meta.edgeStyle != null && !['floating', 'routed', 'straight'].includes(doc.meta.edgeStyle)) bad('/meta/edgeStyle', 'must be floating | routed | straight');
   }
   for (const key of ['frames', 'nodes', 'edges']) {
@@ -70,6 +71,7 @@ export function validateSchema(doc) {
     if (n.ack != null && !isStr(n.ack)) bad(`${who}/ack`, 'ack must be a string (the reason)');
     if (n.position != null) pos(`${who}/position`, n.position);
     if (n.tags != null && !(Array.isArray(n.tags) && n.tags.every(isStr))) bad(`${who}/tags`, 'tags must be strings');
+    if (n.path != null && !(isStr(n.path) || (Array.isArray(n.path) && n.path.every(isStr)))) bad(`${who}/path`, 'path must be a file, directory or glob — a string, or a list of them');
     if (n.ports != null) {
       if (!Array.isArray(n.ports)) bad(`${who}/ports`, 'ports must be an array');
       else n.ports.forEach((pt, j) => {

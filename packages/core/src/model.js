@@ -75,6 +75,31 @@ export function frameDepth(doc, fid) {
  * `remove` deletes by id and drops edges whose endpoints vanish and nodes
  * whose frame vanishes (they become frameless, not deleted).
  */
+/**
+ * Make a patch safe to apply. Existing elements may be patched by id alone —
+ * one field at a time is the normal case for an agent — but a NEW node needs a
+ * kind and a NEW edge needs both ends, and the error names the element rather
+ * than letting a half-made node into the file for lint to complain about later.
+ * Fills the defaults apply always had: edge id from its ends, frame label from
+ * its id. Returns a new patch; the caller's object is untouched.
+ */
+export function preparePatch(doc, patch = {}) {
+  const has = (list, id) => (list ?? []).some((x) => x.id === id);
+  const out = { ...patch };
+  out.nodes = (patch.nodes ?? []).map((n) => {
+    if (!has(doc.nodes, n.id) && !n.kind) throw new Error(`node "${n.id}" is new: kind is required (see dgv_catalog)`);
+    return { ...n };
+  });
+  out.edges = (patch.edges ?? []).map((e) => {
+    const id = e.id ?? (e.source && e.target ? `${e.source}-${e.target}` : undefined);
+    if (!id) throw new Error('an edge needs source and target (or an id, to patch an existing one)');
+    if (!has(doc.edges, id) && !(e.source && e.target)) throw new Error(`edge "${id}" is new: source and target are required`);
+    return { ...e, id };
+  });
+  out.frames = (patch.frames ?? []).map((f) => (!f.label && !has(doc.frames, f.id) ? { ...f, label: f.id } : { ...f }));
+  return out;
+}
+
 export function applyPatch(doc, patch = {}) {
   const d = normalize(structuredClone(doc));
   const changed = { frames: 0, nodes: 0, edges: 0, removed: 0 };

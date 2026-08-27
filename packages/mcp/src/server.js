@@ -3,6 +3,7 @@
  * plan a system without ever touching the JSON by hand:
  *
  *   dgv_catalog → dgv_create → dgv_apply (repeat) → dgv_lint → dgv_layout → dgv_open → dgv_export
+ *   …and as code lands: dgv_drift — does every node.path exist, does every directory belong to a node
  */
 import { spawn } from 'node:child_process';
 import path from 'node:path';
@@ -12,10 +13,11 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod';
 import {
   catalogSummary, emptyDiagram, applyPatch, placeUnpositioned, lint, layout,
-  summarizeDiagnostics as diagSummary, outline as textSummary, toMarkdown, toMermaid, toSVG, NODE_KIND_IDS, EDGE_KIND_IDS, STATUS_IDS, FRAME_TONES,
+  summarizeDiagnostics as diagSummary, outline as textSummary, toMarkdown, toMermaid, toSVG, drift, preparePatch, NODE_KIND_IDS, EDGE_KIND_IDS, STATUS_IDS, FRAME_TONES,
 } from '@dgv/core';
 import * as store from '@dgv/core/store';
 import { probe, DEFAULT_PORT } from './http.js';
+import { listFiles } from './walk.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -41,12 +43,13 @@ const Node = z.object({
   status: z.enum(STATUS_IDS).optional(),
   tags: z.array(z.string()).optional(),
   ports: z.array(Port).optional().describe('interfaces this node exposes; edges bind to them'),
+  path: z.union([z.string(), z.array(z.string())]).optional().describe('the code this node IS: a file, a directory (claims everything under it), a glob, or a list. dgv_drift checks it exists. Leave unset for devices, externals, stores'),
   ack: z.string().optional().describe('acknowledge this element\'s lint warnings with a one-line reason (they become info)'),
   position: Pos.optional().describe('omit — DGV places new nodes; use dgv_layout for a full relayout'),
 });
 const Edge = z.object({
-  id: z.string().optional().describe('defaults to "<source>-<target>"'),
-  source: z.string(), target: z.string(),
+  id: z.string().optional().describe('defaults to "<source>-<target>"; an existing edge can be patched by id alone'),
+  source: z.string().optional().describe('required when creating'), target: z.string().optional().describe('required when creating'),
   kind: z.enum(EDGE_KIND_IDS).optional().describe('sync (default) | async | data | import | deploy | control'),
   protocol: z.string().optional(), label: z.string().optional(),
   sourcePort: z.string().optional(), targetPort: z.string().optional().describe('must be a port declared on the target'),
@@ -61,7 +64,7 @@ const fail = (msg) => ({ content: [{ type: 'text', text: msg }], isError: true }
 export function createServer({ dir } = {}) {
   dir = store.resolveDir(dir);
   const server = new McpServer({ name: 'dgv', version: '0.1.0' }, {
-    instructions: `Dia-GramV: plan a system's architecture as a typed, linted diagram BEFORE writing code. Diagrams are files in ${dir} (<name>.dgv.json). Flow: dgv_catalog → dgv_create → dgv_apply (nodes/frames/edges, ports on nodes, protocols on edges) → dgv_lint → fix → dgv_layout → dgv_open. Read dgv_catalog once per session for the allowed kinds.`,
+    instructions: `Dia-GramV: plan a system's architecture as a typed, linted diagram BEFORE writing code. Diagrams are files in ${dir} (<name>.dgv.json). Flow: dgv_catalog → dgv_create → dgv_apply (nodes/frames/edges, ports on nodes, protocols on edges) → dgv_lint → fix → dgv_layout → dgv_open → dgv_drift as code lands. Read dgv_catalog once per session for the allowed kinds.`,
   });
 
   const lintReport = (doc) => { const d = lint(doc); return { summary: diagSummary(d), diagnostics: d }; };
@@ -95,19 +98,17 @@ export function createServer({ dir } = {}) {
   });
 
   server.registerTool('dgv_apply', {
-    title: 'Apply changes', description: 'Upsert frames/nodes/edges by id (partial objects merge into existing ones) and/or remove by id. New nodes are auto-placed. Returns the lint report — fix errors before moving on.',
+    title: 'Apply changes', description: 'Upsert frames/nodes/edges by id and/or remove by id. Partial objects merge into existing elements — to change one field on an existing node or edge, send just id and that field. New nodes need kind; new edges need source and target. New nodes are auto-placed. Returns the lint report — fix errors before moving on.',
     inputSchema: {
       name: z.string(),
-      meta: z.object({ title: z.string().optional(), description: z.string().optional(), colorBy: z.enum(['kind', 'status']).optional(), edgeStyle: z.enum(['floating', 'routed', 'straight']).optional().describe('link drawing: floating bezier | routed orthogonally around nodes | straight') }).optional(),
+      meta: z.object({ title: z.string().optional(), description: z.string().optional(), colorBy: z.enum(['kind', 'status']).optional(), edgeStyle: z.enum(['floating', 'routed', 'straight']).optional().describe('link drawing: floating bezier | routed orthogonally around nodes | straight'), driftIgnore: z.array(z.string()).optional().describe('paths/globs that are deliberately not in the diagram (docs, scripts, fixtures) — dgv_drift skips them') }).optional(),
       frames: z.array(Frame).optional(), nodes: z.array(Node).optional(), edges: z.array(Edge).optional(),
       remove: z.object({ frames: z.array(z.string()).optional(), nodes: z.array(z.string()).optional(), edges: z.array(z.string()).optional() }).optional(),
     },
   }, async ({ name, ...patch }) => {
     try {
       const cur = store.read(dir, name);
-      for (const e of patch.edges ?? []) if (!e.id) e.id = `${e.source}-${e.target}`;
-      for (const f of patch.frames ?? []) if (!f.label && !cur.frames.some((x) => x.id === f.id)) f.label = f.id;
-      const { doc, changed } = applyPatch(cur, patch);
+      const { doc, changed } = applyPatch(cur, preparePatch(cur, patch));
       const placed = placeUnpositioned(doc).doc;
       const report = lintReport(placed);
       store.write(dir, name, placed);
@@ -152,6 +153,25 @@ export function createServer({ dir } = {}) {
       const url = `http://127.0.0.1:${DEFAULT_PORT}/${name ? '#/' + name : ''}`;
       if (open) openBrowser(url);
       return text({ url, dir: up.dir, note: up.dir !== dir ? `viewer is serving ${up.dir}, not ${dir} — stop it or use one dir` : undefined });
+    } catch (e) { return fail(e.message); }
+  });
+
+  server.registerTool('dgv_drift', {
+    title: 'Drift', description: 'Does the diagram still describe the code? Every node.path must exist (drift/missing, error) and every directory of code must belong to some node (drift/unclaimed). Walks the project with git ls-files when available, never the diagram directory. Fix drift/missing first: the code moved (update path) or the node is gone (remove it, or status: todo).',
+    inputSchema: {
+      name: z.string(),
+      root: z.string().optional().describe('project root to walk; default: the parent of the diagram directory'),
+      depth: z.number().int().min(1).max(6).optional().describe('how deep to name an unclaimed directory (default 2)'),
+    },
+  }, async ({ name, root, depth }) => {
+    try {
+      const doc = store.read(dir, name);
+      const base = path.resolve(root ?? path.dirname(dir));
+      const r = drift(doc, listFiles(base, { exclude: [path.relative(base, dir)] }), { depth });
+      // the per-node file lists are long and rarely what the agent needs; the unmapped ids are
+      return text({ root: base, ok: r.ok, linked: r.linked, summary: r.summary,
+        findings: r.findings.filter((f) => f.code !== 'drift/unmapped'),
+        unmapped: r.findings.filter((f) => f.code === 'drift/unmapped').map((f) => f.subject.id) });
     } catch (e) { return fail(e.message); }
   });
 

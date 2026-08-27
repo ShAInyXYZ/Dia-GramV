@@ -31,6 +31,7 @@
     <select value={nd.kind} onchange={(e) => up({ kind: (e.target as HTMLSelectElement).value })}>{#each Object.entries(NODE_KINDS) as [k, v]}<option value={k}>{v.label} — {v.hint}</option>{/each}</select>
     <label class="f">label</label><input value={nd.label} oninput={(e) => up({ label: (e.target as HTMLInputElement).value })} />
     <label class="f">sublabel</label><input value={nd.sublabel ?? ''} oninput={(e) => up({ sublabel: (e.target as HTMLInputElement).value })} />
+    <label class="f">path · the code this is</label><input class="mono" value={Array.isArray(nd.path) ? nd.path.join(', ') : nd.path ?? ''} placeholder="internal/api — or a glob, or a comma list" onchange={(e) => { const v = (e.target as HTMLInputElement).value.split(',').map((s) => s.trim()).filter(Boolean); up({ path: v.length > 1 ? v : v[0] }); }} />
     <div class="two">
       <div><label class="f">tech</label><input value={nd.tech ?? ''} placeholder="Go, Svelte 5…" oninput={(e) => up({ tech: (e.target as HTMLInputElement).value })} /></div>
       <div><label class="f">status</label><select value={nd.status ?? ''} onchange={(e) => up({ status: (e.target as HTMLSelectElement).value || undefined })}><option value="">—</option>{#each Object.entries(STATUSES) as [k, v]}<option value={k}>{v.label}</option>{/each}</select></div>

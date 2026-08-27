@@ -17,7 +17,8 @@
     <a href="#install"><strong>Install ↓</strong></a> ·
     <a href="#a-session-start-to-finish"><strong>A session</strong></a> ·
     <a href="#mcp-tools"><strong>MCP tools</strong></a> ·
-    <a href="#what-the-linter-checks"><strong>Lint rules</strong></a> ·
+    <a href="#what-the-linter-checks"><strong>Lint</strong></a> ·
+    <a href="#is-it-still-true"><strong>Drift</strong></a> ·
     <a href="#the-file-format"><strong>Format</strong></a>
   </p>
 </div>
@@ -30,7 +31,7 @@ One file, two ways in.
 
 The file is `dgv/<name>.dgv.json`: frames (boundaries), nodes (components) and edges (connections), each with a **kind** from a fixed catalog. A node can declare **ports**; an edge can name the port it lands on and the **protocol** it speaks. It is a plain JSON document that lives in your repository next to the code it describes.
 
-The **MCP server** is how an agent works with that file. Through it the agent creates a diagram, changes it, reads it back as a short outline, and — on every write — gets a lint report back: a stable code, the element concerned, and concrete fixes.
+The **MCP server** is how an agent works with that file. Through it the agent creates a diagram, changes it, reads it back as a short outline, and — on every write — gets a lint report back: a stable code, the element concerned, and concrete fixes. Give nodes a `path` and it can also answer whether the diagram still matches the code on disk.
 
 The **viewer** is how you work with it. A Svelte Flow canvas where kinds have shapes, wires carry their protocol, an inspector edits every field, and the problems panel shows the same lint live. When the agent changes the file, the page reloads.
 
@@ -198,6 +199,14 @@ The skill is optional. It teaches the agent the workflow — catalog first, appl
 ln -s /ABS/PATH/Dia-GramV/skill ~/.claude/skills/dgv
 ```
 
+The hooks are optional too, and worth it on any project you come back to — they put the diagram in front of the agent at the start and check it against the code at the end. `doctor` prints the block with your path filled in; it goes in `~/.claude/settings.json`:
+
+```json
+{ "hooks": {
+    "SessionStart": [ { "hooks": [ { "type": "command", "command": "node /ABS/PATH/Dia-GramV/hooks/session-start.mjs", "timeout": 10 } ] } ],
+    "Stop":         [ { "hooks": [ { "type": "command", "command": "node /ABS/PATH/Dia-GramV/hooks/stop.mjs",          "timeout": 10 } ] } ] } }
+```
+
 Then, in any project: *"map this system in DGV before we start."* Diagrams go to `./dgv` under the directory the agent was started in; set `DGV_DIR` to put them elsewhere.
 
 No prebuilt viewer ships in the repo, so what runs is compiled from the source you cloned. If you only want the MCP tools, `npm run build` can be skipped: everything works without it except `dgv_open` and `serve`, which need a viewer to serve.
@@ -210,6 +219,7 @@ node packages/mcp/bin/dgv.mjs serve [--dir d] [--port p] [--no-open]     # viewe
 node packages/mcp/bin/dgv.mjs lint   <name|file> [--json]
 node packages/mcp/bin/dgv.mjs layout <name|file> [--direction TB|LR]
 node packages/mcp/bin/dgv.mjs export <name|file> [--format markdown|mermaid|summary|svg]
+node packages/mcp/bin/dgv.mjs drift  <name|file> [--root dir] [--depth n] [--json]
 node packages/mcp/bin/dgv.mjs list | catalog | doctor | open <name>
 ```
 </details>
@@ -222,8 +232,9 @@ node packages/mcp/bin/dgv.mjs list | catalog | doctor | open <name>
 | `dgv_list` | the diagrams in the directory, with counts |
 | `dgv_read` | one diagram: `mode: "summary"` (the outline above, default) or `mode: "json"` (the full document) |
 | `dgv_create` | a new, empty diagram |
-| `dgv_apply` | upsert frames, nodes and edges by id; remove by id; places new nodes; **returns the lint report** |
+| `dgv_apply` | upsert frames, nodes and edges by id; remove by id; places new nodes; **returns the lint report**. Partial: to change one field on an existing element, send its id and that field |
 | `dgv_lint` | the diagnostics: `code`, `severity`, `subject`, `fixes` |
+| `dgv_drift` | does the diagram still describe the code? every `path` must exist, every directory of code must belong to a node |
 | `dgv_layout` | dagre layout, `TB` or `LR`; overwrites positions |
 | `dgv_open` | starts the viewer if it is not running and opens the diagram |
 | `dgv_export` | `markdown` (tables), `mermaid`, `summary` (the outline), or `svg` |
@@ -270,6 +281,58 @@ Setting `ack: "<reason>"` on an element turns its **warnings** into info with th
 
 Frames do not nest. Folding a frame into one node had to answer *what about the frames inside it*, and every answer was a special case. One level keeps the fold, the layout and the file simple; `frame/nested` is an error so an old file with a `parent` says so rather than rendering wrongly.
 
+## Is it still true?
+
+Lint says whether the plan is coherent. It cannot say whether the plan is *true* — whether the code on disk is still the code the diagram describes. That takes one more field.
+
+Give a node a `path`: a file, a directory (which claims everything under it), a glob, or a list. Then `dgv_drift` walks the project (`git ls-files` when there is a repository, so `.gitignore` is respected) and reports three things:
+
+| code | severity | means |
+|---|---|---|
+| `drift/missing` | error | a node's `path` matches nothing — the code moved, or the node describes something that is not there |
+| `drift/unclaimed` | warning | a directory of code that belongs to no node |
+| `drift/shared` | warning | two nodes claim the same file |
+| `drift/unmapped` | info | a node with no `path` — right for devices, externals and stores |
+
+Directories that are deliberately not part of the system — docs, fixtures, scripts — go in `meta.driftIgnore`, so the exception is written down rather than re-explained.
+
+This repository keeps its own architecture in [`dgv/dia-gramv.dgv.json`](dgv/dia-gramv.dgv.json), every node with a `path`:
+
+<div align="center">
+  <img src="assets/dia-gramv.svg" width="880" alt="DGV's own architecture: Claude Code and the hooks on the agent side; the MCP server, CLI, HTTP/SSE server, walker and core in one Node process; the viewer in the browser; the diagram files on disk"/>
+</div>
+
+The first time drift ran on it, it found something:
+
+```
+$ node packages/mcp/bin/dgv.mjs drift dia-gramv
+warning drift/unclaimed  packages/mcp/ — 1 of 5 files belong to no node
+        fix: add a node with this path | widen an existing node's path to cover it | add it to meta.driftIgnore if it is not part of the system
+
+60 files · 7 nodes mapped · 2 unmapped · 0 missing · 1 unclaimed dir(s) · 19 ignored
+```
+
+`packages/mcp/package.json` — claimed by nobody, because the MCP node's `path` was one file. Widened, and:
+
+```
+60 files · 7 nodes mapped · 2 unmapped · 0 missing · 0 unclaimed dir(s) · 19 ignored
+```
+
+The two unmapped nodes are Claude Code and the diagram files themselves — not code in this repo, so no `path`.
+
+### The hooks
+
+The MCP cannot make an agent read the diagram before it starts, or update it before it stops. The harness can. [`hooks/`](hooks/README.md) has two Claude Code hooks:
+
+- **SessionStart** prints the outline of every diagram in `./dgv` into context, with its drift summary — so the first thing the agent knows is the shape of the system and whether the map is stale.
+- **Stop** runs drift after each turn and, only when there is something to say, leaves a one-line notice: a path that no longer exists, code that belongs to no node, or uncommitted source changes with no diagram change. It never blocks.
+
+```
+DGV · app: 1 node path no longer exists (old)
+```
+
+Both are silent in projects with no `./dgv`.
+
 ## The viewer
 
 `node packages/mcp/bin/dgv.mjs serve` → http://127.0.0.1:7710
@@ -296,7 +359,7 @@ The folded view keeps its own arrangement per diagram in your browser, never in 
   "frames": [ { "id": "server", "label": "Server · one process", "tone": "amber",
                 "position": { "x": 480, "y": 60 }, "size": { "width": 380, "height": 300 } } ],
   "nodes":  [ { "id": "api", "kind": "api", "label": "HTTP API", "sublabel": "/api/notes",
-                "frame": "server", "status": "done", "position": { "x": 520, "y": 120 },
+                "frame": "server", "status": "done", "path": "src/api", "position": { "x": 520, "y": 120 },
                 "ports": [ { "id": "rest", "protocol": "http", "dir": "in" } ] } ],
   "edges":  [ { "id": "web-api", "source": "web", "target": "api",
                 "kind": "sync", "protocol": "http", "targetPort": "rest", "label": "fetch" } ] }
@@ -306,7 +369,7 @@ The folded view keeps its own arrangement per diagram in your browser, never in 
   <img src="assets/kinds.svg" width="880" alt="Every node kind with its shape, and every wire kind with its dash — drawn from the catalog"/>
 </div>
 
-`kind` is required on a node. On an edge it is inferred from the protocol when omitted — `data` for `sql` `redis` `s3` `fs` `smb`, `async` for `kafka` `nats` `amqp` `mqtt` `sse` `ws`, otherwise `sync`. `protocol`, `ports`, `status` and `frame` are optional; the linter asks for them when their absence matters. Positions are saved, so an arrangement you made stays made.
+`kind` is required on a node. On an edge it is inferred from the protocol when omitted — `data` for `sql` `redis` `s3` `fs` `smb`, `async` for `kafka` `nats` `amqp` `mqtt` `sse` `ws`, otherwise `sync`. `protocol`, `ports`, `status`, `frame` and `path` are optional; the linter asks for the first two when their absence matters, and drift for the last. Positions are saved, so an arrangement you made stays made.
 
 The full catalog — every kind with its shape, every protocol, every lint code — is in [`skill/references/format.md`](skill/references/format.md).
 
@@ -318,15 +381,17 @@ The full catalog — every kind with its shape, every protocol, every lint code 
 | `packages/mcp` | the `dgv` CLI, the MCP server, and the local HTTP/SSE server behind the viewer |
 | `packages/viewer` | Svelte 5 + Svelte Flow: shaped nodes, frames, folding, inspector, live problems |
 | `skill/` | a Claude Code skill (`SKILL.md`) that teaches the workflow |
+| `hooks/` | SessionStart and Stop hooks for Claude Code |
+| `dgv/` | this repository's own diagram, drift-checked |
 | `examples/` | [`notes-app`](examples/notes-app.dgv.json), [`local-ai-harness`](examples/local-ai-harness.dgv.json) |
 
 ```bash
-npm test    # core: schema, lint rules, patch semantics, layout containment, folding, exports, SVG
+npm test    # core: schema, lint rules, patch semantics, layout containment, folding, exports, SVG, drift
 ```
 
 ## Limits
 
-DGV records the plan; it does not read your source. It can tell you the plan is coherent. It cannot tell you the code matches it — that is a habit, and keeping the file in the repo is what makes the habit reviewable.
+DGV does not parse your source. Lint can tell you the plan is coherent; drift can tell you every node still points at code that exists and every directory of code has a node. Neither can tell you that the *calls* the diagram draws are the calls the code makes — that is still read by a person, or by the agent, and the file living in the repo is what makes that reading reviewable.
 
 Not here: collaboration or hosting, sequence and lifecycle diagrams, discovery of a repository's structure. The format is versioned (`dgv: 1`) so those can be added without breaking existing files.
 

@@ -61,8 +61,8 @@
     onselectionchange={({ nodes, edges }: { nodes: FNode[]; edges: FEdge[] }) => dg.onSelectionChange(nodes, edges)}
   >
     <!-- two-level grid: fine 24px lines, stronger 120px lines — snapping is 12px so cards land on the fine grid -->
-    <Background id="minor" variant={BackgroundVariant.Lines} bgColor="#1d1d1d" patternColor="#1e1e1e" gap={24} lineWidth={1} />
-    <Background id="major" variant={BackgroundVariant.Lines} patternColor="#202020" gap={120} lineWidth={1} />
+    <Background id="minor" variant={BackgroundVariant.Lines} bgColor="#1d1d1d" patternColor="#1c1c1c" gap={24} lineWidth={1} />
+    <Background id="major" variant={BackgroundVariant.Lines} patternColor="#1c1c1c" gap={120} lineWidth={1} />
     <Controls showLock={false} />
     <MiniMap width={148} height={104} nodeColor={(n: any) => (n.type === 'frame' ? tones[n.data?.tone ?? 'neutral'] : kindColor(n.data?.kind))} maskColor="rgba(29,29,29,0.75)" pannable zoomable />
   </SvelteFlow>

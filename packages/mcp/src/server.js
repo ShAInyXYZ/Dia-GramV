@@ -12,7 +12,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod';
 import {
   catalogSummary, emptyDiagram, applyPatch, placeUnpositioned, lint, layout,
-  summarizeDiagnostics as diagSummary, outline as textSummary, toMarkdown, toMermaid, NODE_KIND_IDS, EDGE_KIND_IDS, STATUS_IDS, FRAME_TONES,
+  summarizeDiagnostics as diagSummary, outline as textSummary, toMarkdown, toMermaid, toSVG, NODE_KIND_IDS, EDGE_KIND_IDS, STATUS_IDS, FRAME_TONES,
 } from '@dgv/core';
 import * as store from '@dgv/core/store';
 import { probe, DEFAULT_PORT } from './http.js';
@@ -156,12 +156,14 @@ export function createServer({ dir } = {}) {
   });
 
   server.registerTool('dgv_export', {
-    title: 'Export', description: 'Render the diagram as markdown tables (for docs / CLAUDE.md) or mermaid (for READMEs).',
-    inputSchema: { name: z.string(), format: z.enum(['markdown', 'mermaid', 'summary']).optional() },
+    title: 'Export', description: 'Render the diagram as markdown tables (for docs / CLAUDE.md), mermaid (for READMEs), or a standalone SVG (self-contained, cropped to the content).',
+    inputSchema: { name: z.string(), format: z.enum(['markdown', 'mermaid', 'summary', 'svg']).optional() },
   }, async ({ name, format = 'markdown' }) => {
     try {
       const doc = store.read(dir, name);
-      return text(format === 'mermaid' ? toMermaid(doc) : format === 'summary' ? textSummary(doc) : toMarkdown(doc));
+      // svg uses the saved layout; the viewer's snapshot button exports what is
+      // on screen instead, folds and hand-placed cards included
+      return text(format === 'svg' ? toSVG(doc) : format === 'mermaid' ? toMermaid(doc) : format === 'summary' ? textSummary(doc) : toMarkdown(doc));
     } catch (e) { return fail(e.message); }
   });
 

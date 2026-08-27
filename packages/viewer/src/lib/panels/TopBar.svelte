@@ -59,25 +59,29 @@
       <button onclick={() => dg.redo()} disabled={!dg.canRedo} data-tip="redo (Ctrl+Shift+Z)">↷</button>
     </div>
     <div class="group">
-      <button onclick={addFrame} disabled={!dg.name} data-tip={selCount ? 'wrap selection in a frame (G)' : 'add a frame (G)'}>{selCount ? '⊞ frame' : '+ frame'}</button>
-      <button onclick={() => (ui.quickAdd = { x: window.innerWidth / 2 - 150, y: 120 })} disabled={!dg.name} data-tip="add a node (A, or double-click the canvas)">+ node</button>
+      <button onclick={addFrame} disabled={!dg.name} data-tip={selCount ? 'wrap selection in a frame (G)' : 'add a frame (G)'}>{selCount ? '⊞' : '+'} <span class="lbl">frame</span></button>
+      <button onclick={() => (ui.quickAdd = { x: window.innerWidth / 2 - 150, y: 120 })} disabled={!dg.name} data-tip="add a node (A, or double-click the canvas)">+ <span class="lbl">node</span></button>
     </div>
     <div class="group">
-      <button onclick={() => dg.relayout('TB')} disabled={!dg.name} data-tip="auto layout ↓">layout ↓</button>
-      <button onclick={() => dg.relayout('LR')} disabled={!dg.name} data-tip="auto layout →">layout →</button>
+      <button onclick={() => dg.relayout('TB')} disabled={!dg.name} data-tip="auto layout ↓"><span class="lbl">layout</span> ↓</button>
+      <button onclick={() => dg.relayout('LR')} disabled={!dg.name} data-tip="auto layout →"><span class="lbl">layout</span> →</button>
       <button onclick={() => flow.fitView({ duration: 300 })} data-tip="fit (F)">fit</button>
     </div>
     <div class="group">
-      <button onclick={() => { hl.edgeStyle = EDGE_STYLES[(EDGE_STYLES.indexOf(hl.edgeStyle) + 1) % EDGE_STYLES.length]; dg.touch(); }} data-tip="link style (L)">links: {hl.edgeStyle}</button>
-      <button class:active={hl.colorBy === 'status'} onclick={() => { hl.colorBy = hl.colorBy === 'kind' ? 'status' : 'kind'; dg.touch(); }} data-tip="colour by kind (1) / status (2)">by {hl.colorBy}</button>
+      <button onclick={() => { hl.edgeStyle = EDGE_STYLES[(EDGE_STYLES.indexOf(hl.edgeStyle) + 1) % EDGE_STYLES.length]; dg.touch(); }} data-tip="link style (L)"><span class="lbl">links:</span> {hl.edgeStyle}</button>
+      <button class:active={hl.colorBy === 'status'} onclick={() => { hl.colorBy = hl.colorBy === 'kind' ? 'status' : 'kind'; dg.touch(); }} data-tip="colour by kind (1) / status (2)"><span class="lbl">by</span> {hl.colorBy}</button>
       <button onclick={exportJson} disabled={!dg.name} data-tip="download the JSON">export</button>
     </div>
   </div>
 </div>
 
 <style>
-  .bar { height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0 10px; background: var(--s1); border-bottom: 1px solid var(--hair); }
-  .left, .right { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .bar { height: 40px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 10px; background: var(--s1); border-bottom: 1px solid var(--hair); }
+  /* The left side yields, the right does not. Actions must stay reachable at
+     any width; the diagram's description is the thing that can be cut, and it
+     is already truncated with an ellipsis. */
+  .left { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1 1 auto; }
+  .right { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .logo { color: var(--accent); font-size: 14px; }
   .namewrap { position: relative; }
   .name { background: transparent; border-color: transparent; font-family: var(--sans); font-size: 13px; font-weight: 650; color: var(--text); padding: 4px 6px; }
@@ -92,8 +96,24 @@
   .dot { width: 10px; height: 10px; padding: 0; border-radius: 50%; border: none; background: var(--ok); }
   .dot.dirty { background: var(--warn); } .dot.saving { background: var(--muted); } .dot.error { background: var(--err); }
   .dot:disabled { opacity: 1; }
-  .desc { font-size: 11px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 38vw; }
+  /* No max-width: it fills what the actions leave and shrinks to nothing
+     rather than pushing them off the bar. min-width:0 is what lets a flex
+     child actually shrink below its content. */
+  .desc { font-size: 11px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
   .group { display: flex; gap: 4px; padding-left: 8px; border-left: 1px solid var(--hair); }
   .group.align button { font-size: 13px; padding: 3px 8px; }
-  button { padding: 4px 9px; }
+  button { padding: 4px 9px; white-space: nowrap; }
+
+  /* Below ~1180px the words go and the glyphs carry the meaning: layout ↓,
+     layout →, + frame, + node all read from their symbol, and every button
+     keeps its tooltip. Losing a word beats losing the button. */
+  @media (max-width: 1180px) {
+    .lbl { display: none; }
+    .desc { display: none; }
+  }
+  /* Narrower still, the diagram name alone identifies the document. */
+  @media (max-width: 900px) {
+    .group { padding-left: 6px; }
+    button { padding: 4px 7px; }
+  }
 </style>

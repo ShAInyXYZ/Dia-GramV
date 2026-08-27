@@ -4,6 +4,7 @@
   import { dg } from '../stores/diagram.svelte';
   import { hl, EDGE_STYLES } from '../stores/hl.svelte';
   import { ui } from '../stores/ui.svelte';
+  import Icon from '../kit/Icon.svelte';
 
   const flow = useSvelteFlow();
   let menu = $state(false), creating = $state(false), name = $state(''), title = $state('');
@@ -55,22 +56,22 @@
       </div>
     {/if}
     <div class="group">
-      <button onclick={() => dg.undo()} disabled={!dg.canUndo} data-tip="undo (Ctrl+Z)">↶</button>
-      <button onclick={() => dg.redo()} disabled={!dg.canRedo} data-tip="redo (Ctrl+Shift+Z)">↷</button>
+      <button onclick={() => dg.undo()} disabled={!dg.canUndo} data-tip="undo (Ctrl+Z)"><Icon name="undo" /></button>
+      <button onclick={() => dg.redo()} disabled={!dg.canRedo} data-tip="redo (Ctrl+Shift+Z)"><Icon name="redo" /></button>
     </div>
     <div class="group">
-      <button onclick={addFrame} disabled={!dg.name} data-tip={selCount ? 'wrap selection in a frame (G)' : 'add a frame (G)'}>{selCount ? '⊞' : '+'} <span class="lbl">frame</span></button>
-      <button onclick={() => (ui.quickAdd = { x: window.innerWidth / 2 - 150, y: 120 })} disabled={!dg.name} data-tip="add a node (A, or double-click the canvas)">+ <span class="lbl">node</span></button>
+      <button onclick={addFrame} disabled={!dg.name} data-tip={selCount ? 'wrap selection in a frame (G)' : 'add a frame (G)'}><Icon name="frame" /><span class="lbl">frame</span></button>
+      <button onclick={() => (ui.quickAdd = { x: window.innerWidth / 2 - 150, y: 120 })} disabled={!dg.name} data-tip="add a node (A, or double-click the canvas)"><Icon name="node" /><span class="lbl">node</span></button>
     </div>
     <div class="group">
-      <button onclick={() => dg.relayout('TB')} disabled={!dg.name} data-tip="auto layout ↓"><span class="lbl">layout</span> ↓</button>
-      <button onclick={() => dg.relayout('LR')} disabled={!dg.name} data-tip="auto layout →"><span class="lbl">layout</span> →</button>
-      <button onclick={() => flow.fitView({ duration: 300 })} data-tip="fit (F)">fit</button>
+      <button onclick={() => dg.relayout('TB')} disabled={!dg.name} data-tip="auto layout, top to bottom"><Icon name="layout-v" /><span class="lbl">layout</span></button>
+      <button onclick={() => dg.relayout('LR')} disabled={!dg.name} data-tip="auto layout, left to right"><Icon name="layout-h" /><span class="lbl">layout</span></button>
+      <button onclick={() => flow.fitView({ duration: 300 })} data-tip="fit (F)"><Icon name="fit" /><span class="lbl">fit</span></button>
     </div>
     <div class="group">
-      <button onclick={() => { hl.edgeStyle = EDGE_STYLES[(EDGE_STYLES.indexOf(hl.edgeStyle) + 1) % EDGE_STYLES.length]; dg.touch(); }} data-tip="link style (L)"><span class="lbl">links:</span> {hl.edgeStyle}</button>
-      <button class:active={hl.colorBy === 'status'} onclick={() => { hl.colorBy = hl.colorBy === 'kind' ? 'status' : 'kind'; dg.touch(); }} data-tip="colour by kind (1) / status (2)"><span class="lbl">by</span> {hl.colorBy}</button>
-      <button onclick={exportJson} disabled={!dg.name} data-tip="download the JSON">export</button>
+      <button onclick={() => { hl.edgeStyle = EDGE_STYLES[(EDGE_STYLES.indexOf(hl.edgeStyle) + 1) % EDGE_STYLES.length]; dg.touch(); }} data-tip="link style: {hl.edgeStyle} (L)"><Icon name="links" /><span class="lbl">{hl.edgeStyle}</span></button>
+      <button class:active={hl.colorBy === 'status'} onclick={() => { hl.colorBy = hl.colorBy === 'kind' ? 'status' : 'kind'; dg.touch(); }} data-tip="colour by {hl.colorBy} — click to switch (1 / 2)"><Icon name="palette" /><span class="lbl">{hl.colorBy}</span></button>
+      <button onclick={exportJson} disabled={!dg.name} data-tip="download the JSON"><Icon name="export" /><span class="lbl">export</span></button>
     </div>
   </div>
 </div>
@@ -102,14 +103,19 @@
   .desc { font-size: 11px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
   .group { display: flex; gap: 4px; padding-left: 8px; border-left: 1px solid var(--hair); }
   .group.align button { font-size: 13px; padding: 3px 8px; }
-  button { padding: 4px 9px; white-space: nowrap; }
+  /* Icon and label as one row, so hiding the label leaves a square button
+     rather than a wide one with a symbol adrift in it. */
+  button { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; white-space: nowrap; }
 
   /* Below ~1180px the words go and the glyphs carry the meaning: layout ↓,
      layout →, + frame, + node all read from their symbol, and every button
      keeps its tooltip. Losing a word beats losing the button. */
   @media (max-width: 1180px) {
+    /* The icon carries it from here, and every button keeps its tooltip on
+       hover — which is why the labels can go at all. */
     .lbl { display: none; }
     .desc { display: none; }
+    button { padding: 5px 7px; }
   }
   /* Narrower still, the diagram name alone identifies the document. */
   @media (max-width: 900px) {

@@ -35,7 +35,7 @@
   };
 </script>
 
-<FloatPanel title="Key" bind:open corner="top-left" width={296}>
+<FloatPanel title="Key" bind:open corner="top-left" width={230}>
   {#each groups as g (g.label)}
     <Section label={g.label}>
       <div class="rows">
@@ -80,12 +80,13 @@
 
 <style>
   /* The gap BETWEEN cells has to beat the gap INSIDE one, or a label sits
-     nearer the next entry's glyph than its own and the pairing inverts.
-     3px inside, 10px between: enough to separate, tight enough that eight
-     groups still fit without the panel scrolling. */
-  .rows { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 8px; }
+     nearer the next entry's glyph than its own and the pairing inverts:
+     3px inside, 10px between.
+     Columns are `auto`, not `1fr`: 1fr makes both columns equal to the widest
+     cell and never shrinks, so the panel could not size to its content. */
+  .rows { display: grid; grid-template-columns: auto auto; justify-content: start; gap: 10px 18px; }
 
-  .row { display: flex; flex-direction: column; align-items: center; gap: 3px; width: 100%; padding: 4px; background: transparent; border: 1px solid transparent; border-radius: 5px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .row { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px; background: transparent; border: 1px solid transparent; border-radius: 5px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
   .row:hover { background: var(--s2); border-color: var(--hair); }
   .row.pin { border-color: var(--accent); }
   .row.static { cursor: default; } .row.static:hover { background: transparent; border-color: transparent; }

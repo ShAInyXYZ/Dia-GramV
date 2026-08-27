@@ -15,7 +15,10 @@
 
 <style>
   .fp { position: absolute; z-index: 5; background: var(--s1); border: 1px solid var(--hair); border-radius: 7px; font-family: var(--mono); color: var(--muted); }
-  .fp.open { width: var(--w); }
+  /* Width follows the content up to --w, rather than always taking it. The key
+     is two narrow columns of short labels; a fixed width left a band of empty
+     panel over the canvas it is sitting on top of. */
+  .fp.open { width: max-content; max-width: var(--w); }
   .fp.top-left { top: 12px; left: 12px; }
   .fp.top-right { top: 12px; right: 12px; }
   .fp.bottom-left { bottom: 12px; left: 12px; }

@@ -47,7 +47,12 @@ label.f { display: block; font-family: var(--mono); font-size: 10px; letter-spac
 .svelte-flow__controls { background: var(--s1); border: 1px solid var(--hair); border-radius: 6px; overflow: hidden; box-shadow: none !important; }
 .svelte-flow__controls-button { background: var(--s1) !important; border-bottom: 1px solid var(--hair) !important; fill: var(--muted); }
 .svelte-flow__controls-button:hover { background: var(--s2) !important; }
-.svelte-flow__minimap { background: var(--s1) !important; border: 1px solid var(--hair); border-radius: 6px; }
+/* Smaller than the 200x150 default: it is an orientation aid, not a second
+   view of the diagram, and at full size it covered a corner of the canvas.
+   Svelte Flow sizes it from these variables, so the width/height props alone
+   would not take. */
+.svelte-flow__minimap { background: var(--s1) !important; border: 1px solid var(--hair); border-radius: 6px;
+  --xy-minimap-background-color: var(--s1); width: 148px !important; height: 104px !important; }
 .svelte-flow__attribution { display: none; }
 .svelte-flow__edge.selected path.dgv-path { stroke: var(--accent) !important; }
 .svelte-flow__node.selected .card { outline: 1px solid var(--accent); outline-offset: 2px; border-radius: 8px; }

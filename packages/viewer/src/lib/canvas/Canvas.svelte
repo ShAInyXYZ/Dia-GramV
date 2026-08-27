@@ -56,7 +56,7 @@
     <Background id="minor" variant={BackgroundVariant.Lines} bgColor="#0e0d0b" patternColor="#151412" gap={24} lineWidth={1} />
     <Background id="major" variant={BackgroundVariant.Lines} patternColor="#1c1a17" gap={120} lineWidth={1} />
     <Controls showLock={false} />
-    <MiniMap nodeColor={(n: any) => (n.type === 'frame' ? tones[n.data?.tone ?? 'neutral'] : kindColor(n.data?.kind))} maskColor="rgba(14,13,11,0.75)" pannable zoomable />
+    <MiniMap width={148} height={104} nodeColor={(n: any) => (n.type === 'frame' ? tones[n.data?.tone ?? 'neutral'] : kindColor(n.data?.kind))} maskColor="rgba(14,13,11,0.75)" pannable zoomable />
   </SvelteFlow>
   {#if ui.quickAdd}<QuickAdd at={ui.quickAdd} onpick={pick} onclose={() => (ui.quickAdd = null)} />{/if}
 </div>

@@ -15,10 +15,11 @@
 
 <style>
   .fp { position: absolute; z-index: 5; background: var(--s1); border: 1px solid var(--hair); border-radius: 7px; font-family: var(--mono); color: var(--muted); }
-  /* Width follows the content up to --w, rather than always taking it. The key
-     is two narrow columns of short labels; a fixed width left a band of empty
-     panel over the canvas it is sitting on top of. */
-  .fp.open { width: max-content; max-width: var(--w); }
+  /* A definite width, because the body lays out on a grid: equal tracks need a
+     container to divide, and max-content would collapse each track to its own
+     widest cell and leave the columns misaligned. --w is therefore the size,
+     kept small enough that the panel does not cover the canvas it floats on. */
+  .fp.open { width: var(--w); }
   .fp.top-left { top: 12px; left: 12px; }
   .fp.top-right { top: 12px; right: 12px; }
   .fp.bottom-left { bottom: 12px; left: 12px; }

@@ -4,11 +4,11 @@
   <p><strong>A typed, linted model of the system you are building — one file your coding agent reads and writes through MCP, and you edit on a canvas.</strong></p>
 
   <p>
-    <img src="https://img.shields.io/badge/MCP-stdio-e8873a?style=flat-square&labelColor=161513" alt="MCP over stdio"/>
-    <img src="https://img.shields.io/badge/Node-20.19%2B-e8873a?style=flat-square&labelColor=161513&logo=node.js&logoColor=e6e3de" alt="Node 20.19+"/>
-    <img src="https://img.shields.io/badge/Svelte-5-e8873a?style=flat-square&labelColor=161513&logo=svelte&logoColor=e6e3de" alt="Svelte 5"/>
-    <img src="https://img.shields.io/badge/status-early-e8873a?style=flat-square&labelColor=161513" alt="early"/>
-    <img src="https://img.shields.io/badge/license-MIT-e8873a?style=flat-square&labelColor=161513" alt="MIT"/>
+    <img src="https://img.shields.io/badge/MCP-stdio-22a06b?style=flat-square&labelColor=161513" alt="MCP over stdio"/>
+    <img src="https://img.shields.io/badge/Node-20.19%2B-22a06b?style=flat-square&labelColor=161513&logo=node.js&logoColor=e6e3de" alt="Node 20.19+"/>
+    <img src="https://img.shields.io/badge/Svelte-5-22a06b?style=flat-square&labelColor=161513&logo=svelte&logoColor=e6e3de" alt="Svelte 5"/>
+    <img src="https://img.shields.io/badge/status-early-22a06b?style=flat-square&labelColor=161513" alt="early"/>
+    <img src="https://img.shields.io/badge/license-MIT-22a06b?style=flat-square&labelColor=161513" alt="MIT"/>
   </p>
 
   <p>Works with any MCP client. The skill and hooks are for Claude Code.<br/>Diagrams are JSON files in your repo. Runs on your machine — no accounts, no cloud, no telemetry.</p>

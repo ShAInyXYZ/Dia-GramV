@@ -30,6 +30,12 @@ export function lint(rawDoc, opts = {}) {
 
   for (const f of doc.frames) {
     if (f.parent && !ix.frame.has(f.parent)) out.push(error('ref/missing-frame', `frame "${f.id}" has parent "${f.parent}" which does not exist`, { type: 'frame', id: f.id }, ['create that frame', 'remove parent']));
+    // Frames do not nest. Folding a frame into one card has to answer "what
+    // happens to the frames inside it", and every answer is a special case:
+    // where the card re-nests, which fold wins, how the survivor refits. One
+    // flat level makes a frame exactly one master node. Hierarchy can come
+    // back when there is a reason for it that pays for that complexity.
+    if (f.parent) out.push(error('frame/nested', `frame "${f.id}" sits inside frame "${f.parent}" — frames do not nest`, { type: 'frame', id: f.id }, ['move this frame out to the top level', `or dissolve "${f.parent}" and let its members join this one`]));
     // parent cycle
     let cur = f, seen = new Set();
     while (cur?.parent) { if (seen.has(cur.id)) { out.push(error('frame/cycle', `frame parent chain loops at "${f.id}"`, { type: 'frame', id: f.id }, ['break the parent loop'])); break; } seen.add(cur.id); cur = ix.frame.get(cur.parent); }

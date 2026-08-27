@@ -9,7 +9,7 @@
  * It draws from the model rather than scraping the live DOM: the same input
  * gives the same file every time, which is what makes it reviewable in a diff.
  */
-import { normalize, estimateHeight, NODE_W } from './model.js';
+import { normalize, estimateHeight, placeUnpositioned, NODE_W } from './model.js';
 import { NODE_KINDS, STATUSES } from './catalog.js';
 import { shapePath, shapeDetail } from './shapes.js';
 import { routeOrthogonal, toBeveledPath, DIR, STUB, BEVEL } from './router.js';
@@ -32,7 +32,12 @@ export function toSVG(rawDoc, opts = {}) {
   // The canvas draws wires in the style the document records; an export that
   // ignored it would not be a picture of what is on screen.
   const style = opts.edgeStyle ?? rawDoc?.meta?.edgeStyle ?? 'floating';
-  const d = normalize(rawDoc);
+  // A document straight out of dgv_apply has no positions yet — everything
+  // would stack on the origin. Place what is missing without moving anything
+  // that already has a place, so an export of a saved layout is untouched.
+  const raw = normalize(rawDoc);
+  const bare = raw.nodes.some((n) => !n.position) || raw.frames.some((f) => !f.position || !f.size);
+  const d = bare ? normalize(placeUnpositioned(raw).doc) : raw;
   const frameById = new Map(d.frames.map((f) => [f.id, f]));
 
   const size = (n) => (n.master

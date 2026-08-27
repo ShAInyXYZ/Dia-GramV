@@ -28,7 +28,7 @@ const Port = z.object({
 });
 const Frame = z.object({
   id: z.string(), label: z.string().optional(),
-  parent: z.string().nullable().optional().describe('parent frame id for nesting'),
+  parent: z.string().nullable().optional().describe('legacy: frames do not nest — setting this is a lint error (frame/nested)'),
   tone: z.enum(FRAME_TONES).optional(), note: z.string().optional(), ack: z.string().optional().describe('acknowledge this element\'s lint warnings with a one-line reason (they become info)'),
   position: Pos.optional(), size: z.object({ width: z.number(), height: z.number() }).optional(),
 });
@@ -127,7 +127,7 @@ export function createServer({ dir } = {}) {
   });
 
   server.registerTool('dgv_layout', {
-    title: 'Auto layout', description: 'Re-place every node and frame with dagre (frames nest, members stay inside). Overwrites positions; use after bulk changes.',
+    title: 'Auto layout', description: 'Re-place every node and frame with dagre (members stay inside their frame). Overwrites positions; use after bulk changes.',
     inputSchema: { name: z.string(), direction: z.enum(['TB', 'LR']).optional() },
   }, async ({ name, direction }) => {
     try {

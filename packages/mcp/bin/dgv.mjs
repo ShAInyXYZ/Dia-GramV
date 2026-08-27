@@ -13,7 +13,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { lint, layout, toMarkdown, toMermaid, outline as textSummary, catalogSummary, normalize, summarizeDiagnostics as diagSummary } from '@dgv/core';
+import { lint, layout, toMarkdown, toMermaid, toSVG, outline as textSummary, catalogSummary, normalize, summarizeDiagnostics as diagSummary } from '@dgv/core';
 import * as store from '@dgv/core/store';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -73,7 +73,7 @@ switch (cmd) {
   case 'export': {
     const { doc } = loadDoc(positional[0]);
     const f = flag('--format') ?? 'markdown';
-    process.stdout.write(f === 'mermaid' ? toMermaid(doc) : f === 'summary' ? textSummary(doc) : toMarkdown(doc));
+    process.stdout.write(f === 'svg' ? toSVG(doc) : f === 'mermaid' ? toMermaid(doc) : f === 'summary' ? textSummary(doc) : toMarkdown(doc));
     break;
   }
   case 'list': { for (const d of store.list(dir)) console.log(`${d.name.padEnd(24)} ${String(d.nodes).padStart(3)} nodes ${String(d.edges).padStart(3)} edges  ${d.title ?? ''}`); break; }

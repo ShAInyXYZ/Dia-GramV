@@ -103,3 +103,17 @@ test('an empty diagram produces a valid, tiny svg rather than throwing', () => {
   const [, , w, h] = viewBox(svg);
   assert.ok(w > 0 && h > 0);
 });
+
+test('a diagram that was never laid out is placed before it is drawn', () => {
+  // dgv export --format svg on a fresh document: nothing has a position, so
+  // every card would stack on the origin and the picture would be a pile.
+  const d = doc();
+  for (const n of d.nodes) delete n.position;
+  for (const f of d.frames) { delete f.position; delete f.size; }
+  const svg = toSVG(d, { padding: 0 });
+  const [, , w, h] = viewBox(svg);
+  assert.ok(w > NODE_W * 1.5, `wide enough to hold ${d.nodes.length} cards, got ${w}`);
+  assert.ok(h > 100, `tall enough, got ${h}`);
+  const places = [...svg.matchAll(/data-node="[^"]+" transform="translate\(([^)]+)\)"/g)].map((m) => m[1]);
+  assert.equal(new Set(places).size, places.length, 'no two cards share a place');
+});

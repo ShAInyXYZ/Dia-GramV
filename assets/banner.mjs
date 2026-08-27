@@ -27,8 +27,9 @@ const cards = [
 ];
 const DIAG_W = CW * 3 + GAP * 2;                      // 558
 const TITLE_W = 500, COL_GAP = 84;
-const LEFT = Math.round((W - (DIAG_W + COL_GAP + TITLE_W)) / 2);   // equal margins either side of the whole composition
-const TX = LEFT + DIAG_W + COL_GAP;                   // title column x
+const MARGIN = Math.round((W - (DIAG_W + COL_GAP + TITLE_W)) / 2);   // equal margins either side of the whole composition
+const TX = MARGIN;                                    // title column on the left
+const LEFT = TX + TITLE_W + COL_GAP;                  // diagram on the right
 
 function card(i) {
   const c = cards[i], k = NODE_KINDS[c.kind];

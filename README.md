@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/banner.svg" width="880" alt="Dia-GramV — plan the architecture before you write the code"/>
+  <img src="assets/banner.svg?v=2" width="880" alt="Dia-GramV — plan the architecture before you write the code"/>
 
   <p><strong>A typed, linted model of the system you are building — one file your coding agent reads and writes through MCP, and you edit on a canvas.</strong></p>
 

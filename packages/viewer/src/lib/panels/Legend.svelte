@@ -35,7 +35,7 @@
   };
 </script>
 
-<FloatPanel title="Key" bind:open corner="top-left" width={212}>
+<FloatPanel title="Key" bind:open corner="top-left" width={212} scale={0.75}>
   {#each groups as g (g.label)}
     <Section label={g.label}>
       <div class="rows">

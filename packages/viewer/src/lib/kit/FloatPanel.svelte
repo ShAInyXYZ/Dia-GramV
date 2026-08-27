@@ -2,11 +2,15 @@
   // A floating panel over the canvas: a header that collapses to a pill, a body when open.
   // Positioned by the caller via `corner`; never sits where Svelte Flow puts its own controls.
   import type { Snippet } from 'svelte';
-  let { title, open = $bindable(true), corner = 'top-left', width = 260, children }:
-    { title: string; open?: boolean; corner?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'; width?: number; children: Snippet } = $props();
+  let { title, open = $bindable(true), corner = 'top-left', width = 260, scale = 1, children }:
+    { title: string; open?: boolean; corner?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'; width?: number; scale?: number; children: Snippet } = $props();
+
+  // Scale from the panel's own corner, so shrinking it pulls the panel toward
+  // its anchor rather than leaving it floating away from the edge.
+  const origin = $derived(corner.split('-').reverse().join(' '));
 </script>
 
-<section class="fp {corner}" class:open style="--w:{width}px">
+<section class="fp {corner}" class:open style="--w:{width}px; --s:{scale}; --o:{origin}">
   <button class="head" onclick={() => (open = !open)} aria-expanded={open}>
     <span class="chev">{open ? '▾' : '▸'}</span><span class="title">{title}</span>
   </button>
@@ -14,7 +18,7 @@
 </section>
 
 <style>
-  .fp { position: absolute; z-index: 5; background: var(--s1); border: 1px solid var(--hair); border-radius: 7px; font-family: var(--mono); color: var(--muted); }
+  .fp { position: absolute; z-index: 5; background: var(--s1); border: 1px solid var(--hair); border-radius: 7px; font-family: var(--mono); color: var(--muted); transform: scale(var(--s, 1)); transform-origin: var(--o, top left); }
   /* A definite width, because the body lays out on a grid: equal tracks need a
      container to divide, and max-content would collapse each track to its own
      widest cell and leave the columns misaligned. --w is therefore the size,

@@ -24,7 +24,7 @@
 
 <div align="center">
   <img src="assets/viewer.png" width="880" alt="The viewer: a shop platform — clients, edge, services, data and providers as frames; shaped nodes; wires routed around cards carrying their protocol"/>
-  <br/><sub><a href="examples/shop-platform.dgv.json"><code>examples/shop-platform.dgv.json</code></a> — 17 components, 21 connections, 7 kB</sub>
+  <br/><sub><a href="examples/shop-platform.dgv.json"><code>examples/shop-platform.dgv.json</code></a> — 17 components, 21 connections, 7 kB · <a href="assets/shop-platform.svg">the same file as an SVG export</a></sub>
 </div>
 
 ---

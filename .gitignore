@@ -1,5 +1,3 @@
-# reference clone, studied but not ours
-archify/
 node_modules/
 dist/
 *.log

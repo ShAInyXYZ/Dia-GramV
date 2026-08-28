@@ -15,12 +15,21 @@
  *
  *   `ack` = "I know, it is intentional": a one-line reason that turns this element's
  *   lint WARNINGS into info. Errors are never acknowledged away.
+ *
+ *   Any element may also carry `flags`: judgements lint cannot make, raised by
+ *   the agent (dgv_flag) or a person (viewer) — "this is a dead end for
+ *   settings", "these two load the same plugins twice". Each is
+ *   { id, kind?: 'issue'|'idea'|'question', title, note?, fix?, by?, at? }.
+ *   Resolving a flag removes it; the history keeps the record.
+ *
+ *   `history` (top level) is written by the store on every save — see history.js.
  * }
  */
 import { NODE_KINDS, EDGE_KINDS, STATUSES, FRAME_TONES } from './catalog.js';
 import { error } from './diagnostics.js';
 
 const ID_RE = /^[a-zA-Z][a-zA-Z0-9_.:-]*$/;
+export const FLAG_KINDS = ['issue', 'idea', 'question'];
 
 const isObj = (v) => v && typeof v === 'object' && !Array.isArray(v);
 const isStr = (v) => typeof v === 'string';
@@ -43,6 +52,17 @@ export function validateSchema(doc) {
     if (doc[key] != null && !Array.isArray(doc[key])) bad(`/${key}`, 'must be an array');
   }
 
+  const flags = (who, list) => {
+    if (list == null) return;
+    if (!Array.isArray(list)) return bad(`${who}/flags`, 'flags must be an array');
+    list.forEach((f, j) => {
+      if (!isObj(f) || !isStr(f.id) || !f.id) return bad(`${who}/flags/${j}`, 'a flag needs an id');
+      if (!isStr(f.title) || !f.title.trim()) bad(`${who}/flags/${j}/title`, 'a flag needs a title (one line: what is wrong)');
+      if (f.kind != null && !FLAG_KINDS.includes(f.kind)) bad(`${who}/flags/${j}/kind`, `kind must be one of ${FLAG_KINDS.join(', ')}`);
+    });
+  };
+  if (doc.history != null && !Array.isArray(doc.history)) bad('/history', 'history must be an array (the store writes it; do not edit it by hand)');
+
   const pos = (path, p) => {
     if (!isObj(p) || !isNum(p.x) || !isNum(p.y)) bad(path, 'position must be {x, y} numbers', 'omit position to let DGV place it, or give numbers');
   };
@@ -55,6 +75,7 @@ export function validateSchema(doc) {
     if (f.parent != null && !isStr(f.parent)) bad(`${p}/parent`, 'parent must be a frame id');
     if (f.tone != null && !FRAME_TONES.includes(f.tone)) bad(`${p}/tone`, `tone must be one of ${FRAME_TONES.join(', ')}`);
     if (f.ack != null && !isStr(f.ack)) bad(`${p}/ack`, 'ack must be a string (the reason)');
+    flags(p, f.flags);
     if (f.position != null) pos(`${p}/position`, f.position);
     if (f.size != null && (!isObj(f.size) || !isNum(f.size.width) || !isNum(f.size.height))) bad(`${p}/size`, 'size must be {width, height}');
   });
@@ -69,6 +90,7 @@ export function validateSchema(doc) {
     if (n.frame != null && !isStr(n.frame)) bad(`${who}/frame`, 'frame must be a frame id');
     if (n.status != null && !STATUSES[n.status]) bad(`${who}/status`, `unknown status "${n.status}"`, `use one of ${Object.keys(STATUSES).join(', ')}`);
     if (n.ack != null && !isStr(n.ack)) bad(`${who}/ack`, 'ack must be a string (the reason)');
+    flags(who, n.flags);
     if (n.position != null) pos(`${who}/position`, n.position);
     if (n.tags != null && !(Array.isArray(n.tags) && n.tags.every(isStr))) bad(`${who}/tags`, 'tags must be strings');
     if (n.path != null && !(isStr(n.path) || (Array.isArray(n.path) && n.path.every(isStr)))) bad(`${who}/path`, 'path must be a file, directory or glob — a string, or a list of them');
@@ -90,6 +112,7 @@ export function validateSchema(doc) {
     if (!isStr(e.target)) bad(`${who}/target`, 'target node id required');
     if (e.kind != null && !EDGE_KINDS[e.kind]) bad(`${who}/kind`, `unknown edge kind "${e.kind}"`, `use one of ${Object.keys(EDGE_KINDS).join(', ')}`);
     if (e.ack != null && !isStr(e.ack)) bad(`${who}/ack`, 'ack must be a string (the reason)');
+    flags(who, e.flags);
   });
 
   return out;

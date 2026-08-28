@@ -6,6 +6,7 @@
   import MasterNode from './MasterNode.svelte';
   import DgvEdge from './DgvEdge.svelte';
   import QuickAdd from './QuickAdd.svelte';
+  import FlagPop from './FlagPop.svelte';
   import { dg } from '../stores/diagram.svelte';
   import { hl } from '../stores/hl.svelte';
   import { ui } from '../stores/ui.svelte';
@@ -15,6 +16,7 @@
   const nodeTypes = { dgv: DgvNode, frame: FrameNode, master: MasterNode } as any;
   const edgeTypes = { dgv: DgvEdge } as any;
   const flow = useSvelteFlow();
+  let wrap = $state<HTMLElement>();
   const tones: Record<string, string> = { neutral: '#2a2825', amber: '#3a2a1c', cyan: '#1c3236', violet: '#2e2438', green: '#1c332c', rose: '#3a222a' };
 
   function onNodeClick({ node }: { node: FNode }) {
@@ -26,7 +28,7 @@
     // middle of; clicking a card is the moment they asked about one thing.
     ui.sideOpen = true; ui.tab = 'inspect';
   }
-  function onPaneClick() { dg.setActive(null); ui.quickAdd = null; }
+  function onPaneClick() { dg.setActive(null); ui.quickAdd = null; hl.flagOpen = null; ui.historyOpen = false; }
   // double-click on empty canvas → quick-add at the cursor
   function onDblClick(e: MouseEvent) {
     if (!(e.target as HTMLElement).closest('.svelte-flow__pane')) return;
@@ -41,7 +43,7 @@
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div class="wrap" ondblclick={onDblClick} onmousemove={(e) => (ui.mouse = { x: e.clientX, y: e.clientY })}>
+<div class="wrap" bind:this={wrap} ondblclick={onDblClick} onmousemove={(e) => (ui.mouse = { x: e.clientX, y: e.clientY })}>
   <!-- Folded, the canvas shows a view: geometry is derived, so dragging and
        deleting are off and nothing here can reach the file. -->
   <SvelteFlow
@@ -54,6 +56,7 @@
     zoomOnDoubleClick={false}
     onnodeclick={onNodeClick as any}
     onpaneclick={onPaneClick}
+    onmovestart={() => (hl.flagOpen = null)}
     onnodedrag={({ nodes }: { nodes: FNode[] }) => dg.onDrag(nodes)}
     onnodedragstop={({ nodes }: { nodes: FNode[] }) => dg.afterDrag(nodes)}
     onbeforeconnect={(c: Connection) => dg.connect(c.source, c.target, c.sourceHandle, c.targetHandle) ?? false}
@@ -67,6 +70,7 @@
     <MiniMap width={148} height={104} nodeColor={(n: any) => (n.type === 'frame' ? tones[n.data?.tone ?? 'neutral'] : kindColor(n.data?.kind))} maskColor="rgba(29,29,29,0.75)" pannable zoomable />
   </SvelteFlow>
   {#if ui.quickAdd}<QuickAdd at={ui.quickAdd} onpick={pick} onclose={() => (ui.quickAdd = null)} />{/if}
+  {#if wrap}<FlagPop host={wrap} />{/if}
 </div>
 
 <style>

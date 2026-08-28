@@ -4,6 +4,8 @@
  *
  *   dgv_catalog → dgv_create → dgv_apply (repeat) → dgv_lint → dgv_layout → dgv_open → dgv_export
  *   …and as code lands: dgv_drift — does every node.path exist, does every directory belong to a node
+ *   …and when the graph is valid but the design is wrong: dgv_flag — pin the judgement on the
+ *   element so the viewer shows it; dgv_resolve when it is fixed. dgv_history: who changed what.
  */
 import { spawn } from 'node:child_process';
 import path from 'node:path';
@@ -14,6 +16,7 @@ import { z } from 'zod';
 import {
   catalogSummary, emptyDiagram, applyPatch, placeUnpositioned, lint, layout,
   summarizeDiagnostics as diagSummary, outline as textSummary, toMarkdown, toMermaid, toSVG, drift, preparePatch, NODE_KIND_IDS, EDGE_KIND_IDS, STATUS_IDS, FRAME_TONES,
+  FLAG_KINDS, raiseFlag, resolveFlag, describeChange, countFlags,
 } from '@dgv/core';
 import * as store from '@dgv/core/store';
 import { probe, DEFAULT_PORT } from './http.js';
@@ -28,10 +31,18 @@ const Port = z.object({
   dir: z.enum(['in', 'out', 'both']).optional().describe('in = others call it (default), out = it emits'),
   shape: z.string().optional().describe('what crosses it: "JSON /api/v1", "text[] → float[][]"'),
 });
+const Flag = z.object({
+  id: z.string().describe('flag id, unique on its element (f1, f2, …)'),
+  kind: z.enum(FLAG_KINDS).optional().describe('issue (lint warning) | idea | question (info)'),
+  title: z.string().describe('one line: what is wrong'),
+  note: z.string().optional(), fix: z.string().optional(), by: z.string().optional(), at: z.string().optional(),
+});
+const FLAGS_DESC = 'the element\'s open flags, replaced wholesale — prefer dgv_flag / dgv_resolve, which add and remove one';
 const Frame = z.object({
   id: z.string(), label: z.string().optional(),
   parent: z.string().nullable().optional().describe('legacy: frames do not nest — setting this is a lint error (frame/nested)'),
   tone: z.enum(FRAME_TONES).optional(), note: z.string().optional(), ack: z.string().optional().describe('acknowledge this element\'s lint warnings with a one-line reason (they become info)'),
+  flags: z.array(Flag).optional().describe(FLAGS_DESC),
   position: Pos.optional(), size: z.object({ width: z.number(), height: z.number() }).optional(),
 });
 const Node = z.object({
@@ -45,6 +56,7 @@ const Node = z.object({
   ports: z.array(Port).optional().describe('interfaces this node exposes; edges bind to them'),
   path: z.union([z.string(), z.array(z.string())]).optional().describe('the code this node IS: a file, a directory (claims everything under it), a glob, or a list. dgv_drift checks it exists. Leave unset for devices, externals, stores'),
   ack: z.string().optional().describe('acknowledge this element\'s lint warnings with a one-line reason (they become info)'),
+  flags: z.array(Flag).optional().describe(FLAGS_DESC),
   position: Pos.optional().describe('omit — DGV places new nodes; use dgv_layout for a full relayout'),
 });
 const Edge = z.object({
@@ -56,6 +68,7 @@ const Edge = z.object({
   payload: z.string().optional().describe('what is exchanged: "messages[], tools[]"'),
   note: z.string().optional(),
   ack: z.string().optional().describe('acknowledge this element\'s lint warnings with a one-line reason (they become info)'),
+  flags: z.array(Flag).optional().describe(FLAGS_DESC),
 });
 
 const text = (s) => ({ content: [{ type: 'text', text: typeof s === 'string' ? s : JSON.stringify(s, null, 2) }] });
@@ -63,8 +76,8 @@ const fail = (msg) => ({ content: [{ type: 'text', text: msg }], isError: true }
 
 export function createServer({ dir } = {}) {
   dir = store.resolveDir(dir);
-  const server = new McpServer({ name: 'dgv', version: '0.1.0' }, {
-    instructions: `Dia-GramV: plan a system's architecture as a typed, linted diagram BEFORE writing code. Diagrams are files in ${dir} (<name>.dgv.json). Flow: dgv_catalog → dgv_create → dgv_apply (nodes/frames/edges, ports on nodes, protocols on edges) → dgv_lint → fix → dgv_layout → dgv_open → dgv_drift as code lands. Read dgv_catalog once per session for the allowed kinds.`,
+  const server = new McpServer({ name: 'dgv', version: '0.2.0' }, {
+    instructions: `Dia-GramV: plan a system's architecture as a typed, linted diagram BEFORE writing code. Diagrams are files in ${dir} (<name>.dgv.json). Flow: dgv_catalog → dgv_create → dgv_apply (nodes/frames/edges, ports on nodes, protocols on edges) → dgv_lint → fix → dgv_layout → dgv_open → dgv_drift as code lands. Read dgv_catalog once per session for the allowed kinds. When the graph lints clean but the design is wrong (a dead end, a duplicated load, a missing death-pact), dgv_flag it on the element — the viewer shows the note as a bubble — and dgv_resolve once fixed. dgv_history says who changed what.`,
   });
 
   const lintReport = (doc) => { const d = lint(doc); return { summary: diagSummary(d), diagnostics: d }; };
@@ -111,8 +124,8 @@ export function createServer({ dir } = {}) {
       const { doc, changed } = applyPatch(cur, preparePatch(cur, patch));
       const placed = placeUnpositioned(doc).doc;
       const report = lintReport(placed);
-      store.write(dir, name, placed);
-      return text({ ok: report.summary.ok, changed, lint: report.summary, diagnostics: report.diagnostics.filter((d) => d.severity !== 'info'), info: report.diagnostics.filter((d) => d.severity === 'info').length });
+      const { entries } = store.commit(dir, name, placed, { by: 'agent' });
+      return text({ ok: report.summary.ok, changed, recorded: entries.map((e) => `${e.id}: ${describeChange(e)}`), lint: report.summary, diagnostics: report.diagnostics.filter((d) => d.severity !== 'info'), info: report.diagnostics.filter((d) => d.severity === 'info').length });
     } catch (e) { return fail(e.message); }
   });
 
@@ -135,6 +148,45 @@ export function createServer({ dir } = {}) {
       const doc = layout(store.read(dir, name), {}, { direction });
       store.write(dir, name, doc);
       return text({ ok: true, nodes: doc.nodes.length, frames: doc.frames.length });
+    } catch (e) { return fail(e.message); }
+  });
+
+  server.registerTool('dgv_flag', {
+    title: 'Flag an issue', description: 'Pin an architecture judgement on a node, edge or frame — something lint cannot see: a dead end for settings, a plugin loaded twice, a bridge with no death-pact. The viewer shows it as a bubble on the element until it is resolved. kind=issue counts as a warning; idea / question are info. Say what is wrong in title, why in note, and the concrete change in fix. Never flag what a lint rule already reports.',
+    inputSchema: {
+      name: z.string(), on: z.string().describe('the node, edge or frame id'),
+      title: z.string().describe('one line: what is wrong'),
+      note: z.string().optional().describe('the reasoning — what you saw and why it matters'),
+      fix: z.string().optional().describe('the concrete change that would resolve it'),
+      kind: z.enum(FLAG_KINDS).optional().describe('issue (default) | idea | question'),
+    },
+  }, async ({ name, on, title, note, fix, kind }) => {
+    try {
+      const { doc, flag } = raiseFlag(store.read(dir, name), on, { title, note, fix, kind, by: 'agent' });
+      store.commit(dir, name, doc, { by: 'agent' });
+      return text({ ok: true, on, flag, open: countFlags(doc), next: 'dgv_resolve when it is fixed; the history keeps both' });
+    } catch (e) { return fail(e.message); }
+  });
+
+  server.registerTool('dgv_resolve', {
+    title: 'Resolve a flag', description: 'Remove a flag from an element once the issue is fixed (or judged not one). Without a flag id, resolves the element\'s only flag; with several, the error names them.',
+    inputSchema: { name: z.string(), on: z.string().describe('the node, edge or frame id'), flag: z.string().optional().describe('flag id (f1, f2…) — needed only when the element has more than one') },
+  }, async ({ name, on, flag }) => {
+    try {
+      const { doc, flag: f } = resolveFlag(store.read(dir, name), on, flag);
+      store.commit(dir, name, doc, { by: 'agent' });
+      return text({ ok: true, resolved: f, open: countFlags(doc) });
+    } catch (e) { return fail(e.message); }
+  });
+
+  server.registerTool('dgv_history', {
+    title: 'History', description: 'What changed in the architecture, on which element, by whom (agent = the MCP tools, viewer = a person in the browser). Layout moves are not recorded. Newest first; filter by element id.',
+    inputSchema: { name: z.string(), on: z.string().optional().describe('only this node / edge / frame id'), limit: z.number().int().min(1).max(300).optional().describe('default 30') },
+  }, async ({ name, on, limit = 30 }) => {
+    try {
+      const doc = store.read(dir, name);
+      const all = (doc.history ?? []).filter((e) => !on || e.id === on);
+      return text({ total: all.length, entries: all.slice(-limit).reverse().map((e) => ({ at: e.at, by: e.by, [e.type]: e.id, change: describeChange(e) })) });
     } catch (e) { return fail(e.message); }
   });
 

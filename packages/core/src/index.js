@@ -11,3 +11,4 @@ export * from './router.js';
 export * from './svg.js';
 export * from './drift.js';
 export * from './collapse.js';
+export * from './history.js';

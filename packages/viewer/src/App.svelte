@@ -6,6 +6,7 @@
   import Inspector from './lib/panels/Inspector.svelte';
   import Problems from './lib/panels/Problems.svelte';
   import Legend from './lib/panels/Legend.svelte';
+  import History from './lib/panels/History.svelte';
   import Shell from './lib/panels/Shell.svelte';
   import { dg } from './lib/stores/diagram.svelte';
   import { ui } from './lib/stores/ui.svelte';
@@ -35,6 +36,7 @@
     {#snippet canvas()}
       <Canvas />
       <Legend />
+      <History />
       {#if dg.externalChange}<div class="banner">This diagram changed on disk (probably the agent). <button onclick={() => dg.open(dg.name!)}>reload &amp; discard my edits</button> <button class="primary" onclick={() => dg.save()}>overwrite with mine</button></div>{/if}
       {#if dg.error}<div class="banner err">{dg.error}</div>{/if}
     {/snippet}

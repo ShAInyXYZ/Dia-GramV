@@ -3,12 +3,14 @@
   import { dg } from '../stores/diagram.svelte';
   import type { NodeData, FrameData, EdgeData, Port } from '../model/flow';
   import EdgeKindPicker from '../canvas/EdgeKindPicker.svelte';
+  import FlagList from './FlagList.svelte';
 
   const sel = $derived(dg.selected);
   const node = $derived(sel && sel.type !== 'edge' ? dg.node(sel.id) : undefined);
   const edge = $derived(sel?.type === 'edge' ? dg.edge(sel.id) : undefined);
   const nd = $derived(node?.type === 'dgv' ? (node.data as NodeData) : null);
   const fd = $derived(node?.type === 'frame' ? (node.data as FrameData) : null);
+  const master = $derived(node?.type === 'master' ? node : null);
   const ed = $derived(edge?.data ?? ({} as EdgeData));
   const frames = $derived(dg.frames().filter((f) => f.id !== node?.id));
   const portsOf = (id?: string) => ((dg.node(id ?? '')?.data as NodeData | undefined)?.ports ?? []);
@@ -53,6 +55,7 @@
     {#if hasWarn(node.id) || nd.ack}
       <label class="f">accepted warning · why</label><input value={nd.ack ?? ''} placeholder="leave empty to keep the warning" onchange={(e) => up({ ack: (e.target as HTMLInputElement).value || undefined })} />
     {/if}
+    <FlagList on={node.id} />
 
   {:else if fd && node}
     <div class="head"><span class="k">Frame</span><button class="x" onclick={() => dg.remove([node.id])}>delete</button></div>
@@ -65,7 +68,18 @@
     {#if hasWarn(node.id) || fd.ack}
       <label class="f">accepted warning · why</label><input value={fd.ack ?? ''} placeholder="leave empty to keep the warning" onchange={(e) => up({ ack: (e.target as HTMLInputElement).value || undefined })} />
     {/if}
+    <FlagList on={node.id} />
     <p class="hint">Drag nodes into a frame to adopt them; frames grow to fit. Drag a corner to resize.</p>
+  {:else if master}
+    <div class="head"><span class="k">Folded frame</span></div>
+    <div class="ends mono">{master.id}</div>
+    <p class="hint">A folded frame stands in for its members. Their flags are on the card; unfold to edit the members.</p>
+    {#if dg.flagsFor(master.id).length}
+      <label class="f">flags inside</label>
+      {#each dg.flagsFor(master.id) as { on, flag } (on + flag.id)}
+        <div class="mflag {flag.kind ?? 'issue'}"><span class="mono dim">{on}</span> {flag.title} <button class="mini" onclick={() => dg.resolveFlag(on, flag.id)}>resolve</button></div>
+      {/each}
+    {/if}
   {:else if edge}
     <div class="head"><span class="k">Edge</span><button class="x" onclick={() => dg.remove([edge.id])}>delete</button></div>
     <div class="ends mono">{edge.source} <span class="dim">→</span> {edge.target}</div>
@@ -82,6 +96,7 @@
     {#if hasWarn(edge.id) || ed.ack}
       <label class="f">accepted warning · why</label><input value={ed.ack ?? ''} placeholder="leave empty to keep the warning" onchange={(e) => upE({ ack: (e.target as HTMLInputElement).value || undefined })} />
     {/if}
+    <FlagList on={edge.id} />
   {:else}
     <p class="hint">Select a node, frame or edge to edit it.<br /><br />Drag from a node's right handle to another node to connect them. Click a node to light up its neighbourhood.</p>
   {/if}
@@ -99,4 +114,6 @@
   .port select { width: auto; } .port .wide { grid-column: 1 / -1; }
   .ends { font-size: 11.5px; color: var(--muted); margin: 8px 0 2px; }
   .hint { color: var(--dim); font-size: 12px; line-height: 1.5; }
+  .mflag { font-size: 11.5px; padding: 5px 8px; margin-bottom: 4px; background: var(--s2); border-left: 2px solid var(--muted); border-radius: 0 4px 4px 0; }
+  .mflag.issue { border-left-color: var(--warn); }
 </style>

@@ -175,6 +175,19 @@ export function lint(rawDoc, opts = {}) {
   const unplaced = doc.nodes.filter((n) => !n.position).length;
   if (unplaced) out.push(info('layout/unplaced', `${unplaced} node(s) have no position yet`, { type: 'diagram' }, ['run layout (dgv_layout)']));
 
+  // ---- flags ----------------------------------------------------------
+  // A flag is a judgement the rules above cannot make — raised by whoever
+  // read the diagram and saw the architecture was wrong even though the
+  // graph was valid. It stays a problem until someone resolves it.
+  for (const [type, list] of [['frame', doc.frames], ['node', doc.nodes], ['edge', doc.edges]]) {
+    for (const it of list) for (const f of it.flags ?? []) {
+      const kind = f.kind ?? 'issue';
+      const mk = kind === 'issue' ? warn : info;
+      out.push({ ...mk(`flag/${kind}`, `${type} "${it.id}": ${f.title}${f.note ? ` — ${f.note}` : ''}`, { type, id: it.id, flag: f.id },
+        [...(f.fix ? [f.fix] : []), `when it is addressed: dgv_resolve on "${it.id}"`]), flag: f });
+    }
+  }
+
   return acknowledge(out, doc);
 }
 
@@ -187,7 +200,7 @@ function acknowledge(diags, doc) {
   const reason = new Map();
   for (const list of [doc.frames, doc.nodes, doc.edges]) for (const it of list) if (it.ack) reason.set(it.id, it.ack);
   return diags.map((d) => {
-    if (d.severity !== 'warning') return d;
+    if (d.severity !== 'warning' || d.code.startsWith('flag/')) return d;
     const r = reason.get(d.subject?.id);
     return r ? { ...d, severity: 'info', ack: r, message: `${d.message} — acknowledged: ${r}` } : d;
   });

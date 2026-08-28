@@ -6,6 +6,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { normalize } from './model.js';
+import { withHistory } from './history.js';
 
 export const EXT = '.dgv.json';
 const NAME_RE = /^[a-zA-Z0-9][a-zA-Z0-9_-]*$/;
@@ -52,6 +53,19 @@ export function write(dir, name, doc) {
   fs.writeFileSync(tmp, JSON.stringify(doc, null, 2) + '\n');
   fs.renameSync(tmp, file);
   return file;
+}
+
+/**
+ * Save with history: diff against what is on disk, append the entries, write.
+ * Every path that changes architecture goes through here — the MCP tools
+ * (by: 'agent') and the viewer's save (by: 'viewer'). A layout-only change
+ * produces no entries and is written as it is.
+ */
+export function commit(dir, name, doc, { by = 'agent' } = {}) {
+  const prev = exists(dir, name) ? read(dir, name) : null;
+  const { doc: next, entries } = withHistory(prev, doc, { by });
+  const file = write(dir, name, next);
+  return { file, entries, history: next.history ?? [] };
 }
 
 export function remove(dir, name) { const f = fileOf(dir, name); if (fs.existsSync(f)) fs.unlinkSync(f); }

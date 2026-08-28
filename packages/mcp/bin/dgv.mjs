@@ -9,12 +9,13 @@
  *   dgv layout <name|file>            auto layout in place
  *   dgv export <name|file> [--format markdown|mermaid|summary]
  *   dgv drift <name|file> [--root r] [--depth n] [--json]   does the diagram still describe the code?
+ *   dgv history <name|file> [--on id] [--limit n]   who changed what (flags raised / resolved included)
  *   dgv list | catalog | doctor
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { lint, layout, drift, toMarkdown, toMermaid, toSVG, outline as textSummary, catalogSummary, normalize, summarizeDiagnostics as diagSummary } from '@dgv/core';
+import { lint, layout, drift, toMarkdown, toMermaid, toSVG, outline as textSummary, catalogSummary, normalize, summarizeDiagnostics as diagSummary, describeChange } from '@dgv/core';
 import * as store from '@dgv/core/store';
 import { listFiles } from '../src/walk.js';
 
@@ -32,7 +33,7 @@ function loadDoc(ref) {
 }
 function saveDoc(file, doc) { const tmp = file + '.tmp'; fs.writeFileSync(tmp, JSON.stringify(doc, null, 2) + '\n'); fs.renameSync(tmp, file); }
 
-const usage = () => { console.log(fs.readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').slice(2, 12).map((l) => l.replace(/^ \* ?/, '')).join('\n')); };
+const usage = () => { console.log(fs.readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').slice(2, 13).map((l) => l.replace(/^ \* ?/, '')).join('\n')); };
 
 switch (cmd) {
   case 'mcp': {
@@ -91,6 +92,14 @@ switch (cmd) {
       console.log(`\n${s.files} files · ${s.mapped} nodes mapped · ${s.unmapped} unmapped · ${s.missing} missing · ${s.unclaimed} unclaimed dir(s) · ${s.ignored} ignored`);
     }
     process.exit(r.ok ? 0 : 1);
+  }
+  case 'history': {
+    const { doc } = loadDoc(positional[0]);
+    const on = flag('--on'), limit = Number(flag('--limit') ?? 30);
+    const all = (doc.history ?? []).filter((e) => !on || e.id === on);
+    for (const e of all.slice(-limit).reverse()) console.log(`${e.at.slice(0, 16).replace('T', ' ')}  ${e.by.padEnd(6)} ${e.type.padEnd(5)} ${e.id.padEnd(16)} ${describeChange(e)}`);
+    console.log(`\n${all.length} change(s) on record${on ? ` for ${on}` : ''}`);
+    break;
   }
   case 'list': { for (const d of store.list(dir)) console.log(`${d.name.padEnd(24)} ${String(d.nodes).padStart(3)} nodes ${String(d.edges).padStart(3)} edges  ${d.title ?? ''}`); break; }
   case 'catalog': { console.log(JSON.stringify(catalogSummary(), null, 2)); break; }

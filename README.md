@@ -14,6 +14,7 @@
   <p>Works with any MCP client. The skill and hooks are for Claude Code.<br/>Diagrams are JSON files in your repo. Runs on your machine — no accounts, no cloud, no telemetry.</p>
 
   <p>
+    <a href="#whats-new--v02--flags-and-history"><strong>What's new</strong></a> ·
     <a href="#thirty-seconds"><strong>30 seconds ↓</strong></a> ·
     <a href="#why-it-matters-when-an-ai-writes-the-code"><strong>Why</strong></a> ·
     <a href="#what-it-does--four-cases"><strong>Four cases</strong></a> ·
@@ -46,6 +47,47 @@ Then, in any project, tell the agent:
 It reads the catalog, writes `dgv/<name>.dgv.json`, gets a lint report back on every write, repairs what it broke, lays the diagram out and opens it at http://127.0.0.1:7710. From then on the file is the map: every later session reads it before it reads code.
 
 Needs Node 20.19+ or 22.12+. `npm install` fetches everything (~100 MB, nothing global); `npm run build` compiles the viewer once. Skip the build if you only want the MCP tools — everything works without it except `dgv_open`.
+
+## What's new · v0.2 — flags and history
+
+The agent can now **flag** an architecture problem on the exact node, wire or frame it is about — a ⚑ bubble on the canvas with what is wrong, why, and the fix — and every change to the diagram, by the agent or by you, lands in a **history** you open from the bottom of the canvas. Three new MCP tools: `dgv_flag`, `dgv_resolve`, `dgv_history`.
+
+<details>
+<summary><b>The details</b> — what it looks like, how to use it, where it lives, every new command</summary>
+<br/>
+
+Lint says whether the graph is **valid**. It cannot say whether the design is **right**. Reviewing a real project through its diagram, the agent found six things no rule would ever fire on — a process that was a dead end for settings (every change was a restart), plugins loaded three times across the map, a spawned child with no death-pact — and had nowhere to put them but a chat message that scrolls away. Now it has two places: a flag on the element, and a record of what changed.
+
+<table>
+<tr>
+<td width="50%" valign="top"><img src="assets/flags-history.png" alt="The installer card carries a ⚑; its open note says what is wrong, why, and the fix, with a resolve button. The history drop-up at the bottom lists nine changes grouped by element"/><br/><sub><b>Flags.</b> The agent pinned a judgement on <code>install.sh</code>: no dependency contract, and the fix. The ⚑ keeps pulsing until it is opened; <b>resolve</b> when it is done. <b>History.</b> The pill at the bottom centre opens into what changed, per element or as a timeline.</sub></td>
+<td width="50%" valign="top"><img src="assets/flag-raise.png" alt="The inspector on a flagged storage node: the flag with its note and fix, and the form to raise a new one — title, kind, fix. Behind it, the history with one element expanded"/><br/><sub><b>Yours too.</b> Every flag is in the inspector with its note; <code>+ flag</code> raises one by hand when you spot what the agent missed — it shows up in the agent's next <code>dgv_read</code> as <code>⚑</code>. Expand an element in the history to see each change, who made it and when.</sub></td>
+</tr>
+</table>
+
+**How you use it.** After the map exists, ask for a review rather than a fix:
+
+> *Read the diagram, then audit the architecture for incoherences lint can't see. Verify each against the code. Pin every real one on its element with what's wrong, why, and the fix. Don't fix anything yet.*
+
+Open the viewer: every flag is a ⚑ on its card, filled and ringing until read. Click one to read the note; **resolve** the ones you disagree with (the history keeps the fact that it was raised), leave the rest. Then: *"fix the open flags on chainx, resolve each as you go"* — and the history pill turns `3 new` when the agent's writes land, with a mark on every card it touched. Layout moves are not recorded; architecture is.
+
+**Where it lives.** Flags sit on the element in the file (`"flags": [ { "id", "kind", "title", "note", "fix", "by", "at" } ]`) and lint reports each one — `flag/issue` counts as a warning, `flag/idea` and `flag/question` as info — so the problems panel, the rail counter and the report `dgv_apply` returns all carry them. `ack` never silences a flag; only resolving does. History is computed by the server on every save, by diffing the file on disk against the one being written, and kept in the file as `history` (the last 300 changes). Nobody has to remember to log anything, and a save from the browser records the same way as one from the agent. Existing diagrams need nothing — the fields are optional and appear on the first save.
+
+**Every new command.**
+
+| where | command | does |
+|---|---|---|
+| MCP | `dgv_flag` | `name`, `on` (node / edge / frame id), `title`, `note`, `fix`, `kind` issue · idea · question. Raises one flag; returns the open count |
+| MCP | `dgv_resolve` | `name`, `on`, optional `flag` id — needed only when the element carries several; the error names them |
+| MCP | `dgv_history` | `name`, optional `on`, `limit`. Newest first: `{ at, by, node\|edge\|frame, change }` |
+| MCP | `dgv_apply` | unchanged, plus: accepts `flags` on any element (replaced wholesale — prefer the two above) and returns `recorded`, the history entries the write produced |
+| MCP | `dgv_read` | unchanged, plus: `⚑` under flagged elements, `## flags: N open`, and `## recent changes` at the end — the session-start hook prints the same |
+| CLI | `dgv history <name> [--on id] [--limit n]` | the history in the terminal |
+| viewer | `H` | open / close the history |
+| viewer | click a ⚑ | read the note; **resolve** removes the flag |
+| viewer | inspector → `+ flag` | raise a flag by hand on the selected element |
+
+</details>
 
 ## What it is
 
@@ -207,6 +249,10 @@ Two optional Claude Code hooks close the loop ([`hooks/`](hooks/README.md); `doc
 </tr>
 </table>
 
+**Flags.** Lint catches what a rule can catch. The agent (or you) catches the rest — a process that is a dead end for settings, plugins loaded three times across the map, a child process with no death-pact — and pins it on the element with `dgv_flag`. On the canvas it is a ⚑ bubble on the card, the frame label or the wire, filled and ringing until you open it; the note says what is wrong, why, and the concrete fix, with a **resolve** button. Open flags sit in the problems list too (`flag/issue` counts as a warning), and in the outline every session starts with.
+
+**History.** The pill at the bottom centre — `history · 3 new` — opens upward into what changed: per element (`chainx · 4 changes · 2m ago`, click to see them and jump to the card) or as a timeline. Every save that changes the *architecture* lands there, whether it came from `dgv_apply` (`agent`) or from this page (`you`): a status flipped, a port added, a node renamed, a flag raised or resolved. Dragging cards around does not count. It is computed on the server by diffing the file on every write, kept in the file (capped), and readable from the agent with `dgv_history`. Cards changed since you last looked carry a small green mark.
+
 Drag a node into a frame and it joins it; frames grow to fit. `Ctrl+Z` undoes. `Ctrl+S` saves — and if the agent changed the file while you had unsaved edits, the page says so and lets you choose. `L` cycles the wire style: floating bezier, routed around cards, straight. `Shift+S` saves what is on screen as a self-contained SVG, which is how every diagram in this README was made.
 
 <details>
@@ -221,6 +267,7 @@ Drag a node into a frame and it joins it; frames grow to fit. `Ctrl+Z` undoes. `
 | `L` | wire style: floating, routed, straight |
 | `S` | fold every frame into one node; again to unfold. Hover a single frame to fold just that one |
 | `Shift+S` | save what is on screen as SVG |
+| `H` | the change history |
 | `F` fit · `I` inspector · `P` problems · `Esc` close · `Del` delete · `Ctrl+S` save · `Ctrl+Z` undo |
 
 The folded view keeps its own arrangement per diagram in your browser, never in the file.
@@ -240,6 +287,9 @@ The folded view keeps its own arrangement per diagram in your browser, never in 
 | `dgv_apply` | upsert frames, nodes and edges by id; remove by id; places new nodes; **returns the lint report**. Partial: to change one field on an existing element, send its id and that field |
 | `dgv_lint` | the diagnostics: `code`, `severity`, `subject`, `fixes` |
 | `dgv_drift` | does the diagram still describe the code? every `path` must exist, every directory of code must belong to a node |
+| `dgv_flag` | pin an architecture judgement on a node, edge or frame — `title`, `note` (why), `fix` (the change); `kind` issue / idea / question. Shown as a bubble in the viewer, listed by lint until resolved |
+| `dgv_resolve` | remove a flag once it is fixed; the history keeps both ends |
+| `dgv_history` | who changed what: every architecture change per element, `agent` or `viewer`, newest first |
 | `dgv_layout` | dagre layout, `TB` or `LR`; overwrites positions |
 | `dgv_open` | starts the viewer if it is not running and opens the diagram |
 | `dgv_export` | `markdown` (tables), `mermaid`, `summary` (the outline), or `svg` |
@@ -277,6 +327,8 @@ Shape first (`schema/invalid`), then references (`ref/missing-node`, `ref/missin
 
 **Info** — worth a look, silent in the counts: `kind/store-access`, `kind/module-loose`, `kind/external-inside`, `graph/shared-store`, `layout/unplaced`.
 
+**Flags** — not rules but judgements, raised with `dgv_flag`: `flag/issue` is a warning, `flag/idea` and `flag/question` are info. They are never acknowledged away; they are resolved.
+
 A warning that is intentional gets `ack: "<reason>"` on its element: it becomes info with the reason attached, and the reason travels with the file. Errors cannot be acknowledged.
 </details>
 
@@ -292,8 +344,12 @@ A warning that is intentional gets `ack: "<reason>"` on its element: it becomes 
                 "frame": "server", "status": "done", "path": "src/api", "position": { "x": 520, "y": 120 },
                 "ports": [ { "id": "rest", "protocol": "http", "dir": "in" } ] } ],
   "edges":  [ { "id": "web-api", "source": "web", "target": "api",
-                "kind": "sync", "protocol": "http", "targetPort": "rest", "label": "fetch" } ] }
+                "kind": "sync", "protocol": "http", "targetPort": "rest", "label": "fetch",
+                "flags": [ { "id": "f1", "kind": "issue", "title": "no death-pact on the child", "fix": "PR_SET_PDEATHSIG", "by": "agent", "at": "2026-08-28T12:15:00Z" } ] } ],
+  "history": [ { "at": "2026-08-28T12:15:00Z", "by": "agent", "type": "edge", "id": "web-api", "op": "flag", "flag": { "id": "f1", "kind": "issue", "title": "no death-pact on the child" } } ] }
 ```
+
+`flags` may sit on any frame, node or edge; `history` is written by the store on every save (never by hand) and holds the last 300 architecture changes.
 
 <div align="center">
   <img src="assets/kinds.svg" width="880" alt="Every node kind with its shape, and every wire kind with its dash — drawn from the catalog"/>
@@ -311,6 +367,7 @@ node packages/mcp/bin/dgv.mjs lint   <name|file> [--json]
 node packages/mcp/bin/dgv.mjs layout <name|file> [--direction TB|LR]
 node packages/mcp/bin/dgv.mjs export <name|file> [--format markdown|mermaid|summary|svg]
 node packages/mcp/bin/dgv.mjs drift  <name|file> [--root dir] [--json]
+node packages/mcp/bin/dgv.mjs history <name|file> [--on id] [--limit n]
 node packages/mcp/bin/dgv.mjs list | catalog | doctor | open <name>
 ```
 </details>
@@ -320,9 +377,9 @@ node packages/mcp/bin/dgv.mjs list | catalog | doctor | open <name>
 
 | path | what |
 |---|---|
-| `packages/core` | plain ESM, no DOM: catalog, schema, lint, dagre layout, orthogonal wire router, fold, exports, drift, file store |
+| `packages/core` | plain ESM, no DOM: catalog, schema, lint, dagre layout, orthogonal wire router, fold, exports, drift, history, file store |
 | `packages/mcp` | the `dgv` CLI, the MCP server, and the local HTTP/SSE server behind the viewer |
-| `packages/viewer` | Svelte 5 + Svelte Flow: shaped nodes, frames, folding, inspector, live problems |
+| `packages/viewer` | Svelte 5 + Svelte Flow: shaped nodes, frames, folding, inspector, live problems, flag bubbles, change history |
 | `skill/` | a Claude Code skill (`SKILL.md`) that teaches the workflow |
 | `hooks/` | SessionStart and Stop hooks for Claude Code |
 | `dgv/` | this repository's own diagram, drift-checked |

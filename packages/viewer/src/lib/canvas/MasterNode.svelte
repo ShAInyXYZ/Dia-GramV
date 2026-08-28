@@ -6,6 +6,7 @@
   // carry that: a card with depth, rather than a card with a badge on it.
   import { Handle, Position, type NodeProps } from '@xyflow/svelte';
   import KindGlyph from '../kit/KindGlyph.svelte';
+  import FlagBadge from './FlagBadge.svelte';
   import { hl } from '../stores/hl.svelte';
   import { dg } from '../stores/diagram.svelte';
   import type { NodeData } from '../model/flow';
@@ -30,6 +31,9 @@
     return worst;
   });
 
+  // Flags inside a folded frame are still flags: the card carries them all.
+  const flags = $derived(dg.flagsFor(id));
+
   // "4 nodes · 2 frames", and nothing at all when it is empty.
   const inside = $derived([
     m.nodes ? `${m.nodes} node${m.nodes > 1 ? 's' : ''}` : '',
@@ -43,6 +47,7 @@
 
   <div class="card">
     {#if problem}<div class="probbar {problem}"></div>{/if}
+    {#if flags.length}<div class="flagpos"><FlagBadge on={id} items={flags} /></div>{/if}
     <Handle type="target" id="in" position={Position.Left} class="hdl" />
     <Handle type="source" id="out" position={Position.Right} class="hdl" />
 
@@ -89,6 +94,7 @@
 
   .probbar { position: absolute; left: 0; top: 12px; bottom: 12px; width: 3px; border-radius: 2px; }
   .probbar.error { background: var(--err); } .probbar.warning { background: var(--warn); }
+  .flagpos { position: absolute; top: -9px; right: 12px; z-index: 3; }
 
   .row { display: flex; align-items: center; gap: 7px; margin-bottom: 3px; }
   .tag { font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--tone); }

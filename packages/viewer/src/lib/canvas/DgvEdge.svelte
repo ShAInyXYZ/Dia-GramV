@@ -43,6 +43,7 @@
   import { routeOrthogonal, toBeveledPath, DIR, STUB, BEVEL, type Rect, type Dir } from './edgeRouter';
   import type { EdgeData, NodeData } from '../model/flow';
   import EdgeKindPicker from './EdgeKindPicker.svelte';
+  import FlagBadge from './FlagBadge.svelte';
   import { PROTOCOLS } from '@dgv/core';
 
   let { id, source, target, data, selected }: EdgeProps & { data?: EdgeData } = $props();
@@ -58,6 +59,7 @@
   const width = $derived(selected || connected ? 2.4 : kind === 'import' ? 1 : kind === 'data' ? 2 : 1.5);
   const dash = $derived(({ async: '7 5', data: '2 4', deploy: '12 6', control: '8 4 2 4', import: '' } as Record<string, string>)[kind] ?? '');
   const text = $derived([data?.label, data?.protocol].filter(Boolean).join(' · '));
+  const flags = $derived((data?.flags ?? []).map((f) => ({ on: id, flag: f })));
   const portsOf = (nid: string) => ((dg.node(nid)?.data as NodeData | undefined)?.ports ?? []);
   const up = (patch: Partial<EdgeData>) => dg.updateEdge(id, patch);
 
@@ -129,9 +131,12 @@
         <datalist id="protocols">{#each PROTOCOLS as p}<option value={p}></option>{/each}</datalist>
       </div>
     </EdgeLabel>
-  {:else if text}
+  {:else if text || flags.length}
     <EdgeLabel x={geo.lx} y={geo.ly}>
-      <div class="lbl" class:muted={(!!hl.activeId && !connected) || filtered}>{text}</div>
+      <div class="lblwrap">
+        {#if text}<div class="lbl" class:muted={(!!hl.activeId && !connected) || filtered}>{text}</div>{/if}
+        {#if flags.length}<FlagBadge on={id} items={flags} small />{/if}
+      </div>
     </EdgeLabel>
   {/if}
 {/if}
@@ -139,6 +144,7 @@
 <style>
   .lbl { font-family: var(--mono); font-size: 9.5px; color: var(--muted); background: var(--bg); border: 1px solid var(--hair); border-radius: 3px; padding: 1px 6px; white-space: nowrap; pointer-events: none; }
   .lbl.muted { opacity: .35; }
+  .lblwrap { display: flex; align-items: center; gap: 4px; }
   .editor { width: 250px; background: var(--s1); border: 1px solid var(--accent); border-radius: 7px; padding: 7px; display: grid; gap: 6px; pointer-events: auto; font-family: var(--sans); }
   .editor .ends { font-family: var(--mono); font-size: 10px; color: var(--muted); }
   .editor .row { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }

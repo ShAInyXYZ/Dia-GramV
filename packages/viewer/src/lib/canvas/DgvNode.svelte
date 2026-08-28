@@ -2,6 +2,7 @@
   import { Handle, Position, useConnection, useViewport, type NodeProps } from '@xyflow/svelte';
   import { NODE_KINDS, STATUSES } from '@dgv/core';
   import Shape from './Shape.svelte';
+  import FlagBadge from './FlagBadge.svelte';
   import { hl } from '../stores/hl.svelte';
   import { dg, accentOf } from '../stores/diagram.svelte';
   import type { NodeData } from '../model/flow';
@@ -16,6 +17,8 @@
   const dim = $derived((hl.neighbors ? !hl.neighbors.has(id) : false) || (!!hl.kindFilter && data.kind !== hl.kindFilter));
   const active = $derived(hl.activeId === id);
   const problem = $derived(dg.problemIds.get(id));
+  const flags = $derived((data.flags ?? []).map((f) => ({ on: id, flag: f })));
+  const recent = $derived(dg.recentIds.has(id));
   const lod = $derived(vp.current.zoom < 0.5);
   // a wire is being dragged toward this node → its ports become drop targets
   const wiring = $derived(!!conn.current?.inProgress && conn.current.fromNode?.id !== id);
@@ -27,10 +30,12 @@
 <div class="card" class:dim class:active class:selected class:lod class:flash={hl.flash === id} style="--accent:{accent}; padding:{pad}" bind:clientWidth={w} bind:clientHeight={h}>
   <Shape shape={kind.shape} {w} {h} color={accent} {dim} />
   {#if problem}<div class="probbar {problem}"></div>{/if}
+  {#if flags.length}<div class="flagpos"><FlagBadge on={id} items={flags} /></div>{/if}
   <Handle type="target" id="in" position={Position.Left} class="hdl" />
   <Handle type="source" id="out" position={Position.Right} class="hdl" />
   <div class="body">
     <div class="row">
+      {#if recent}<i class="recent" data-tip="changed since you last opened the history"></i>{/if}
       <span class="kind">{kind.label}</span>
       {#if data.tech}<span class="tech">{data.tech}</span>{/if}
       {#if data.status}<span class="status" style="--sc:{STATUSES[data.status]?.color}">{data.status}</span>{/if}
@@ -61,6 +66,11 @@
   .card.lod .sub, .card.lod .note, .card.lod .ports, .card.lod .tech { opacity: .25; }
   .probbar { position: absolute; left: 0; top: 14px; bottom: 14px; width: 3px; border-radius: 2px; z-index: 1; }
   .probbar.error { background: var(--err); } .probbar.warning { background: var(--warn); }
+  /* On the outline, top right: the one place no shape puts a header or a port. */
+  .flagpos { position: absolute; top: -9px; right: 12px; z-index: 3; }
+  /* A changed card: one small mark before the kind tag, in the "new" colour
+     the history pill uses, so the two read as the same fact. */
+  .recent { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex: none; }
   .body { position: relative; }
   .row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; min-height: 12px; }
   .kind { font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }

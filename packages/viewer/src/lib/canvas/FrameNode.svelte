@@ -3,12 +3,14 @@
   import { dg } from '../stores/diagram.svelte';
   import { hl } from '../stores/hl.svelte';
   import type { FrameData } from '../model/flow';
+  import FlagBadge from './FlagBadge.svelte';
 
   let { id, data, selected }: NodeProps & { data: FrameData } = $props();
   const tones: Record<string, string> = { neutral: '#8a8580', amber: '#e8873a', cyan: '#5ec8d8', violet: '#c98cff', green: '#4ec9a5', rose: '#e86a8f' };
   const tone = $derived(tones[data.tone ?? 'neutral'] ?? tones.neutral);
   const problem = $derived(dg.problemIds.get(id));
   const drop = $derived(hl.dropFrame === id);
+  const flags = $derived((data.flags ?? []).map((f) => ({ on: id, flag: f })));
 
   // inline rename: double-click the label
   let editing = $state(false), draft = $state('');
@@ -25,6 +27,7 @@
     <div class="frame-label" ondblclick={start} role="heading" aria-level="3">
       <button class="fold nodrag nopan" onclick={(e) => { e.stopPropagation(); dg.setCollapsed(id, true); }} data-tip="fold into one node" aria-label="fold {data.label}">⤡</button>
       {data.label}{#if problem}<span class="prob {problem}">●</span>{/if}
+      {#if flags.length}<FlagBadge on={id} items={flags} small />{/if}
     </div>
   {/if}
   {#if data.note}<div class="frame-note">{data.note}</div>{/if}

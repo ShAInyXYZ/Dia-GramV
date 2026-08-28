@@ -68,3 +68,5 @@ label.f { display: block; font-family: var(--mono); font-size: 10px; letter-spac
   font-family: var(--mono); font-size: 10px; letter-spacing: .02em; white-space: nowrap; z-index: 60; pointer-events: none;
 }
 .rail [data-tip]:hover::after { left: auto; right: calc(100% + 8px); top: 50%; transform: translateY(-50%); }
+/* Anything on the bottom edge of the canvas tips upward, or the tip falls off the screen. */
+.hist [data-tip]:hover::after, .badge[data-tip]:hover::after { top: auto; bottom: calc(100% + 6px); }

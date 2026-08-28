@@ -10,9 +10,14 @@
                 "path"?: "internal/api" | [ "panel/src/**/*.svelte", "panel/package.json" ],
                 "tags"?: [], "ports"?: [ { "id", "protocol"?, "dir"?: in|out|both, "shape"? } ], "position"?: {x,y}, "ack"? } ],
   "edges":  [ { "id", "source", "target", "kind"?: sync|async|data|import|deploy|control, "protocol"?, "label"?,
-                "sourcePort"?, "targetPort"?, "payload"?, "note"?, "ack"? } ]
+                "sourcePort"?, "targetPort"?, "payload"?, "note"?, "ack"?, "flags"? } ],
+  "history"?: [ { "at", "by": agent|viewer, "type": node|edge|frame|meta, "id", "op": add|remove|rename|change|flag|resolve, … } ]
 }
 ```
+
+Any frame, node or edge may carry `flags`: `[ { "id": "f1", "kind"?: issue|idea|question, "title", "note"?, "fix"?, "by"?, "at"? } ]` — an architecture judgement pinned to that element, raised with `dgv_flag` and removed with `dgv_resolve`. Lint reports each as `flag/<kind>` (issue = warning; idea, question = info); `ack` does not silence them. The viewer draws a ⚑ bubble on the element.
+
+`history` is written by the store on every save, by diffing the file against the one being written; never edit it by hand. Positions and sizes are not diffed — only the architecture. Entries: `add` / `remove` (`kind`, `label`), `rename` (`to`), `change` (`fields: [{ field, from, to }]`), `flag` / `resolve` (`flag: { id, kind, title }`). Capped at 300. `dgv_history` reads it; `dgv_read` shows the tail.
 
 `ack` is a one-line reason on any element: its lint **warnings** become info carrying that reason. Errors cannot be acknowledged. Use it only after checking the warning is intentional, and say why in the ack.
 
@@ -67,6 +72,8 @@ sync (solid) · async (dashed) · data (dotted, thick) · import (thin) · deplo
 | frame/empty | warning | frame with no members |
 | layout/overlap, layout/outside-frame | warning | run layout |
 | kind/store-access, kind/module-loose, kind/external-inside, graph/shared-store, contract/unknown-protocol, layout/unplaced, status/missing | info | advice |
+| flag/issue | warning | a flag raised with `dgv_flag` — an architecture judgement, not a rule; resolve it, never ack it |
+| flag/idea, flag/question | info | a softer flag |
 
 ## Drift codes (`dgv_drift`)
 

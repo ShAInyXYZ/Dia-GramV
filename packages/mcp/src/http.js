@@ -56,9 +56,10 @@ export function startHttp({ dir, port = DEFAULT_PORT, host = '127.0.0.1', log = 
         }
         if (req.method === 'PUT') {
           const doc = normalize(JSON.parse(await readBody(req)));
-          const file = store.write(dir, name, placeUnpositioned(doc).doc);
+          // the viewer is a person at the keyboard: its saves are recorded as such
+          const { file, history } = store.commit(dir, name, placeUnpositioned(doc).doc, { by: 'viewer' });
           log(`saved ${file}`);
-          return json(res, 200, { ok: true, file });
+          return json(res, 200, { ok: true, file, history });
         }
         if (req.method === 'DELETE') { store.remove(dir, name); return json(res, 200, { ok: true }); }
       }

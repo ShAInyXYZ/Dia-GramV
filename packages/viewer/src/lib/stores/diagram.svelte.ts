@@ -5,12 +5,13 @@
  */
 import { lint, layout, collapseView, toSVG, NODE_KINDS, kindColor, STATUSES, applyPatch, emptyDiagram } from '@dgv/core';
 import { api, type DiagramInfo } from '../api';
-import { toFlow, fromFlow, absPos, nodeW, nodeH, isFrame, isMaster, type FNode, type FEdge, type NodeData, type FrameData, type EdgeData } from '../model/flow';
+import { toFlow, fromFlow, absPos, nodeW, nodeH, isFrame, isMaster, type FNode, type FEdge, type NodeData, type FrameData, type EdgeData, type Flag } from '../model/flow';
 import { hl, EDGE_STYLES } from './hl.svelte';
 
 export type Sel = { type: 'node' | 'frame' | 'edge'; id: string } | null;
 type Snap = { nodes: FNode[]; edges: FEdge[]; meta: any };
-export type Diag = { code: string; severity: 'error' | 'warning' | 'info'; message: string; subject: any; fixes: string[] };
+export type Diag = { code: string; severity: 'error' | 'warning' | 'info'; message: string; subject: any; fixes: string[]; flag?: Flag };
+export type HistEntry = { at: string; by: string; type: string; id: string; op: string; kind?: string; label?: string; to?: string; fields?: { field: string; from?: string; to?: string }[]; flag?: { id: string; kind?: string; title: string } };
 
 const PAD = 40, TOP = 52;
 
@@ -45,6 +46,15 @@ class DiagramStore {
   private viewPos = $state.raw<Record<string, { x: number; y: number }>>({});
   private viewDir = $state<'TB' | 'LR' | null>(null);   // set when layout is pressed while folded
 
+  // History is the server's: computed from the diff on every save and read
+  // back — this store never writes it. "New" means newer than the last time
+  // the history was opened here, and not made from this keyboard.
+  history = $state.raw<HistEntry[]>([]);
+  private seenAt = $state('');
+  private flagSeen = $state.raw<Set<string>>(new Set());
+  newCount = $derived(this.history.filter((e) => this.isNew(e)).length);
+  recentIds = $derived.by(() => { const s = new Set<string>(); for (const e of this.history) if (this.isNew(e)) s.add(e.id); return s; });
+
   // $state.snapshot on meta is load-bearing: layout() and applyPatch() start
   // with structuredClone, and the browser refuses to clone a Svelte state
   // proxy (DataCloneError) — which threw inside relayout and inside the fold,
@@ -76,6 +86,8 @@ class DiagramStore {
       hl.activeId = null; hl.neighbors = null; hl.colorBy = doc.meta.colorBy ?? 'kind';
       hl.edgeStyle = EDGE_STYLES.includes(doc.meta.edgeStyle) ? doc.meta.edgeStyle : 'floating';
       this.restoreFolds();
+      this.history = doc.history ?? [];
+      this.restoreSeen();
       location.hash = '#/' + name;
     } catch (e: any) { this.error = e.message; }
   }
@@ -100,7 +112,8 @@ class DiagramStore {
     this.saveState = 'saving';
     try {
       this.meta = { ...this.meta, colorBy: hl.colorBy, edgeStyle: hl.edgeStyle, updated: new Date().toISOString().slice(0, 10) };
-      await api.write(this.name, this.doc);
+      const r = await api.write(this.name, this.doc);
+      if (r.history) this.history = r.history;
       this.lastSave = Date.now();
       this.dirty = false; this.saveState = 'saved'; this.externalChange = false;
       this.refreshList();
@@ -425,6 +438,63 @@ class DiagramStore {
     const measured: Record<string, { w: number; h: number }> = {};
     for (const n of ns) if (!isFrame(n) && n.measured?.height) measured[n.id] = { w: n.measured.width!, h: n.measured.height };
     return toSVG({ dgv: 1, meta: $state.snapshot(this.meta), frames, nodes, edges }, { measured, edgeStyle: hl.edgeStyle });
+  }
+
+  // ---- history & flags -----------------------------------------------
+  isNew(e: HistEntry) { return !!this.seenAt && e.at > this.seenAt && e.by !== 'viewer'; }
+  markHistorySeen() {
+    const last = this.history[this.history.length - 1]; if (!last || last.at <= this.seenAt) return;
+    this.seenAt = last.at;
+    try { localStorage.setItem('dgv.seen.' + this.name, JSON.stringify({ at: this.seenAt, flags: [...this.flagSeen] })); } catch {}
+  }
+  private restoreSeen() {
+    let saved: { at?: string; flags?: string[] } = {};
+    try { saved = JSON.parse(localStorage.getItem('dgv.seen.' + this.name) ?? '{}'); } catch {}
+    // First visit: nothing is new, or every old entry would shout at once.
+    this.seenAt = saved.at ?? this.history[this.history.length - 1]?.at ?? '';
+    const live = new Set<string>();
+    for (const n of this.nodes) for (const f of ((n.data as any).flags ?? []) as Flag[]) live.add(`${n.id}/${f.id}`);
+    for (const e of this.edges) for (const f of (e.data?.flags ?? []) as Flag[]) live.add(`${e.id}/${f.id}`);
+    this.flagSeen = new Set((saved.flags ?? []).filter((k) => live.has(k)));
+    if (!saved.at) this.persistSeen();
+  }
+  private persistSeen() { try { localStorage.setItem('dgv.seen.' + this.name, JSON.stringify({ at: this.seenAt, flags: [...this.flagSeen] })); } catch {} }
+  flagUnread(on: string, fid: string) { return !this.flagSeen.has(`${on}/${fid}`); }
+  markFlagSeen(on: string, fid: string) {
+    const k = `${on}/${fid}`; if (this.flagSeen.has(k)) return;
+    const s = new Set(this.flagSeen); s.add(k); this.flagSeen = s; this.persistSeen();
+  }
+  /** Every flag an element answers for: its own, and — for a folded frame — its members' and their inner wires'. */
+  flagsFor(id: string): { on: string; flag: Flag }[] {
+    const out: { on: string; flag: Flag }[] = [];
+    const own = (x: FNode | FEdge | undefined, oid: string) => { for (const f of ((x?.data as any)?.flags ?? []) as Flag[]) out.push({ on: oid, flag: f }); };
+    const n = this.node(id);
+    if (n && isMaster(n)) {
+      own(this.nodes.find((k) => k.id === id), id);
+      const members = new Set((n.data as NodeData).master!.members);
+      for (const mid of members) own(this.nodes.find((k) => k.id === mid), mid);
+      for (const e of this.edges) if (members.has(e.source) && members.has(e.target)) own(e, e.id);
+      return out;
+    }
+    if (n) own(this.nodes.find((k) => k.id === id) ?? n, id); else own(this.edges.find((e) => e.id === id), id);
+    return out;
+  }
+  private setFlags(on: string, flags: Flag[] | undefined) {
+    const v = flags?.length ? flags : undefined;
+    if (this.nodes.some((k) => k.id === on)) this.updateData(on, { flags: v } as any);
+    else if (this.edges.some((e) => e.id === on)) this.updateEdge(on, { flags: v });
+  }
+  resolveFlag(on: string, fid: string) {
+    const cur = this.flagsFor(on).filter((i) => i.on === on).map((i) => i.flag);
+    this.setFlags(on, cur.filter((f) => f.id !== fid));
+  }
+  addFlag(on: string, flag: { title: string; kind?: Flag['kind']; note?: string; fix?: string }) {
+    const cur = this.flagsFor(on).filter((i) => i.on === on).map((i) => i.flag);
+    let i = cur.length + 1; while (cur.some((f) => f.id === `f${i}`)) i++;
+    const f: Flag = { id: `f${i}`, kind: flag.kind ?? 'issue', title: flag.title, by: 'viewer', at: new Date().toISOString() };
+    if (flag.note) f.note = flag.note; if (flag.fix) f.fix = flag.fix;
+    this.setFlags(on, [...cur, f]);
+    this.markFlagSeen(on, f.id);
   }
 
   // ---- selection -----------------------------------------------------

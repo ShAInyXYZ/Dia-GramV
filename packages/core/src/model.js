@@ -2,6 +2,7 @@
  * Pure helpers over a DGV document. No IO, no DOM — shared by MCP + viewer.
  */
 import { NODE_KINDS } from './catalog.js';
+import { describeChange } from './history.js';
 
 export const NODE_W = 260;          // card width the viewer renders
 export const NODE_H_MIN = 64;       // card with only a label
@@ -195,17 +196,18 @@ export function outline(doc) {
   const lines = [`# ${d.meta.title}`];
   if (d.meta.description) lines.push(d.meta.description);
   lines.push(`frames ${d.frames.length} · nodes ${d.nodes.length} · edges ${d.edges.length} · updated ${d.meta.updated ?? '?'}`, '');
+  const flagLines = (it) => (it.flags ?? []).map((f) => `  ⚑ ${f.kind ?? 'issue'}: ${f.title}${f.fix ? ` → ${f.fix}` : ''}`);
   const nodeLine = (n) => {
     const bits = [`- ${n.id} [${n.kind}] ${n.label}`];
     if (n.sublabel) bits.push(`— ${n.sublabel}`);
     if (n.tech) bits.push(`(${n.tech})`);
     if (n.status) bits.push(`{${n.status}}`);
     if (n.ports?.length) bits.push('ports: ' + n.ports.map((p) => `${p.id}${p.protocol ? ':' + p.protocol : ''}${p.dir ? '/' + p.dir : ''}`).join(', '));
-    return bits.join(' ');
+    return [bits.join(' '), ...flagLines(n)].join('\n');
   };
   const roots = d.frames.filter((f) => !f.parent);
   const walk = (f, depth) => {
-    lines.push(`${'#'.repeat(Math.min(6, depth + 2))} frame ${f.id}: ${f.label}`);
+    lines.push(`${'#'.repeat(Math.min(6, depth + 2))} frame ${f.id}: ${f.label}`, ...flagLines(f));
     for (const n of d.nodes.filter((n) => n.frame === f.id)) lines.push(nodeLine(n));
     for (const k of d.frames.filter((k) => k.parent === f.id)) walk(k, depth + 1);
   };
@@ -218,9 +220,65 @@ export function outline(doc) {
     if (e.label) parts.push(e.label);
     if (e.targetPort || e.sourcePort) parts.push(`ports ${e.sourcePort ?? '·'}→${e.targetPort ?? '·'}`);
     if (e.payload) parts.push(`payload: ${e.payload}`);
-    lines.push(parts.join(' '));
+    lines.push(parts.join(' '), ...flagLines(e));
+  }
+  const open = countFlags(d);
+  if (open) lines.push('', `## flags: ${open} open — architecture judgements awaiting a fix or dgv_resolve (marked ⚑ above)`);
+  const hist = d.history ?? [];
+  if (hist.length) {
+    lines.push('', `## recent changes (${hist.length} on record)`);
+    for (const e of hist.slice(-8).reverse()) lines.push(`- ${e.at.slice(0, 16).replace('T', ' ')} ${e.by} · ${e.id}: ${describeChange(e)}`);
   }
   return lines.join('\n');
+}
+
+export function countFlags(doc) {
+  let n = 0;
+  for (const list of [doc.frames ?? [], doc.nodes ?? [], doc.edges ?? []]) for (const it of list) n += it.flags?.length ?? 0;
+  return n;
+}
+
+/** The element (frame, node or edge) with this id, and which list it is in. */
+export function findElement(doc, id) {
+  for (const type of ['nodes', 'edges', 'frames']) {
+    const it = (doc[type] ?? []).find((x) => x.id === id);
+    if (it) return { type: type.slice(0, -1), item: it };
+  }
+  return null;
+}
+
+/**
+ * Raise a flag on an element. Returns a new doc; the flag gets the next free
+ * id on that element (f1, f2, …) unless one is given.
+ */
+export function raiseFlag(doc, on, flag) {
+  const d = normalize(structuredClone(doc));
+  const hit = findElement(d, on);
+  if (!hit) throw new Error(`no node, edge or frame with id "${on}"`);
+  if (!flag?.title?.trim()) throw new Error('a flag needs a title: one line saying what is wrong');
+  const flags = hit.item.flags ?? [];
+  let id = flag.id;
+  if (!id) { let i = flags.length + 1; while (flags.some((f) => f.id === `f${i}`)) i++; id = `f${i}`; }
+  if (flags.some((f) => f.id === id)) throw new Error(`"${on}" already has a flag "${id}"`);
+  const clean = Object.fromEntries(Object.entries({ id, kind: flag.kind ?? 'issue', title: flag.title.trim(), note: flag.note, fix: flag.fix, by: flag.by ?? 'agent', at: flag.at ?? new Date().toISOString() }).filter(([, v]) => v != null && v !== ''));
+  hit.item.flags = [...flags, clean];
+  return { doc: d, flag: clean, on: hit };
+}
+
+/** Resolve (remove) a flag. With no flag id, the element's only flag; several → an error naming them. */
+export function resolveFlag(doc, on, flagId) {
+  const d = normalize(structuredClone(doc));
+  const hit = findElement(d, on);
+  if (!hit) throw new Error(`no node, edge or frame with id "${on}"`);
+  const flags = hit.item.flags ?? [];
+  if (!flags.length) throw new Error(`"${on}" has no flags`);
+  let target;
+  if (flagId) { target = flags.find((f) => f.id === flagId); if (!target) throw new Error(`"${on}" has no flag "${flagId}" — it has: ${flags.map((f) => f.id).join(', ')}`); }
+  else if (flags.length === 1) target = flags[0];
+  else throw new Error(`"${on}" has ${flags.length} flags — say which: ${flags.map((f) => `${f.id} (${f.title})`).join(', ')}`);
+  hit.item.flags = flags.filter((f) => f !== target);
+  if (!hit.item.flags.length) delete hit.item.flags;
+  return { doc: d, flag: target, on: hit };
 }
 
 export function kindColor(kind) { return NODE_KINDS[kind]?.color ?? '#8a8580'; }

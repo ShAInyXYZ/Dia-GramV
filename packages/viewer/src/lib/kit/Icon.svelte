@@ -1,6 +1,6 @@
 <script lang="ts">
   // The bar's icons, drawn inline rather than pulled from a library: there are
-  // eleven of them and a dependency for eleven paths is not worth the bytes or the
+  // thirteen of them and a dependency for thirteen paths is not worth the bytes or the
   // version to maintain.
   //
   // 24x24 grid, 1.6 stroke, round caps — matching the canvas node outlines so
@@ -26,6 +26,10 @@
     export: 'M12 3v11 M8 10l4 4 4-4 M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2',
     // a crop frame closing on the picture: take a still of the canvas
     snapshot: 'M3 8V5a1 1 0 0 1 1-1h3 M17 4h3a1 1 0 0 1 1 1v3 M21 16v3a1 1 0 0 1-1 1h-3 M7 20H4a1 1 0 0 1-1-1v-3 M8 9h8a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1Z',
+    // a pennant on a pole: something pinned to an element for a person to read
+    flag: 'M6 21V4 M6 4h12l-3 4.5 3 4.5H6',
+    // a clock with its hand run back: what happened, in order
+    history: 'M3 12a9 9 0 1 0 2.6-6.4 M3 4v4.5h4.5 M12 7.5V12l3 2',
   };
   const d = $derived(P[name] ?? '');
 </script>

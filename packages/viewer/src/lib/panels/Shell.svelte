@@ -23,7 +23,7 @@
     if (mod && e.key.toLowerCase() === 's') { e.preventDefault(); dg.save(); return; }
     if (mod && e.key.toLowerCase() === 'z') { e.preventDefault(); if (e.shiftKey) dg.redo(); else dg.undo(); return; }
     if (typing(e)) return;
-    if (e.key === 'Escape') { if (ui.quickAdd) ui.quickAdd = null; else if (dg.selected) dg.select(null); else ui.sideOpen = false; dg.setActive(null); return; }
+    if (e.key === 'Escape') { if (hl.flagOpen) hl.flagOpen = null; else if (ui.historyOpen) ui.historyOpen = false; else if (ui.quickAdd) ui.quickAdd = null; else if (dg.selected) dg.select(null); else ui.sideOpen = false; dg.setActive(null); return; }
     if (!dg.name) return;
     switch (e.key.toLowerCase()) {
       case 'a': if (dg.simple) break; e.preventDefault(); ui.quickAdd = { ...ui.mouse }; break;
@@ -34,6 +34,7 @@
       case '1': hl.colorBy = 'kind'; dg.touch(); break;
       case '2': hl.colorBy = 'status'; dg.touch(); break;
       case 'p': open('problems'); break;
+      case 'h': ui.historyOpen = !ui.historyOpen; break;
       case 'i': open('inspect'); break;
     }
   }

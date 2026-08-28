@@ -4,7 +4,8 @@ export const ui = $state<{
   quickAdd: { x: number; y: number } | null;   // screen coords
   mouse: { x: number; y: number };
   legendOpen: boolean;
-}>({ sideOpen: false, tab: 'inspect', quickAdd: null, mouse: { x: 400, y: 300 }, legendOpen: true });
+  historyOpen: boolean;
+}>({ sideOpen: false, tab: 'inspect', quickAdd: null, mouse: { x: 400, y: 300 }, legendOpen: true, historyOpen: false });
 
 /** true when the keyboard focus is in a text field (shortcuts must stay out of the way) */
 export function typing(e: Event) {

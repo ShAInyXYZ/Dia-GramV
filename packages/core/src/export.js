@@ -29,9 +29,15 @@ export function toMarkdown(rawDoc) {
 export function toMermaid(rawDoc) {
   const d = normalize(rawDoc);
   const safe = (id) => id.replace(/[^a-zA-Z0-9_]/g, '_');
+  // Every label is quoted, because an unquoted one breaks on the first
+  // parenthesis — and a quote inside it is written as the #quot; entity,
+  // because mermaid has no backslash escape: `\"` is a parse error, not a
+  // quote. One helper for nodes, frames and edges: they all failed the same
+  // way, and a second copy of this rule is a third failure waiting.
+  const q = (v) => `"${String(v ?? '').replace(/"/g, '#quot;')}"`;
   const shape = (n) => {
     const s = NODE_KINDS[n.kind]?.shape;
-    const t = `"${n.label}"`;
+    const t = q(n.label);
     if (s === 'cylinder') return `[(${t})]`;
     if (s === 'pill') return `([${t}])`;
     if (s === 'hexagon') return `{{${t}}}`;
@@ -44,7 +50,7 @@ export function toMermaid(rawDoc) {
   const emitNode = (n, ind) => L.push(`${ind}${safe(n.id)}${shape(n)}`);
   const walk = (fid, ind) => {
     for (const f of d.frames.filter((f) => (f.parent ?? null) === fid)) {
-      L.push(`${ind}subgraph ${safe(f.id)}["${f.label}"]`);
+      L.push(`${ind}subgraph ${safe(f.id)}[${q(f.label)}]`);
       for (const n of d.nodes.filter((n) => n.frame === f.id)) emitNode(n, ind + '  ');
       walk(f.id, ind + '  ');
       L.push(`${ind}end`);
@@ -55,8 +61,7 @@ export function toMermaid(rawDoc) {
   for (const e of d.edges) {
     const arrow = e.kind === 'async' ? '-.->' : e.kind === 'import' ? '-->' : e.kind === 'data' ? '-->' : e.kind === 'deploy' ? '-.-' : '-->';
     const lbl = [e.label, e.protocol].filter(Boolean).join(' / ');
-    const safeLbl = lbl.replace(/"/g, '\\"');
-    L.push(`  ${safe(e.source)} ${arrow}${lbl ? `|"${safeLbl}"|` : ''} ${safe(e.target)}`);
+    L.push(`  ${safe(e.source)} ${arrow}${lbl ? `|${q(lbl)}|` : ''} ${safe(e.target)}`);
   }
   for (const n of d.nodes) {
     const c = NODE_KINDS[n.kind]?.color; if (c) L.push(`  style ${safe(n.id)} stroke:${c},stroke-width:2px`);

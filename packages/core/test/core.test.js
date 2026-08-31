@@ -135,6 +135,25 @@ test('exports', () => {
   assert.match(mm, /subgraph core\["Go Core · crv"\]/);
 });
 
+// Mermaid has no backslash escape and chokes on an unquoted parenthesis, so
+// every label — node, frame and edge alike — is quoted with " and any quote
+// inside it written as #quot;. Regression for #1, which fixed the edge labels.
+test('mermaid quotes every label and escapes quotes as #quot;', () => {
+  const doc = emptyDiagram('t');
+  doc.frames.push({ id: 'f', label: 'Edge ("DMZ")' });
+  doc.nodes.push(
+    { id: 'gw', kind: 'api', label: 'Gateway (public)', frame: 'f' },
+    { id: 'db', kind: 'db', label: 'Store "primary"' },
+  );
+  doc.edges.push({ id: 'gw-db', source: 'gw', target: 'db', kind: 'data', label: 'read "hot" rows', protocol: 'sql (TLS)' });
+  const mm = toMermaid(doc);
+  assert.match(mm, /subgraph f\["Edge \(#quot;DMZ#quot;\)"\]/);
+  assert.match(mm, /gw\(\["Gateway \(public\)"\]\)/);
+  assert.match(mm, /db\[\("Store #quot;primary#quot;"\)\]/);
+  assert.match(mm, /gw --> \|"read #quot;hot#quot; rows \/ sql \(TLS\)"\| db|gw -->\|"read #quot;hot#quot; rows \/ sql \(TLS\)"\| db/);
+  assert.ok(!/\\"/.test(mm), 'never emits a backslash escape — mermaid does not support it');
+});
+
 test('catalog summary is compact', () => {
   const c = catalogSummary();
   assert.ok(Object.keys(c.nodeKinds).length >= 14);

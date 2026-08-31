@@ -55,7 +55,8 @@ export function toMermaid(rawDoc) {
   for (const e of d.edges) {
     const arrow = e.kind === 'async' ? '-.->' : e.kind === 'import' ? '-->' : e.kind === 'data' ? '-->' : e.kind === 'deploy' ? '-.-' : '-->';
     const lbl = [e.label, e.protocol].filter(Boolean).join(' / ');
-    L.push(`  ${safe(e.source)} ${arrow}${lbl ? `|${lbl}|` : ''} ${safe(e.target)}`);
+    const safeLbl = lbl.replace(/"/g, '\\"');
+    L.push(`  ${safe(e.source)} ${arrow}${lbl ? `|"${safeLbl}"|` : ''} ${safe(e.target)}`);
   }
   for (const n of d.nodes) {
     const c = NODE_KINDS[n.kind]?.color; if (c) L.push(`  style ${safe(n.id)} stroke:${c},stroke-width:2px`);

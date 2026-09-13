@@ -56,7 +56,7 @@ The agent can now **flag** an architecture problem on the exact node, wire or fr
 <summary><b>The details</b> — what it looks like, how to use it, where it lives, every new command</summary>
 <br/>
 
-Lint says whether the graph is **valid**. It cannot say whether the design is **right**. Reviewing a real project through its diagram, the agent found six things no rule would ever fire on — a process that was a dead end for settings (every change was a restart), plugins loaded three times across the map, a spawned child with no death-pact — and had nowhere to put them but a chat message that scrolls away. Now it has two places: a flag on the element, and a record of what changed.
+Lint says whether the graph is **valid**. It cannot say whether the design is **right**. Reviewing a real project through its diagram, the agent found six structural problems — a process that was a dead end for settings (every change was a restart), plugins loaded three times across the map, a spawned child with no death-pact. Lint had surfaced two of them as patterns (`kind/import-across-programs`, `graph/shared-store`); the other four only exist once you read the code. In all six, the judgement — is this a problem, why, what fixes it — had nowhere to go but a chat message that scrolls away. Now it has two places: a flag on the element, and a record of what changed.
 
 <table>
 <tr>
@@ -292,7 +292,7 @@ The folded view keeps its own arrangement per diagram in your browser, never in 
 | `dgv_history` | who changed what: every architecture change per element, `agent` or `viewer`, newest first |
 | `dgv_layout` | dagre layout, `TB` or `LR`; overwrites positions |
 | `dgv_open` | starts the viewer if it is not running and opens the diagram |
-| `dgv_export` | `markdown` (tables), `mermaid`, `summary` (the outline), or `svg` |
+| `dgv_export` | `markdown` (tables), `mermaid`, `structurizr` (the C4 model as Structurizr DSL, for teams documenting in C4), `summary` (the outline), or `svg` |
 
 Diagrams go to `./dgv` under the directory the agent was started in; `DGV_DIR` puts them elsewhere.
 </details>
@@ -333,6 +333,20 @@ A warning that is intentional gets `ack: "<reason>"` on its element: it becomes 
 </details>
 
 <details>
+<summary><b>Compared to C4 / Structurizr</b></summary>
+
+C4 is the common convention for drawing architecture at four zoom levels (context, container, component, code); Structurizr is its tooling, with a text DSL, an open JSON workspace and an MCP server. DGV isn't a replacement for it. C4 is a documentation standard for people; DGV is a working model for the build, and the two fit together: keep C4 as the document, let the agent work in DGV, and generate the C4 view from it with `dgv_export format=structurizr`.
+
+What is actually different, kept to what matters for an agent:
+
+- **What a write is.** Structurizr's MCP write replaces the workspace DSL on a Structurizr server. `dgv_apply` upserts one element by id in a local file and returns the lint report for the whole model in the same call, with a stable code, the subject and the fixes. Patch one thing, be told what it broke; no server, no account. Structurizr's diagram editor moves boxes; DGV's canvas edits the model.
+- **What lint can reason about.** C4 describes an element with free-text `technology` and `tags`. DGV's catalog is closed and every kind has a role, so "a database initiates a sync call", "a bridge with one side", "an import across a process boundary", "an edge into a port that speaks another protocol" are errors here and valid models there.
+- **What the file is for.** `path` on every node so `dgv_drift` can say the diagram no longer matches the tree, `status`, flags, history. None of that belongs in a documentation standard.
+
+The export mapping, lossy on purpose and one-way: the diagram becomes a `softwareSystem`; a frame a `group` (a boundary holding several deployables is not a container); every node a `container` with `technology` = tech and the kind as a tag; a `module` a `component` of the one container that imports it, or of a synthetic container named after its frame when several do; an `external` a separate software system tagged External; an edge a relationship with description = label and technology = protocol. Ports, status and flags travel as `properties`. The output is validated against the Structurizr CLI on every example. Import from a Structurizr JSON workspace is not there yet; it will come when someone brings a real one to test on.
+</details>
+
+<details>
 <summary><b>The file format and the catalog</b></summary>
 
 ```jsonc
@@ -365,7 +379,7 @@ A warning that is intentional gets `ack: "<reason>"` on its element: it becomes 
 node packages/mcp/bin/dgv.mjs serve  [--dir d] [--port p] [--no-open]      # viewer, default http://127.0.0.1:7710
 node packages/mcp/bin/dgv.mjs lint   <name|file> [--json]
 node packages/mcp/bin/dgv.mjs layout <name|file> [--direction TB|LR]
-node packages/mcp/bin/dgv.mjs export <name|file> [--format markdown|mermaid|summary|svg]
+node packages/mcp/bin/dgv.mjs export <name|file> [--format markdown|mermaid|structurizr|summary|svg]
 node packages/mcp/bin/dgv.mjs drift  <name|file> [--root dir] [--json]
 node packages/mcp/bin/dgv.mjs history <name|file> [--on id] [--limit n]
 node packages/mcp/bin/dgv.mjs list | catalog | doctor | open <name>

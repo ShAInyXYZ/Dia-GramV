@@ -7,7 +7,7 @@
  *   dgv open <name>                   open one diagram in the viewer (starts it if needed)
  *   dgv lint <name|file> [--json]     lint a diagram
  *   dgv layout <name|file>            auto layout in place
- *   dgv export <name|file> [--format markdown|mermaid|summary]
+ *   dgv export <name|file> [--format markdown|mermaid|structurizr|summary|svg]
  *   dgv drift <name|file> [--root r] [--depth n] [--json]   does the diagram still describe the code?
  *   dgv history <name|file> [--on id] [--limit n]   who changed what (flags raised / resolved included)
  *   dgv list | catalog | doctor
@@ -15,7 +15,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { lint, layout, drift, toMarkdown, toMermaid, toSVG, outline as textSummary, catalogSummary, normalize, summarizeDiagnostics as diagSummary, describeChange } from '@dgv/core';
+import { lint, layout, drift, toMarkdown, toMermaid, toStructurizr, toSVG, outline as textSummary, catalogSummary, normalize, summarizeDiagnostics as diagSummary, describeChange } from '@dgv/core';
 import * as store from '@dgv/core/store';
 import { listFiles } from '../src/walk.js';
 
@@ -76,7 +76,7 @@ switch (cmd) {
   case 'export': {
     const { doc } = loadDoc(positional[0]);
     const f = flag('--format') ?? 'markdown';
-    process.stdout.write(f === 'svg' ? toSVG(doc) : f === 'mermaid' ? toMermaid(doc) : f === 'summary' ? textSummary(doc) : toMarkdown(doc));
+    process.stdout.write(f === 'svg' ? toSVG(doc) : f === 'mermaid' ? toMermaid(doc) : f === 'structurizr' ? toStructurizr(doc) : f === 'summary' ? textSummary(doc) : toMarkdown(doc));
     break;
   }
   case 'drift': {

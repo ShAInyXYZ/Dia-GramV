@@ -15,7 +15,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod';
 import {
   catalogSummary, emptyDiagram, applyPatch, placeUnpositioned, lint, layout,
-  summarizeDiagnostics as diagSummary, outline as textSummary, toMarkdown, toMermaid, toSVG, drift, preparePatch, NODE_KIND_IDS, EDGE_KIND_IDS, STATUS_IDS, FRAME_TONES,
+  summarizeDiagnostics as diagSummary, outline as textSummary, toMarkdown, toMermaid, toStructurizr, toSVG, drift, preparePatch, NODE_KIND_IDS, EDGE_KIND_IDS, STATUS_IDS, FRAME_TONES,
   FLAG_KINDS, raiseFlag, resolveFlag, describeChange, countFlags,
 } from '@dgv/core';
 import * as store from '@dgv/core/store';
@@ -228,14 +228,14 @@ export function createServer({ dir } = {}) {
   });
 
   server.registerTool('dgv_export', {
-    title: 'Export', description: 'Render the diagram as markdown tables (for docs / CLAUDE.md), mermaid (for READMEs), or a standalone SVG (self-contained, cropped to the content).',
-    inputSchema: { name: z.string(), format: z.enum(['markdown', 'mermaid', 'summary', 'svg']).optional() },
+    title: 'Export', description: 'Render the diagram as markdown tables (for docs / CLAUDE.md), mermaid (for READMEs), structurizr (C4 model as Structurizr DSL, for teams whose documentation standard is C4 — lossy, one-way: nodes become containers, modules components, frames groups), or a standalone SVG (self-contained, cropped to the content).',
+    inputSchema: { name: z.string(), format: z.enum(['markdown', 'mermaid', 'structurizr', 'summary', 'svg']).optional() },
   }, async ({ name, format = 'markdown' }) => {
     try {
       const doc = store.read(dir, name);
       // svg uses the saved layout; the viewer's snapshot button exports what is
       // on screen instead, folds and hand-placed cards included
-      return text(format === 'svg' ? toSVG(doc) : format === 'mermaid' ? toMermaid(doc) : format === 'summary' ? textSummary(doc) : toMarkdown(doc));
+      return text(format === 'svg' ? toSVG(doc) : format === 'mermaid' ? toMermaid(doc) : format === 'structurizr' ? toStructurizr(doc) : format === 'summary' ? textSummary(doc) : toMarkdown(doc));
     } catch (e) { return fail(e.message); }
   });
 

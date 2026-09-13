@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
-import { validateSchema, lint, layout, applyPatch, placeUnpositioned, outline, toMarkdown, toMermaid, emptyDiagram, catalogSummary, summarizeDiagnostics as diagSummary } from '../src/index.js';
+import { validateSchema, lint, layout, applyPatch, placeUnpositioned, outline, toMarkdown, toMermaid, toStructurizr, emptyDiagram, catalogSummary, summarizeDiagnostics as diagSummary } from '../src/index.js';
 import * as store from '../src/store.js';
 
 const example = JSON.parse(fs.readFileSync(new URL('../../../examples/local-ai-harness.dgv.json', import.meta.url), 'utf8'));
@@ -152,6 +152,50 @@ test('mermaid quotes every label and escapes quotes as #quot;', () => {
   assert.match(mm, /db\[\("Store #quot;primary#quot;"\)\]/);
   assert.match(mm, /gw --> \|"read #quot;hot#quot; rows \/ sql \(TLS\)"\| db|gw -->\|"read #quot;hot#quot; rows \/ sql \(TLS\)"\| db/);
   assert.ok(!/\\"/.test(mm), 'never emits a backslash escape — mermaid does not support it');
+});
+
+// The C4 mapping: nodes are containers, frames are groups, a module is a
+// component of the one container that imports it (or of a synthetic one),
+// externals sit outside the system. Validated against the Structurizr CLI
+// (structurizr.sh validate) on every example and on this document.
+test('structurizr export: containment, keyword ids, escaping, no parent→child relationship', () => {
+  const h = emptyDiagram('Shop "v2"', 'line one\nline two');
+  h.frames.push({ id: 'edge', label: 'Edge ("DMZ")' }, { id: 'empty', label: 'Nothing here' });
+  h.nodes.push(
+    { id: 'gw', kind: 'api', label: 'Gateway (public)', frame: 'edge', tech: 'Go', ports: [{ id: 'rest', protocol: 'https', dir: 'in' }], status: 'wip', flags: [{ id: 'f1', kind: 'issue', title: 'no rate limit' }] },
+    { id: 'auth', kind: 'module', label: 'Auth lib', frame: 'edge' },
+    { id: 'util', kind: 'module', label: 'Utils' },
+    { id: 'views', kind: 'module', label: 'Keyword id', frame: 'edge' },
+    { id: 'db', kind: 'db', label: 'Store "primary"' },
+    { id: 'stripe', kind: 'external', label: 'Stripe' },
+    { id: 'wk', kind: 'worker', label: 'Worker' },
+  );
+  h.edges.push(
+    { id: 'gw-auth', source: 'gw', target: 'auth', kind: 'import' },
+    { id: 'gw-util', source: 'gw', target: 'util', kind: 'import' },
+    { id: 'wk-util', source: 'wk', target: 'util', kind: 'import' },
+    { id: 'gw-views', source: 'gw', target: 'views', kind: 'import' },
+    { id: 'gw-db', source: 'gw', target: 'db', kind: 'data', label: 'read "hot"', protocol: 'sql', targetPort: 'sql' },
+    { id: 'gw-db2', source: 'gw', target: 'db', kind: 'data', label: 'read "hot"', protocol: 'sql' },
+    { id: 'gw-stripe', source: 'gw', target: 'stripe', kind: 'sync', label: 'charge', protocol: 'https' },
+  );
+  const out = toStructurizr(h);
+  assert.match(out, /^workspace "Shop \\"v2\\"" "line one line two" \{/m, 'quotes escaped, newline flattened');
+  assert.match(out, /stripe = softwareSystem "Stripe" "" \{\n\s+tags "External"/, 'external is its own system');
+  assert.match(out, /group "Edge \(\\"DMZ\\"\)" \{/); assert.doesNotMatch(out, /Nothing here/, 'an empty frame is not emitted');
+  // auth has one importer → component inside gw; util has two → synthetic container; views collides with a keyword
+  assert.match(out, /gw = container "Gateway \(public\)"[\s\S]*?auth = component "Auth lib"[\s\S]*?\n {8}\}/);
+  assert.match(out, /modules = container "Modules"[\s\S]*?util = component "Utils"/);
+  assert.match(out, /views_ = component "Keyword id"/);
+  assert.match(out, /"dgv\.ports" "rest:https\/in"/); assert.match(out, /"dgv\.status" "wip"/); assert.match(out, /"dgv\.flags" "issue: no rate limit"/);
+  assert.doesNotMatch(out, /gw -> auth/, 'containment already says it; Structurizr refuses parent→child');
+  assert.match(out, /gw -> util "" "" "import"/);
+  assert.equal((out.match(/gw -> db "read \\"hot\\"" "sql" "data"/g) ?? []).length, 1, 'duplicate relationship deduped');
+  assert.match(out, /"dgv\.targetPort" "sql"/);
+  assert.match(out, /systemContext sys "Context" \{\n\s+include \*\n\s+autoLayout lr\n\s+\}/);
+  assert.match(out, /component gw "Components-gw"/);
+  // and the example still exports
+  assert.match(toStructurizr(example), /sys = softwareSystem "Local AI Harness"/);
 });
 
 test('catalog summary is compact', () => {

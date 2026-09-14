@@ -200,6 +200,30 @@ export function toStructurizr(rawDoc) {
   view('container sys "Containers"');
   const withKids = new Set([...parentOf.values()]);
   for (const cid of withKids) view(`component ${identOf(cid)} ${str('Components-' + ident(cid))}`);
+  // The kind travels as a tag; give the tags the shapes C4 readers expect and
+  // the catalog colour the DGV key uses, so a database is a cylinder in the
+  // same yellow on both canvases. Only for kinds actually present: a short DSL
+  // for a small diagram. One statement per line — the parser insists.
+  // no Hexagon for bridges: Structurizr's PlantUML exporter draws it as bare text
+  const SHAPE = { ui: 'WebBrowser', device: 'MobileDevicePortrait', db: 'Cylinder', cache: 'Cylinder', storage: 'Folder', queue: 'Pipe', bridge: 'RoundedBox', model: 'RoundedBox', external: 'RoundedBox', infra: 'Box', sidecar: 'RoundedBox' };
+  const LINE = { async: 'dashed', data: 'dotted', import: 'dotted', deploy: 'dashed', control: 'dashed' };
+  // dark ink on the light catalog colours, white on the dark ones
+  const ink = (hex) => { const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)); return (0.299 * r + 0.587 * g + 0.114 * b) > 150 ? '#1d1d1d' : '#ffffff'; };
+  const kinds = [...new Set(d.nodes.map((n) => n.kind))].filter((k) => NODE_KINDS[k]);
+  const edgeKinds = [...new Set(d.edges.map((e) => e.kind))].filter((k) => LINE[k]);
+  const block = (head, lines) => { push(3, `${head} {`); for (const l of lines) push(4, l); push(3, '}'); };
+  if (kinds.length || edgeKinds.length) {
+    push(2, 'styles {');
+    for (const k of kinds) {
+      const c = NODE_KINDS[k].color;
+      block(`element ${str(k === 'external' ? 'External' : k)}`, [...(SHAPE[k] ? [`shape ${SHAPE[k]}`] : []), `background ${c}`, `color ${ink(c)}`, `stroke ${c}`]);
+    }
+    // Structurizr's default relationship is dashed; make the base solid so
+    // the async/data styles below actually read as different.
+    if (d.edges.length) block('relationship "Relationship"', ['style solid']);
+    for (const k of edgeKinds) block(`relationship ${str(k)}`, [`style ${LINE[k]}`]);
+    push(2, '}');
+  }
   push(2, `theme default`);
   L.push('  }', '}');
   return L.join('\n') + '\n';

@@ -62,13 +62,13 @@ The file this README opens with, `examples/shop-platform.dgv.json`, as a C4 cont
 
 <div align="center">
   <img src="assets/c4-shop-platform.svg" width="880" alt="C4 container view of the shop platform, rendered by Structurizr from the DSL that dgv export produced: five dashed group boundaries (Clients, Edge, Services, Data), each DGV node as a container with its technology, Stripe and the email provider as external systems, every wire a relationship with its label and protocol"/>
-  <br/><sub>The same seventeen components and twenty-one connections as the DGV canvas at the top of this page. Frames became the dashed boundaries; Stripe and the email provider sit outside the system, as C4 draws them.</sub>
+  <br/><sub>The same seventeen components and twenty-one connections as the DGV canvas at the top of this page, in the same colours as its key. Frames became the boundaries; databases are cylinders, the queue a pipe, the bucket a folder; sync calls are solid, async dashed, data access dotted; Stripe and the email provider sit outside the system, as C4 draws them.</sub>
 </div>
 
 ```sh
 node packages/mcp/bin/dgv.mjs export examples/shop-platform.dgv.json --format structurizr > shop.dsl
 structurizr.sh validate -workspace shop.dsl                                       # Structurizr CLI: parses clean
-structurizr.sh export -workspace shop.dsl -format plantuml/c4plantuml -output c4  # then PlantUML for the picture
+structurizr.sh export -workspace shop.dsl -format plantuml/structurizr -output c4  # then PlantUML for the picture
 ```
 
 What the DSL looks like, for one boundary and one wire:
@@ -94,10 +94,10 @@ web -> gateway "browse, checkout" "https" "sync"
 |---|---|---|
 | diagram | `softwareSystem` | title and description carried over |
 | frame | `group` | a boundary holding several deployables is not a container |
-| node | `container` | `technology` = tech, `description` = sublabel, the kind as a tag |
+| node | `container` | `technology` = tech, `description` = sublabel, the kind as a tag — and a style per tag: the catalog's shape and colour, so a database is a yellow cylinder on both canvases |
 | `module` node | `component` | inside the one container that imports it — or, when several do, a synthetic container named after its frame; a component must live in a container |
 | `external` node | separate `softwareSystem` | tagged `External`, outside the system |
-| edge | relationship | description = label, technology = protocol, the kind as a tag |
+| edge | relationship | description = label, technology = protocol, the kind as a tag; sync solid, async dashed, data dotted |
 | ports, status, flags, path | `properties` | C4 has no slot for them; nothing is dropped silently |
 
 The import edge from a container to its own component is not emitted: containment already says it, and Structurizr refuses a parent-to-child relationship. Duplicate relationships collapse to one; an id that collides with a DSL keyword gets a trailing underscore; quotes, backslashes and newlines in labels are escaped.

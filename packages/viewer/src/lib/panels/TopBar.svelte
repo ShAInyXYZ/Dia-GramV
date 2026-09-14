@@ -5,6 +5,7 @@
   import { hl, EDGE_STYLES } from '../stores/hl.svelte';
   import { ui } from '../stores/ui.svelte';
   import Icon from '../kit/Icon.svelte';
+  import { toStructurizr } from '@dgv/core';
 
   const flow = useSvelteFlow();
   let menu = $state(false), creating = $state(false), name = $state(''), title = $state('');
@@ -32,6 +33,11 @@
   }
   function exportJson() {
     download(`${dg.name}.dgv.json`, JSON.stringify(dg.doc, null, 2), 'application/json');
+  }
+  // The C4 view of the file, as Structurizr DSL — from the document, not the
+  // screen, because a fold is a way of looking and C4 has no idea of it.
+  function exportC4() {
+    download(`${dg.name}.dsl`, toStructurizr(dg.doc), 'text/plain');
   }
   export function addFrame() { dg.addFrame(centerOfView()); }
 </script>
@@ -89,6 +95,7 @@
       <button class:active={hl.colorBy === 'status'} onclick={() => { hl.colorBy = hl.colorBy === 'kind' ? 'status' : 'kind'; dg.touch(); }} data-tip="colour by {hl.colorBy} — click to switch (1 / 2)"><Icon name="palette" /><span class="lbl">{hl.colorBy}</span></button>
       <button onclick={snapshot} disabled={!dg.name} data-tip="save this view as an SVG — for a README or docs (Shift+S)"><Icon name="snapshot" /><span class="lbl">snapshot</span></button>
       <button onclick={exportJson} disabled={!dg.name} data-tip="download the JSON"><Icon name="export" /><span class="lbl">export</span></button>
+      <button onclick={exportC4} disabled={!dg.name} data-tip="download the C4 model as Structurizr DSL"><Icon name="c4" /><span class="lbl">C4</span></button>
     </div>
   </div>
 </div>

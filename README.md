@@ -52,7 +52,7 @@ Needs Node 20.19+ or 22.12+. `npm install` fetches everything (~100 MB, nothing 
 
 ### v0.2.1 · 2026-09-14 — C4 / Structurizr export
 
-`dgv_export format=structurizr` (and `dgv export --format structurizr` on the CLI) writes the diagram as Structurizr DSL, the source format of the C4 model. A team that documents in C4 keeps C4 as the document and generates it from the DGV working model, instead of maintaining two drawings by hand. Asked for in [#2](https://github.com/ShAInyXYZ/Dia-GramV/issues/2).
+`dgv_export format=structurizr` (`dgv export --format structurizr` on the CLI, the **C4** button in the viewer) writes the diagram as Structurizr DSL, the source format of the C4 model. A team that documents in C4 keeps C4 as the document and generates it from the DGV working model, instead of maintaining two drawings by hand. Asked for in [#2](https://github.com/ShAInyXYZ/Dia-GramV/issues/2).
 
 <details>
 <summary><b>The details</b> — the example, the mapping, import, how it was verified</summary>
@@ -312,7 +312,7 @@ Two optional Claude Code hooks close the loop ([`hooks/`](hooks/README.md); `doc
 
 **History.** The pill at the bottom centre — `history · 3 new` — opens upward into what changed: per element (`chainx · 4 changes · 2m ago`, click to see them and jump to the card) or as a timeline. Every save that changes the *architecture* lands there, whether it came from `dgv_apply` (`agent`) or from this page (`you`): a status flipped, a port added, a node renamed, a flag raised or resolved. Dragging cards around does not count. It is computed on the server by diffing the file on every write, kept in the file (capped), and readable from the agent with `dgv_history`. Cards changed since you last looked carry a small green mark.
 
-Drag a node into a frame and it joins it; frames grow to fit. `Ctrl+Z` undoes. `Ctrl+S` saves — and if the agent changed the file while you had unsaved edits, the page says so and lets you choose. `L` cycles the wire style: floating bezier, routed around cards, straight. `Shift+S` saves what is on screen as a self-contained SVG, which is how every diagram in this README was made.
+Drag a node into a frame and it joins it; frames grow to fit. `Ctrl+Z` undoes. `Ctrl+S` saves — and if the agent changed the file while you had unsaved edits, the page says so and lets you choose. `L` cycles the wire style: floating bezier, routed around cards, straight. `Shift+S` saves what is on screen as a self-contained SVG, which is how every diagram in this README was made. **C4** downloads the file as Structurizr DSL, the same export as `dgv_export format=structurizr`.
 
 <details>
 <summary>Every shortcut</summary>

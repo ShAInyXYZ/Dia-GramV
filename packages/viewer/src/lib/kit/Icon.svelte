@@ -1,6 +1,6 @@
 <script lang="ts">
   // The bar's icons, drawn inline rather than pulled from a library: there are
-  // thirteen of them and a dependency for thirteen paths is not worth the bytes or the
+  // fourteen of them and a dependency for fourteen paths is not worth the bytes or the
   // version to maintain.
   //
   // 24x24 grid, 1.6 stroke, round caps — matching the canvas node outlines so
@@ -30,6 +30,8 @@
     flag: 'M6 21V4 M6 4h12l-3 4.5 3 4.5H6',
     // a clock with its hand run back: what happened, in order
     history: 'M3 12a9 9 0 1 0 2.6-6.4 M3 4v4.5h4.5 M12 7.5V12l3 2',
+    // C4's zoom levels: a box inside a box inside a box
+    c4: 'M3 4h18v16H3z M7 8h10v8H7z M10 11h4v2h-4z',
   };
   const d = $derived(P[name] ?? '');
 </script>

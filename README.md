@@ -50,9 +50,66 @@ Needs Node 20.19+ or 22.12+. `npm install` fetches everything (~100 MB, nothing 
 
 ## What's new
 
-**2026-09-14 · C4 / Structurizr export.** `dgv_export format=structurizr` (and `dgv export --format structurizr`) emits the diagram as Structurizr DSL, so a team that documents in C4 can keep C4 as the document and generate it from the DGV working model: nodes become containers, modules components, frames groups, externals a separate system; ports, status and flags travel as properties. Validated against the Structurizr CLI on every example. Asked for in [#2](https://github.com/ShAInyXYZ/Dia-GramV/issues/2); the mapping and what stays different are in [Compared to C4 / Structurizr](#reference).
+### v0.2.1 · 2026-09-14 — C4 / Structurizr export
 
-**v0.2 · flags and history.** The agent can now **flag** an architecture problem on the exact node, wire or frame it is about — a ⚑ bubble on the canvas with what is wrong, why, and the fix — and every change to the diagram, by the agent or by you, lands in a **history** you open from the bottom of the canvas. Three new MCP tools: `dgv_flag`, `dgv_resolve`, `dgv_history`.
+`dgv_export format=structurizr` (and `dgv export --format structurizr` on the CLI) writes the diagram as Structurizr DSL, the source format of the C4 model. A team that documents in C4 keeps C4 as the document and generates it from the DGV working model, instead of maintaining two drawings by hand. Asked for in [#2](https://github.com/ShAInyXYZ/Dia-GramV/issues/2).
+
+<details>
+<summary><b>The details</b> — the example, the mapping, import, how it was verified</summary>
+<br/>
+
+The file this README opens with, `examples/shop-platform.dgv.json`, as a C4 container diagram. Nothing was drawn: the DSL came out of `dgv export`, the picture out of Structurizr's own tooling.
+
+<div align="center">
+  <img src="assets/c4-shop-platform.svg" width="880" alt="C4 container view of the shop platform, rendered by Structurizr from the DSL that dgv export produced: five dashed group boundaries (Clients, Edge, Services, Data), each DGV node as a container with its technology, Stripe and the email provider as external systems, every wire a relationship with its label and protocol"/>
+  <br/><sub>The same seventeen components and twenty-one connections as the DGV canvas at the top of this page. Frames became the dashed boundaries; Stripe and the email provider sit outside the system, as C4 draws them.</sub>
+</div>
+
+```sh
+node packages/mcp/bin/dgv.mjs export examples/shop-platform.dgv.json --format structurizr > shop.dsl
+structurizr.sh validate -workspace shop.dsl                                       # Structurizr CLI: parses clean
+structurizr.sh export -workspace shop.dsl -format plantuml/c4plantuml -output c4  # then PlantUML for the picture
+```
+
+What the DSL looks like, for one boundary and one wire:
+
+```
+group "Edge" {
+  gateway = container "API gateway" "TLS · rate limit · auth" "Envoy" {
+    tags "infra"
+    properties {
+      "dgv.id" "gateway"
+      "dgv.status" "done"
+      "dgv.ports" "https:https/in"
+    }
+  }
+}
+…
+web -> gateway "browse, checkout" "https" "sync"
+```
+
+**The mapping.** Lossy on purpose and one-way: C4 groups by containment, DGV by boundary and role.
+
+| DGV | Structurizr | note |
+|---|---|---|
+| diagram | `softwareSystem` | title and description carried over |
+| frame | `group` | a boundary holding several deployables is not a container |
+| node | `container` | `technology` = tech, `description` = sublabel, the kind as a tag |
+| `module` node | `component` | inside the one container that imports it — or, when several do, a synthetic container named after its frame; a component must live in a container |
+| `external` node | separate `softwareSystem` | tagged `External`, outside the system |
+| edge | relationship | description = label, technology = protocol, the kind as a tag |
+| ports, status, flags, path | `properties` | C4 has no slot for them; nothing is dropped silently |
+
+The import edge from a container to its own component is not emitted: containment already says it, and Structurizr refuses a parent-to-child relationship. Duplicate relationships collapse to one; an id that collides with a DSL keyword gets a trailing underscore; quotes, backslashes and newlines in labels are escaped.
+
+**Import.** There is no `dgv_import` yet, and you do not need one to start: give the agent the `workspace.dsl` (or the compiled `workspace.json`) and say *map this into DGV*. The mapping is the table above read right to left, and the skill spells it out: containers become nodes with the kind read from tags and technology (`Database` → db, `Web Browser` → ui, `Message Bus` → queue, otherwise service), components become `module` nodes, groups become frames, relationships become edges with protocol = technology. Lint will then report `contract/unspecified` wherever C4 had no protocol, which is the honest outcome: the linter names what the C4 model never said. A deterministic importer from `workspace.json` comes when someone brings a real workspace to test on.
+
+**Verified.** Every example, this repo's own diagram, and a hostile document (quotes, a backslash, a newline, an id colliding with a keyword, a parent-to-child import, a duplicate relationship, an empty frame) parse with `structurizr-cli` v2025.11.09; a deliberately broken file fails, so a silent pass is a real pass. Regression test in `packages/core/test/core.test.js`.
+</details>
+
+### v0.2 · 2026-08-28 — flags and history
+
+The agent can now **flag** an architecture problem on the exact node, wire or frame it is about — a ⚑ bubble on the canvas with what is wrong, why, and the fix — and every change to the diagram, by the agent or by you, lands in a **history** you open from the bottom of the canvas. Three new MCP tools: `dgv_flag`, `dgv_resolve`, `dgv_history`.
 
 <details>
 <summary><b>The details</b> — what it looks like, how to use it, where it lives, every new command</summary>
@@ -345,7 +402,7 @@ What is actually different, kept to what matters for an agent:
 - **What lint can reason about.** C4 describes an element with free-text `technology` and `tags`. DGV's catalog is closed and every kind has a role, so "a database initiates a sync call", "a bridge with one side", "an import across a process boundary", "an edge into a port that speaks another protocol" are errors here and valid models there.
 - **What the file is for.** `path` on every node so `dgv_drift` can say the diagram no longer matches the tree, `status`, flags, history. None of that belongs in a documentation standard.
 
-The export mapping, lossy on purpose and one-way: the diagram becomes a `softwareSystem`; a frame a `group` (a boundary holding several deployables is not a container); every node a `container` with `technology` = tech and the kind as a tag; a `module` a `component` of the one container that imports it, or of a synthetic container named after its frame when several do; an `external` a separate software system tagged External; an edge a relationship with description = label and technology = protocol. Ports, status and flags travel as `properties`. The output is validated against the Structurizr CLI on every example. Import from a Structurizr JSON workspace is not there yet; it will come when someone brings a real one to test on.
+The export mapping, lossy on purpose and one-way: the diagram becomes a `softwareSystem`; a frame a `group` (a boundary holding several deployables is not a container); every node a `container` with `technology` = tech and the kind as a tag; a `module` a `component` of the one container that imports it, or of a synthetic container named after its frame when several do; an `external` a separate software system tagged External; an edge a relationship with description = label and technology = protocol. Ports, status and flags travel as `properties`. The output is validated against the Structurizr CLI on every example. There is no deterministic importer yet; hand the agent a `workspace.dsl` or `workspace.json` and it maps it into DGV with `dgv_apply` (the skill spells the mapping out).
 </details>
 
 <details>

@@ -24,6 +24,19 @@ One diagram per system, stored as `dgv/<name>.dgv.json` in the project. The agen
 7. `dgv_export format=markdown` when the plan is agreed → paste into the project's docs / CLAUDE.md so the build follows it. If the team documents in C4, `format=structurizr` emits the Structurizr DSL (nodes → containers, modules → components, frames → groups; lossy, one-way) so the C4 view is generated from the working model instead of maintained by hand.
 8. **While building and before you stop:** `dgv_drift`. Fix `drift/missing` first (the code moved: update `path`; the node is gone: remove it, or `status: todo` if it is not written yet). For `drift/unclaimed`, add a node or widen a `path` — or put the directory in `meta.driftIgnore` with good reason. Then set `status` on what you built or changed. A diagram that is not updated is worse than none: the next session will trust it. Every `dgv_apply`, `dgv_flag` and `dgv_resolve` is recorded in the diagram's history (`dgv_history`, also the tail of `dgv_read`): `who` (agent or viewer) changed `what` on which element. Read it when the user asks what changed, or when the file differs from what you remember — the viewer's saves show up there as `viewer`.
 
+## Given a C4 / Structurizr model to bring into DGV
+
+There is no import tool; you are the importer. Read the `workspace.dsl` (or the compiled `workspace.json`) and build the diagram with `dgv_create` + `dgv_apply`, in a few large batches:
+
+- `softwareSystem` (the one being modelled) → the diagram; other software systems → `external` nodes, no frame.
+- `group` → a frame (DGV frames do not nest: flatten nested groups to the innermost one, and say so in `meta.description`).
+- `container` → a node. Kind from tags and technology: `Database`/Postgres/MySQL/SQLite → `db`; Redis/Memcached → `cache`; S3/bucket/blob → `storage`; `Message Bus`/Kafka/RabbitMQ/queue → `queue`; `Web Browser`/SPA/mobile app → `ui`; gateway/proxy/load balancer → `infra`; otherwise `service`. `technology` → `tech`, `description` → `sublabel`. Keep the Structurizr identifier as the DGV id.
+- `component` → a `module` node in the frame of its container, with an `import` edge from the container to it.
+- relationship → an edge: description → `label`, technology → `protocol` (lower-cased: `https`, `sql`, `kafka`…), kind `data` when the target is a store, `async` for queues/events, else `sync`.
+- Declare a port on any node that is called, named after its protocol, and bind edges to it — C4 has no ports, so this is where the DGV model becomes stricter than the source.
+
+Then `dgv_lint`. Expect `contract/unspecified` wherever C4 had no technology on a relationship: report them to the user rather than inventing protocols. `dgv_export format=structurizr` afterwards is how the team keeps C4 as the document.
+
 ## Modelling rules
 
 - **One node per runtime thing** (process, store, device, external). Code-level structure inside a program is a `module` node with `import` edges — only inside the program's frame.

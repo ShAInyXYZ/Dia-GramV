@@ -76,7 +76,7 @@ const fail = (msg) => ({ content: [{ type: 'text', text: msg }], isError: true }
 
 export function createServer({ dir } = {}) {
   dir = store.resolveDir(dir);
-  const server = new McpServer({ name: 'dgv', version: '0.2.0' }, {
+  const server = new McpServer({ name: 'dgv', version: '0.2.1' }, {
     instructions: `Dia-GramV: plan a system's architecture as a typed, linted diagram BEFORE writing code. Diagrams are files in ${dir} (<name>.dgv.json). Flow: dgv_catalog → dgv_create → dgv_apply (nodes/frames/edges, ports on nodes, protocols on edges) → dgv_lint → fix → dgv_layout → dgv_open → dgv_drift as code lands. Read dgv_catalog once per session for the allowed kinds. When the graph lints clean but the design is wrong (a dead end, a duplicated load, a missing death-pact), dgv_flag it on the element — the viewer shows the note as a bubble — and dgv_resolve once fixed. dgv_history says who changed what.`,
   });
 

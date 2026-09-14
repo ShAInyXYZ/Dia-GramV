@@ -14,7 +14,7 @@
   <p>Works with any MCP client. The skill and hooks are for Claude Code.<br/>Diagrams are JSON files in your repo. Runs on your machine — no accounts, no cloud, no telemetry.</p>
 
   <p>
-    <a href="#whats-new--v02--flags-and-history"><strong>What's new</strong></a> ·
+    <a href="#whats-new"><strong>What's new</strong></a> ·
     <a href="#thirty-seconds"><strong>30 seconds ↓</strong></a> ·
     <a href="#why-it-matters-when-an-ai-writes-the-code"><strong>Why</strong></a> ·
     <a href="#what-it-does--four-cases"><strong>Four cases</strong></a> ·
@@ -48,9 +48,11 @@ It reads the catalog, writes `dgv/<name>.dgv.json`, gets a lint report back on e
 
 Needs Node 20.19+ or 22.12+. `npm install` fetches everything (~100 MB, nothing global); `npm run build` compiles the viewer once. Skip the build if you only want the MCP tools — everything works without it except `dgv_open`.
 
-## What's new · v0.2 — flags and history
+## What's new
 
-The agent can now **flag** an architecture problem on the exact node, wire or frame it is about — a ⚑ bubble on the canvas with what is wrong, why, and the fix — and every change to the diagram, by the agent or by you, lands in a **history** you open from the bottom of the canvas. Three new MCP tools: `dgv_flag`, `dgv_resolve`, `dgv_history`.
+**2026-09-14 · C4 / Structurizr export.** `dgv_export format=structurizr` (and `dgv export --format structurizr`) emits the diagram as Structurizr DSL, so a team that documents in C4 can keep C4 as the document and generate it from the DGV working model: nodes become containers, modules components, frames groups, externals a separate system; ports, status and flags travel as properties. Validated against the Structurizr CLI on every example. Asked for in [#2](https://github.com/ShAInyXYZ/Dia-GramV/issues/2); the mapping and what stays different are in [Compared to C4 / Structurizr](#reference).
+
+**v0.2 · flags and history.** The agent can now **flag** an architecture problem on the exact node, wire or frame it is about — a ⚑ bubble on the canvas with what is wrong, why, and the fix — and every change to the diagram, by the agent or by you, lands in a **history** you open from the bottom of the canvas. Three new MCP tools: `dgv_flag`, `dgv_resolve`, `dgv_history`.
 
 <details>
 <summary><b>The details</b> — what it looks like, how to use it, where it lives, every new command</summary>

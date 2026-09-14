@@ -68,7 +68,7 @@ The file this README opens with, `examples/shop-platform.dgv.json`, as a C4 cont
 ```sh
 node packages/mcp/bin/dgv.mjs export examples/shop-platform.dgv.json --format structurizr > shop.dsl
 structurizr.sh validate -workspace shop.dsl                                       # Structurizr CLI: parses clean
-structurizr.sh export -workspace shop.dsl -format plantuml/structurizr -output c4  # then PlantUML for the picture
+structurizr.sh export -workspace shop.dsl -format plantuml/structurizr -output c4  # then PlantUML (+ Graphviz) for the picture
 ```
 
 What the DSL looks like, for one boundary and one wire:

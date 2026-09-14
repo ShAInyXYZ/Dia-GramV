@@ -194,8 +194,12 @@ export function toStructurizr(rawDoc) {
     if (pr.length) { push(2, `${head} {`); push(3, ...pr); push(2, `}`); } else push(2, head);
   }
   L.push('  }', '', '  views {');
-  // one statement per line: the DSL does not accept a view body on one line
-  const view = (head) => { push(2, `${head} {`); push(3, 'include *', 'autoLayout lr'); push(2, '}'); };
+  // One statement per line: the DSL does not accept a view body on one line.
+  // Top to bottom, with room: left to right funnels every services→data wire
+  // through one corridor in both Structurizr's renderer and PlantUML; the
+  // separations (Structurizr px; PlantUML maps them /5 and /10) are what kept
+  // a 17-container view legible in the README example.
+  const view = (head) => { push(2, `${head} {`); push(3, 'include *', 'autoLayout tb 550 500'); push(2, '}'); };
   view('systemContext sys "Context"');
   view('container sys "Containers"');
   const withKids = new Set([...parentOf.values()]);

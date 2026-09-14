@@ -192,7 +192,7 @@ test('structurizr export: containment, keyword ids, escaping, no parent→child 
   assert.match(out, /gw -> util "" "" "import"/);
   assert.equal((out.match(/gw -> db "read \\"hot\\"" "sql" "data"/g) ?? []).length, 1, 'duplicate relationship deduped');
   assert.match(out, /"dgv\.targetPort" "sql"/);
-  assert.match(out, /systemContext sys "Context" \{\n\s+include \*\n\s+autoLayout lr\n\s+\}/);
+  assert.match(out, /systemContext sys "Context" \{\n\s+include \*\n\s+autoLayout tb 550 500\n\s+\}/);
   assert.match(out, /component gw "Components-gw"/);
   // and the example still exports
   assert.match(toStructurizr(example), /sys = softwareSystem "Local AI Harness"/);
